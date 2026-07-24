@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[Titolo case study] — [Nome Cognome]</title>
+  <meta name="description" content="[Riassunto in una riga del case study: problema + esito.]">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,30;1,9..144,300..700,30&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Vai al contenuto</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="container site-header__inner">
+    <a href="index.html" class="brand">[Nome] <em>— design</em></a>
+    <nav class="nav" aria-label="Principale">
+      <a href="index.html#work" aria-current="page">Work</a>
+      <a href="index.html#lab">Lab</a>
+      <a href="about.html">About</a>
+      <a href="index.html#contact">Contatti</a>
+    </nav>
+    <a class="header-cta" href="/cv.pdf" download>Scarica CV</a>
+    <button class="nav-toggle" type="button" aria-label="Apri navigazione" aria-expanded="false" onclick="toggleNav(this)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HEADER CASE STUDY -->
+  <section class="cs-header container">
+    <p class="cs-header__crumb"><a href="index.html">Portfolio</a> / Case study 01</p>
+    <h1 class="cs-header__title">
+      [Titolo del case study: descrivi il problema, non il prodotto]
+    </h1>
+    <p class="cs-header__lede">
+      [Una-due righe: contesto e cosa era in gioco. Es. "Un flusso di onboarding B2B che stava perdendo il 62% dei nuovi account nei primi 7 giorni."]
+    </p>
+  </section>
+
+  <!-- ROLE BOX — P5: cosa hai fatto tu vs il team -->
+  <section class="container">
+    <div class="role-box" aria-labelledby="role-title">
+      <p class="role-box__title" id="role-title">Il mio ruolo</p>
+      <dl class="role-box__grid">
+        <div>
+          <dt>Ruolo</dt>
+          <dd>[Senior UX Designer]</dd>
+        </div>
+        <div>
+          <dt>Durata</dt>
+          <dd>[6 mesi · 2024]</dd>
+        </div>
+        <div>
+          <dt>Team</dt>
+          <dd>[1 PM, 2 dev, 1 researcher, io lead design]</dd>
+        </div>
+        <div>
+          <dt>Ho posseduto</dt>
+          <dd>[Ricerca, IA, prototipi, decisioni di sistema]</dd>
+        </div>
+        <div>
+          <dt>Non ho posseduto</dt>
+          <dd>[Copy finale, implementazione, business case iniziale]</dd>
+        </div>
+        <div>
+          <dt>Stack usato</dt>
+          <dd>[Figma, Dovetail, Maze, workshop in Miro]</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- BODY CASE STUDY -->
+  <section class="container section" style="padding-top: var(--space-5);">
+    <div class="cs-body">
+
+      <article class="cs-main">
+
+        <h2 id="problema">Il problema</h2>
+        <p>[3–5 righe: descrivi il problema come lo vedevi <em>tu</em> quando sei entrato. Non ripetere il brief aziendale — mostra il tuo framing. Se il brief era "riprogettare l'onboarding", tu spiega perché quello era il sintomo e non la causa.]</p>
+
+        <p>[Aggiungi 1 dato concreto che rende il problema tangibile: una metrica di baseline, una citazione da user interview, una schermata iniziale.]</p>
+
+        <blockquote>
+          [Una citazione forte da user interview o da uno stakeholder che ha reso chiaro il problema. Usa questo formato per una sola citazione per case study, così pesa.]
+        </blockquote>
+
+        <h2 id="decisione">La decisione chiave</h2>
+        <p>[Questa è la sezione più importante per un Design Lead. Racconta <strong>una</strong> decisione strategica che hai preso — non l'intero processo. Es. "Ho deciso di non ridisegnare il flusso, ma di eliminarne metà. Ecco perché e come l'ho difesa."]</p>
+
+        <h3>Perché</h3>
+        <p>[Il ragionamento. Cosa avevi capito che gli altri non vedevano. Che trade-off comportava. Chi era d'accordo e chi no.]</p>
+
+        <h3>Cosa non ho fatto (e perché)</h3>
+        <ul>
+          <li>[Alternativa scartata #1 — e il motivo specifico, non generico.]</li>
+          <li>[Alternativa scartata #2 — con l'evidenza che ti ha fatto decidere.]</li>
+          <li>[Un compromesso che <em>hai</em> accettato consapevolmente e con quale rischio.]</li>
+        </ul>
+
+        <h2 id="processo">Il processo, in breve</h2>
+        <p>[Massimo 5–6 righe. Non "Discover / Define / Ideate / Deliver". Racconta i 2–3 momenti che hanno mosso la decisione: es. "Il workshop con supporto clienti ci ha fatto scoprire che X. Il prototipo testato su 6 utenti ha mostrato Y. Il go/no-go con il CFO si è chiuso su Z."]</p>
+
+        <h2 id="outcome">Outcome</h2>
+        <p>[Se hai metriche, mostrale. Se non le hai (o sono sotto NDA), dichiara i proxy qualitativi con onestà: es. "Il team supporto ha ridotto i ticket di onboarding del ~40% nei 3 mesi successivi, misurato internamente."]</p>
+
+        <div class="outcome">
+          <div class="outcome__grid">
+            <div>
+              <p class="outcome__num">-40%</p>
+              <p class="outcome__label">Drop-off nei primi 7 giorni</p>
+            </div>
+            <div>
+              <p class="outcome__num">+12pt</p>
+              <p class="outcome__label">NPS post-onboarding</p>
+            </div>
+            <div>
+              <p class="outcome__num">6→2</p>
+              <p class="outcome__label">Step nel flusso critico</p>
+            </div>
+            <div>
+              <p class="outcome__num">2 mesi</p>
+              <p class="outcome__label">Dal go al ship</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="riflessione">Cosa rifarei diversamente</h2>
+        <p>[Un paragrafo onesto. Un Design Lead sta cercando qui il tuo livello di auto-consapevolezza. Non "vorrei aver avuto più tempo". Più tipo: "Avrei portato il team supporto nel workshop dal giorno 1, non alla settimana 3. Sarebbe costato 2 ore e mi avrebbe risparmiato 3 settimane di framing sbagliato."]</p>
+
+      </article>
+
+      <!-- INDICE LATERALE -->
+      <aside class="cs-aside" aria-label="Indice del case study">
+        <h4>In questa pagina</h4>
+        <ul>
+          <li><a href="#problema">Il problema</a></li>
+          <li><a href="#decisione">La decisione chiave</a></li>
+          <li><a href="#processo">Il processo</a></li>
+          <li><a href="#outcome">Outcome</a></li>
+          <li><a href="#riflessione">Riflessione</a></li>
+        </ul>
+
+        <h4>Meta</h4>
+        <ul>
+          <li>Anno: [2024]</li>
+          <li>Cliente: [Azienda]</li>
+          <li>Settore: [Fintech]</li>
+          <li>Lettura: [~6 min]</li>
+        </ul>
+      </aside>
+
+    </div>
+
+    <!-- NEXT CASE -->
+    <nav class="next-case" aria-label="Prossimo case study">
+      <a class="next-case__link" href="#">
+        <p class="next-case__label">Prossimo case study →</p>
+        <p class="next-case__title">[Titolo del prossimo progetto]</p>
+      </a>
+    </nav>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <span>© [Anno] [Nome Cognome]</span>
+    <span><a href="index.html">← Torna al portfolio</a></span>
+  </div>
+</footer>
+
+<script>
+  function toggleNav(btn) {
+    const header = document.getElementById('siteHeader');
+    const open = header.getAttribute('data-open') === 'true';
+    header.setAttribute('data-open', String(!open));
+    btn.setAttribute('aria-expanded', String(!open));
+  }
+</script>
+
+</body>
+</html>
