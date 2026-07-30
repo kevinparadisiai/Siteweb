@@ -33,9 +33,9 @@
   --color-on-accent:     #F1E7D6;      /* off-cream — 9.5:1 su graphite */
 
   /* Card palette — chalky editorial pastels, tutti AAA sul testo */
-  --color-card-1:        #DDD3C4;      /* warm beige creamy — 11.68:1 */
-  --color-card-2:        #C6D2CE;      /* clean sage mint — 11.12:1 */
-  --color-card-3:        #E5C7BC;      /* soft peach editorial — 10.88:1 */
+  --color-card-1:        #DDC7C2;      /* soft dusty rose — 10.72:1 AAA (era beige giallo-sabbia) */
+  --color-card-2:        #C6D2CE;      /* clean sage mint — 11.12:1 AAA */
+  --color-card-3:        #E5C7BC;      /* soft peach editorial — 10.88:1 AAA */
   --color-on-card:       #161A2A;      /* deep graphite testo */
   --color-focus:         #14213D;
 
@@ -549,14 +549,15 @@ button { font: inherit; cursor: pointer; }
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(20, 26, 42, 0.35);
+  background: transparent;
+  border: 1px solid rgba(20, 26, 42, 0.55);
   border-radius: 999px;
   color: var(--color-on-card);
-  transition: transform var(--dur-2) var(--ease), background var(--dur-2) var(--ease), color var(--dur-2) var(--ease);
+  transition: transform var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+  flex-shrink: 0;
 }
 .work-item__link:hover .work-item__arrow {
-  background: var(--color-on-card);
-  color: var(--color-bg);
+  border-color: var(--color-on-card);
   transform: translateX(4px);
 }
 
