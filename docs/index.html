@@ -149,19 +149,31 @@ button { font: inherit; cursor: pointer; }
 }
 .brand {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--step-1);
   letter-spacing: -0.01em;
   text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
 }
 .brand em {
   font-style: italic;
   color: var(--color-muted);
-  font-weight: 400;
+  font-weight: 300;
+  font-size: var(--step-0);
 }
-.nav { display: flex; gap: var(--space-5); align-items: center; }
+.nav {
+  display: flex;
+  gap: var(--space-5);
+  align-items: center;
+  font-family: var(--font-body);
+}
 .nav a {
-  font-size: var(--step--1);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
   text-decoration: none;
   color: var(--color-muted);
   padding: var(--space-2) 0;
@@ -171,6 +183,7 @@ button { font: inherit; cursor: pointer; }
 .nav a[aria-current="page"] { color: var(--color-fg); }
 .nav a[aria-current="page"] {
   border-bottom: 1px solid var(--color-fg);
+  padding-bottom: 4px;
 }
 
 .header-cta {
@@ -222,16 +235,44 @@ button { font: inherit; cursor: pointer; }
 }
 
 /* -------------------------------------------------------------------------
-   Hero
+   Hero (with signature ampersand behind the title)
    ------------------------------------------------------------------------- */
-.hero { padding-block: clamp(var(--space-7), 10vh, var(--space-9)); }
-.hero__eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+.hero {
+  padding-block: clamp(var(--space-7), 10vh, var(--space-9));
+  position: relative;
+  overflow: hidden;
+}
+.hero__ampersand {
+  position: absolute;
+  right: -0.1em;
+  bottom: -0.15em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(20rem, 42vw, 40rem);
+  line-height: 0.85;
   color: var(--color-accent);
-  letter-spacing: 0.06em;
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  z-index: 0;
+}
+.hero > * { position: relative; z-index: 1; }
+
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  font-weight: 500;
   margin: 0 0 var(--space-5) 0;
+}
+.hero__eyebrow::before {
+  content: "— ";
+  color: var(--color-accent);
+  font-weight: 400;
 }
 .hero__title {
   font-family: var(--font-display);
@@ -285,13 +326,18 @@ button { font: inherit; cursor: pointer; }
   .summary__grid { grid-template-columns: 1fr; gap: var(--space-6); }
 }
 .summary__col h3 {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-muted);
   margin: 0 0 var(--space-4) 0;
+}
+.summary__col h3::before {
+  content: "— ";
+  color: var(--color-accent);
+  font-weight: 400;
 }
 .summary__list {
   list-style: none;
@@ -321,17 +367,42 @@ button { font: inherit; cursor: pointer; }
   padding-bottom: var(--space-4);
   border-bottom: 1px solid var(--color-border);
 }
+.section-title__eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-3) 0;
+}
+.section-title__eyebrow::before {
+  content: "— ";
+  color: var(--color-accent);
+  font-weight: 400;
+}
 .section-title h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: var(--step-4);
-  line-height: 1.05;
+  font-size: var(--step-3);
+  line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0;
+  max-width: 30ch;
 }
+.section-title h2 em {
+  font-style: italic;
+  color: var(--color-muted);
+  font-weight: 300;
+}
+.section-title__body { max-width: 30ch; }
 .section-title__link {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 500;
   color: var(--color-muted);
   text-decoration: none;
   flex-shrink: 0;
@@ -426,11 +497,17 @@ button { font: inherit; cursor: pointer; }
 }
 .lab-card:hover { border-color: var(--color-fg); }
 .lab-card__tag {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
   color: var(--color-accent);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+.lab-card__tag::before {
+  content: "— ";
+  color: var(--color-accent);
+  font-weight: 400;
 }
 .lab-card__title {
   font-family: var(--font-display);
@@ -538,12 +615,18 @@ button { font: inherit; cursor: pointer; }
   border-left: 3px solid var(--color-accent);
 }
 .role-box__title {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  letter-spacing: 0.06em;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-accent);
   margin: 0 0 var(--space-4) 0;
+}
+.role-box__title::before {
+  content: "— ";
+  color: var(--color-accent);
+  font-weight: 400;
 }
 .role-box__grid {
   display: grid;
@@ -757,7 +840,7 @@ button { font: inherit; cursor: pointer; }
 
 <header class="site-header" id="siteHeader">
   <div class="container site-header__inner">
-    <a href="#home" class="brand" data-route-link>[Nome] <em>— design</em></a>
+    <a href="#home" class="brand" data-route-link>[Nome Cognome] <em>— Portfolio 2026</em></a>
     <nav class="nav" aria-label="Principale">
       <a href="#work" data-route-link aria-current="page">Work</a>
       <a href="#lab" data-route-link>Lab</a>
@@ -779,6 +862,7 @@ button { font: inherit; cursor: pointer; }
 
   <!-- HERO — P1: posizionamento in una frase -->
   <section class="hero container" aria-labelledby="hero-title">
+    <span class="hero__ampersand" aria-hidden="true">&amp;</span>
     <p class="hero__eyebrow">Portfolio · [Città] · Aggiornato luglio 2026</p>
     <h1 class="hero__title" id="hero-title">
       UX Designer che progetta <em>sistemi, non schermate.</em>
@@ -796,9 +880,12 @@ button { font: inherit; cursor: pointer; }
   <!-- IN SINTESI — P2: skill / settori / metodi scansionabili -->
   <section class="summary section" aria-labelledby="summary-title">
     <div class="container">
-      <h2 class="section-title" id="summary-title" style="border:none; padding:0; margin-bottom: var(--space-6);">
-        <span style="font-family: var(--font-mono); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); font-weight: 500;">In sintesi</span>
-      </h2>
+      <div class="section-title">
+        <div class="section-title__body">
+          <span class="section-title__eyebrow" id="summary-title">In sintesi</span>
+          <h2>Cosa so fare, per chi, e <em>come</em>.</h2>
+        </div>
+      </div>
       <div class="summary__grid">
         <div class="summary__col">
           <h3>Cosa faccio meglio</h3>
@@ -837,7 +924,10 @@ button { font: inherit; cursor: pointer; }
   <section class="section" id="work" aria-labelledby="work-title">
     <div class="container">
       <div class="section-title">
-        <h2 id="work-title">Progetti selezionati</h2>
+        <div class="section-title__body">
+          <span class="section-title__eyebrow">Tre progetti</span>
+          <h2 id="work-title">Tre modi di lavorare su un problema, <em>non</em> tre schermate.</h2>
+        </div>
         <a class="section-title__link" href="#" aria-label="Vedi tutti i progetti">Tutti →</a>
       </div>
 
@@ -891,12 +981,15 @@ button { font: inherit; cursor: pointer; }
   <section class="section" id="lab" aria-labelledby="lab-title" style="background: var(--color-surface); border-block: 1px solid var(--color-border);">
     <div class="container">
       <div class="section-title">
-        <h2 id="lab-title">Lab</h2>
+        <div class="section-title__body">
+          <span class="section-title__eyebrow">Lab</span>
+          <h2 id="lab-title">Cosa ho pensato <em>ultimamente</em>.</h2>
+        </div>
         <a class="section-title__link" href="#" aria-label="Vedi tutte le note del lab">Tutte le note →</a>
       </div>
 
       <p style="max-width: 60ch; color: var(--color-muted); margin: 0 0 var(--space-6);">
-        Esperimenti brevi su AI, workflow e strumenti. Non sono progetti client: sono il modo in cui tengo mano e mente allenate.
+        Esperimenti brevi su AI, metodo e strumenti. Non sono progetti client: sono il modo in cui tengo mano e mente allenate.
       </p>
 
       <div class="lab-grid">
