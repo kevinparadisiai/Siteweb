@@ -31,6 +31,12 @@
   --color-accent-weak:   #E4E7EE;
   --color-accent-deep:   #0B1428;      /* per pannelli scuri */
   --color-on-accent:     #F4EBD9;      /* off-cream su navy — WCAG 12:1 */
+
+  /* Card palette — 3 editorial hues che coesistono con navy */
+  --color-card-navy:     #14213D;
+  --color-card-burgundy: #6E2B2B;      /* rosso editoriale profondo */
+  --color-card-ochre:    #8F6A17;      /* giallo profondo, gold */
+  --color-on-card:       #F4EBD9;      /* off-cream — leggibile su tutti e 3 */
   --color-focus:         #0F0F10;
 
   /* --- Type --- */
@@ -246,19 +252,21 @@ button { font: inherit; cursor: pointer; }
 }
 .hero__ampersand {
   position: absolute;
-  right: -0.1em;
-  bottom: -0.15em;
+  left: -0.02em;
+  bottom: -0.12em;
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(20rem, 42vw, 40rem);
+  font-size: clamp(6rem, 22vw, 20rem);
   line-height: 0.85;
+  letter-spacing: -0.04em;
   color: var(--color-accent);
-  opacity: 0.06;
+  opacity: 0.055;
   pointer-events: none;
   user-select: none;
   font-variation-settings: "opsz" 144, "SOFT" 100;
   z-index: 0;
+  white-space: nowrap;
 }
 .hero > * { position: relative; z-index: 1; }
 
@@ -412,84 +420,135 @@ button { font: inherit; cursor: pointer; }
 .section-title__link:hover { color: var(--color-fg); }
 
 /* -------------------------------------------------------------------------
-   Progetti — lista editoriale
+   Progetti — grid di card a color block (editoriale, non "app cards")
    ------------------------------------------------------------------------- */
 .work-list {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-.work-item {
-  border-bottom: 1px solid var(--color-border);
-}
-.work-item__link {
   display: grid;
-  grid-template-columns: 60px 1fr auto;
-  align-items: baseline;
-  gap: var(--space-5);
-  padding: var(--space-6) 0;
-  text-decoration: none;
-  transition: background var(--dur-2) var(--ease), padding var(--dur-2) var(--ease);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
 }
-.work-item__link:hover {
-  background: var(--color-accent-weak);
-  padding-inline: var(--space-4);
-  text-decoration: none;
+@media (max-width: 960px) {
+  .work-list { grid-template-columns: repeat(2, 1fr); }
+  .work-item:nth-child(3) { grid-column: 1 / -1; }
 }
+@media (max-width: 640px) {
+  .work-list { grid-template-columns: 1fr; }
+  .work-item:nth-child(3) { grid-column: auto; }
+}
+
+.work-item { border: none; }
+.work-item__link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-6);
+  min-height: 360px;
+  border-radius: 4px;
+  color: var(--color-on-card);
+  background: var(--color-card-navy);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur-2) var(--ease);
+}
+.work-item:nth-child(1) .work-item__link { background: var(--color-card-navy); }
+.work-item:nth-child(2) .work-item__link { background: var(--color-card-burgundy); }
+.work-item:nth-child(3) .work-item__link { background: var(--color-card-ochre); }
+.work-item__link:hover { transform: translateY(-4px); text-decoration: none; }
+.work-item__link:focus-visible { outline-color: var(--color-on-card); }
+
+/* Numero grande in filigrana in fondo a destra della card */
+.work-item__link::after {
+  content: attr(data-num);
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.28em;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(12rem, 22vw, 20rem);
+  line-height: 0.8;
+  color: var(--color-on-card);
+  opacity: 0.08;
+  pointer-events: none;
+  font-variation-settings: "opsz" 144, "SOFT" 100;
+  font-variant-numeric: tabular-nums;
+  z-index: 0;
+}
+
 .work-item__num {
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 500;
   letter-spacing: 0.14em;
-  color: var(--color-on-accent);
-  background: var(--color-accent);
-  padding: 0.35em 0.6em;
-  border-radius: 999px;
-  align-self: start;
-  justify-self: start;
-  transition: background var(--dur-2) var(--ease);
-  font-variant-numeric: tabular-nums;
+  color: var(--color-on-card);
+  opacity: 0.7;
+  z-index: 1;
+  position: relative;
 }
-.work-item__link:hover .work-item__num {
-  background: var(--color-accent-deep);
+.work-item__num::before {
+  content: "— ";
+  color: var(--color-on-card);
+  font-weight: 400;
+  opacity: 1;
 }
+
+.work-item__body { position: relative; z-index: 1; margin-top: var(--space-6); }
 .work-item__body h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: var(--step-3);
-  line-height: 1.1;
+  font-size: var(--step-2);
+  line-height: 1.15;
   letter-spacing: -0.02em;
-  margin: 0 0 var(--space-2) 0;
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-on-card);
+  max-width: 22ch;
 }
 .work-item__body p {
   margin: 0;
-  color: var(--color-muted);
-  max-width: 60ch;
+  color: var(--color-on-card);
+  opacity: 0.78;
   font-size: var(--step-0);
+  line-height: 1.5;
+  max-width: 40ch;
 }
-.work-item__meta {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  color: var(--color-muted);
-  text-align: right;
-  white-space: nowrap;
-}
-.work-item__meta span { display: block; }
-.work-item__meta span + span { margin-top: var(--space-1); color: var(--color-muted-2); }
 
-@media (max-width: 720px) {
-  .work-item__link {
-    grid-template-columns: 40px 1fr;
-    padding-block: var(--space-5);
-  }
-  .work-item__meta {
-    grid-column: 2;
-    text-align: left;
-    margin-top: var(--space-3);
-    white-space: normal;
-  }
-  .work-item__meta span { display: inline; margin-right: var(--space-3); }
-  .work-item__meta span + span { margin-top: 0; }
+.work-item__meta {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(244, 235, 217, 0.2);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-card);
+  opacity: 0.7;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  align-items: center;
+}
+.work-item__meta span { display: inline-block; }
+.work-item__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(244, 235, 217, 0.4);
+  border-radius: 999px;
+  transition: transform var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
+}
+.work-item__link:hover .work-item__arrow {
+  background: var(--color-on-card);
+  color: var(--color-fg);
+  transform: translateX(4px);
 }
 
 /* -------------------------------------------------------------------------
@@ -504,24 +563,56 @@ button { font: inherit; cursor: pointer; }
   .lab-grid { grid-template-columns: 1fr; }
 }
 .lab-card {
-  padding: var(--space-6);
-  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  overflow: hidden;
   background: var(--color-surface);
+  border: 1px solid var(--color-border);
   transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+  display: flex;
+  flex-direction: column;
 }
-.lab-card:hover { border-color: var(--color-fg); }
+.lab-card:hover { border-color: var(--color-fg); transform: translateY(-4px); }
+.lab-card:nth-child(1) .lab-card__strip { background: var(--color-card-burgundy); }
+.lab-card:nth-child(2) .lab-card__strip { background: var(--color-card-ochre); }
+
+.lab-card__strip {
+  padding: var(--space-4) var(--space-6);
+  color: var(--color-on-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
 .lab-card__tag {
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 500;
-  color: var(--color-accent);
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--color-on-card);
+  margin: 0;
 }
 .lab-card__tag::before {
   content: "— ";
-  color: var(--color-accent);
+  color: var(--color-on-card);
   font-weight: 400;
+}
+.lab-card__strip__hint {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--step-2);
+  line-height: 1;
+  color: var(--color-on-card);
+  opacity: 0.7;
+  font-variation-settings: "opsz" 72, "SOFT" 100;
+}
+
+.lab-card__body {
+  padding: var(--space-6);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .lab-card__title {
   font-family: var(--font-display);
@@ -529,15 +620,19 @@ button { font: inherit; cursor: pointer; }
   font-size: var(--step-2);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  margin: var(--space-3) 0 var(--space-3);
+  margin: 0 0 var(--space-3);
 }
 .lab-card__title a { text-decoration: none; }
 .lab-card__title a:hover { text-decoration: underline; }
-.lab-card p { margin: 0; color: var(--color-muted); font-size: var(--step-0); }
+.lab-card__body > p { margin: 0; color: var(--color-muted); font-size: var(--step-0); line-height: 1.55; }
 .lab-card__meta {
-  margin-top: var(--space-4);
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  margin-top: auto;
+  padding-top: var(--space-5);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--color-muted-2);
 }
 
@@ -1121,7 +1216,7 @@ button { font: inherit; cursor: pointer; }
 
   <!-- HERO — P1: posizionamento in una frase -->
   <section class="hero container" aria-labelledby="hero-title">
-    <span class="hero__ampersand" aria-hidden="true">&amp;</span>
+    <span class="hero__ampersand" aria-hidden="true">designer.</span>
     <p class="hero__eyebrow">Portfolio · [Città] · Aggiornato luglio 2026</p>
     <h1 class="hero__title" id="hero-title">
       UX Designer che progetta <em>sistemi, non schermate.</em>
@@ -1190,45 +1285,51 @@ button { font: inherit; cursor: pointer; }
         <a class="section-title__link" href="#" aria-label="Vedi tutti i progetti">Tutti →</a>
       </div>
 
-      <ol class="work-list" reversed>
+      <ol class="work-list">
         <li class="work-item">
-          <a class="work-item__link" href="case-study.html">
-            <span class="work-item__num">01</span>
+          <a class="work-item__link" href="case-study.html" data-num="01">
+            <span class="work-item__num">Fintech · KYC · Onboarding</span>
             <div class="work-item__body">
-              <h3>Tagliare metà onboarding invece di rifarlo: −40% drop-off in 8 settimane</h3>
-              <p>Un flusso fintech B2B a 6 step perdeva il 62% degli account nei primi 7 giorni. Il ridisegno avrebbe richiesto 6 mesi. Abbiamo tolto 3 step, testato, spedito.</p>
+              <h3>Tagliare metà onboarding invece di rifarlo.</h3>
+              <p>−40% drop-off in 8 settimane su un flusso B2B a 6 step. Tolti 3, non rifatti gli altri.</p>
             </div>
             <div class="work-item__meta">
-              <span>[Fintech B2B — nome su richiesta]</span>
-              <span>2024 · Senior UX, design lead</span>
+              <span>2024 · Senior UX</span>
+              <span class="work-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
             </div>
           </a>
         </li>
 
         <li class="work-item">
-          <a class="work-item__link" href="#">
-            <span class="work-item__num">02</span>
+          <a class="work-item__link" href="#" data-num="02">
+            <span class="work-item__num">[Settore · Dominio · Tipo]</span>
             <div class="work-item__body">
-              <h3>[Titolo del secondo progetto centrato sul problema]</h3>
-              <p>[Una riga sull'impatto o sulla decisione strategica presa.]</p>
+              <h3>[Titolo che nomina la decisione, non il prodotto.]</h3>
+              <p>[Una riga: cosa era in gioco, cosa è cambiato dopo.]</p>
             </div>
             <div class="work-item__meta">
-              <span>[Azienda]</span>
               <span>[Anno] · [Ruolo]</span>
+              <span class="work-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
             </div>
           </a>
         </li>
 
         <li class="work-item">
-          <a class="work-item__link" href="#">
-            <span class="work-item__num">03</span>
+          <a class="work-item__link" href="#" data-num="03">
+            <span class="work-item__num">[Settore] · Su richiesta</span>
             <div class="work-item__body">
-              <h3>[Terzo progetto — se sotto NDA, "Caso su richiesta"]</h3>
-              <p>[Una riga sintetica. Se NDA, spiega cosa puoi mostrare in colloquio.]</p>
+              <h3>[Terzo progetto — o caso NDA mostrato in colloquio.]</h3>
+              <p>[Una riga sintetica. Se NDA, spiega cosa puoi mostrare a voce.]</p>
             </div>
             <div class="work-item__meta">
-              <span>[Azienda]</span>
               <span>[Anno] · Su richiesta</span>
+              <span class="work-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
             </div>
           </a>
         </li>
@@ -1253,17 +1354,27 @@ button { font: inherit; cursor: pointer; }
 
       <div class="lab-grid">
         <article class="lab-card">
-          <div class="lab-card__tag">AI · Metodo</div>
-          <h3 class="lab-card__title"><a href="#">Cosa succede se chiedo a un LLM di argomentare contro le mie decisioni di design?</a></h3>
-          <p>Un LLM è comodo quando mi dà idee. È scomodo quando gli chiedo di demolire le mie. Ho testato su 3 progetti reali un prompt "avvocato del diavolo strutturato" — su 2 su 3 le prime due obiezioni erano lacune che avevo davvero sotto-esplorato. Il valore non è la lista di obiezioni: è che scriverle in prompt mi obbliga a vedere cosa avevo evitato di guardare.</p>
-          <p class="lab-card__meta">Giugno 2024 · 3 min · include il prompt template</p>
+          <div class="lab-card__strip">
+            <div class="lab-card__tag">AI · Metodo</div>
+            <span class="lab-card__strip__hint" aria-hidden="true">?</span>
+          </div>
+          <div class="lab-card__body">
+            <h3 class="lab-card__title"><a href="#">Cosa succede se chiedo a un LLM di argomentare contro le mie decisioni di design?</a></h3>
+            <p>Un LLM è comodo quando mi dà idee. È scomodo quando gli chiedo di demolire le mie. Ho testato su 3 progetti reali un prompt "avvocato del diavolo strutturato" — su 2 su 3 le prime due obiezioni erano lacune che avevo davvero sotto-esplorato. Il valore non è la lista di obiezioni: è che scriverle in prompt mi obbliga a vedere cosa avevo evitato di guardare.</p>
+            <p class="lab-card__meta">Giugno 2024 · 3 min · prompt template</p>
+          </div>
         </article>
 
         <article class="lab-card">
-          <div class="lab-card__tag">Metodo · Ricerca</div>
-          <h3 class="lab-card__title"><a href="#">Perché invito support al primo workshop di framing (anche se non ha voce sul design)</a></h3>
-          <p>Il team support conosce i pain point con 6 mesi di anticipo rispetto a quando arrivano in analytics. Ho smesso di trattarli come "chi rispondera dopo il lancio" e ho iniziato a trattarli come co-ricercatori del framing. Nota su come li invito, cosa gli chiedo, e perché il costo è zero.</p>
-          <p class="lab-card__meta">Maggio 2024 · 4 min · con template invito workshop</p>
+          <div class="lab-card__strip">
+            <div class="lab-card__tag">Metodo · Ricerca</div>
+            <span class="lab-card__strip__hint" aria-hidden="true">§</span>
+          </div>
+          <div class="lab-card__body">
+            <h3 class="lab-card__title"><a href="#">Perché invito support al primo workshop di framing (anche se non ha voce sul design)</a></h3>
+            <p>Il team support conosce i pain point con 6 mesi di anticipo rispetto a quando arrivano in analytics. Ho smesso di trattarli come "chi risponde dopo il lancio" e ho iniziato a trattarli come co-ricercatori del framing. Nota su come li invito, cosa gli chiedo, e perché il costo è zero.</p>
+            <p class="lab-card__meta">Maggio 2024 · 4 min · template invito</p>
+          </div>
         </article>
       </div>
     </div>
