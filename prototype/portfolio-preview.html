@@ -19,25 +19,25 @@
    ========================================================================= */
 
 :root {
-  /* --- Color tokens --- */
-  --color-bg:            #FBFAF7;
-  --color-surface:       #FFFFFF;
-  --color-fg:            #0F0F10;
-  --color-muted:         #6E6B66;
+  /* --- Color tokens — Editorial Muted (Aesop/Kinfolk direction) --- */
+  --color-bg:            #F5EFE6;      /* warm oat, softer */
+  --color-surface:       #FBF7EE;      /* card surface lift */
+  --color-fg:            #141A2A;      /* deep graphite navy */
+  --color-muted:         #6B6D7D;      /* graphite dilato */
   --color-muted-2:       #9A9691;
-  --color-border:        #E5E1D8;
-  --color-border-strong: #C9C4B7;
-  --color-accent:        #14213D;      /* editorial ink navy — dei riferimenti Dixon&Moe */
-  --color-accent-weak:   #E4E7EE;
-  --color-accent-deep:   #0B1428;      /* per pannelli scuri */
-  --color-on-accent:     #F4EBD9;      /* off-cream su navy — WCAG 12:1 */
+  --color-border:        #E1D9C9;
+  --color-border-strong: #C9BFAB;
+  --color-accent:        #14213D;      /* editorial ink — piccoli marchi */
+  --color-accent-weak:   #E9E1D0;
+  --color-accent-deep:   #3D3F4E;      /* muted graphite per pannelli scuri */
+  --color-on-accent:     #E8DFD1;      /* warm off-cream su graphite */
 
-  /* Card palette — gerarchia sofisticata evitando i default AI */
-  --color-card-navy:     #14213D;      /* dominante — editoriale ink */
-  --color-card-plum:     #4A2E3F;      /* secondaria — aubergine editoriale */
-  --color-card-gold:     #A67B2C;      /* terziaria — burnished gold */
-  --color-on-card:       #F4EBD9;      /* off-cream — WCAG AA su tutti */
-  --color-focus:         #0F0F10;
+  /* Card palette — pigmenti editoriali muted (non wellness/baby) */
+  --color-card-1:        #A8918E;      /* dusty mauve */
+  --color-card-2:        #8DA394;      /* muted sage */
+  --color-card-3:        #B6A278;      /* dusty gold */
+  --color-on-card:       #141A2A;      /* deep graphite testo (invertito) */
+  --color-focus:         #141A2A;
 
   /* --- Type --- */
   --font-display: "Fraunces", ui-serif, Georgia, serif;
@@ -451,15 +451,15 @@ button { font: inherit; cursor: pointer; }
   width: 100%;
   border-radius: 4px;
   color: var(--color-on-card);
-  background: var(--color-card-navy);
+  background: var(--color-card-1);
   text-decoration: none;
   position: relative;
   overflow: hidden;
   transition: transform var(--dur-2) var(--ease);
 }
-.work-item:nth-child(1) .work-item__link { background: var(--color-card-navy); }
-.work-item:nth-child(2) .work-item__link { background: var(--color-card-plum); }
-.work-item:nth-child(3) .work-item__link { background: var(--color-card-gold); }
+.work-item:nth-child(1) .work-item__link { background: var(--color-card-1); }
+.work-item:nth-child(2) .work-item__link { background: var(--color-card-2); }
+.work-item:nth-child(3) .work-item__link { background: var(--color-card-3); }
 .work-item__link:hover { transform: translateY(-4px); text-decoration: none; }
 .work-item__link:focus-visible { outline-color: var(--color-on-card); }
 
@@ -475,7 +475,7 @@ button { font: inherit; cursor: pointer; }
   font-size: clamp(12rem, 22vw, 20rem);
   line-height: 0.8;
   color: var(--color-on-card);
-  opacity: 0.08;
+  opacity: 0.11;
   pointer-events: none;
   font-variation-settings: "opsz" 144, "SOFT" 100;
   font-variant-numeric: tabular-nums;
@@ -488,7 +488,7 @@ button { font: inherit; cursor: pointer; }
   font-weight: 500;
   letter-spacing: 0.14em;
   color: var(--color-on-card);
-  opacity: 0.7;
+  opacity: 0.75;
   z-index: 1;
   position: relative;
 }
@@ -518,7 +518,7 @@ button { font: inherit; cursor: pointer; }
 .work-item__body p {
   margin: 0;
   color: var(--color-on-card);
-  opacity: 0.78;
+  opacity: 0.82;
   font-size: var(--step-0);
   line-height: 1.5;
   max-width: 40ch;
@@ -529,7 +529,7 @@ button { font: inherit; cursor: pointer; }
   z-index: 1;
   margin-top: auto;
   padding-top: var(--space-4);
-  border-top: 1px solid rgba(244, 235, 217, 0.2);
+  border-top: 1px solid rgba(20, 26, 42, 0.18);
   font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 500;
@@ -549,13 +549,14 @@ button { font: inherit; cursor: pointer; }
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(244, 235, 217, 0.4);
+  border: 1px solid rgba(20, 26, 42, 0.35);
   border-radius: 999px;
-  transition: transform var(--dur-2) var(--ease), background var(--dur-2) var(--ease);
+  color: var(--color-on-card);
+  transition: transform var(--dur-2) var(--ease), background var(--dur-2) var(--ease), color var(--dur-2) var(--ease);
 }
 .work-item__link:hover .work-item__arrow {
   background: var(--color-on-card);
-  color: var(--color-fg);
+  color: var(--color-bg);
   transform: translateX(4px);
 }
 
@@ -580,8 +581,8 @@ button { font: inherit; cursor: pointer; }
   flex-direction: column;
 }
 .lab-card:hover { border-color: var(--color-fg); transform: translateY(-4px); }
-.lab-card:nth-child(1) .lab-card__strip { background: var(--color-card-plum); }
-.lab-card:nth-child(2) .lab-card__strip { background: var(--color-card-gold); }
+.lab-card:nth-child(1) .lab-card__strip { background: var(--color-card-1); }
+.lab-card:nth-child(2) .lab-card__strip { background: var(--color-card-3); }
 
 .lab-card__strip {
   padding: var(--space-4) var(--space-6);
