@@ -555,6 +555,12 @@ button { font: inherit; cursor: pointer; }
   color: var(--color-on-card);
   transition: transform var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
   flex-shrink: 0;
+  line-height: 0;
+}
+.work-item__arrow svg {
+  display: block;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .work-item__link:hover .work-item__arrow {
   border-color: var(--color-on-card);
