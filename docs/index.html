@@ -704,7 +704,51 @@ button { font: inherit; cursor: pointer; }
 
 
 /* Preview-only: SPA-style routing */
-#main[data-route="case"], #main-case[data-route="home"] { display: none; }
+#main[data-route="case"], #main[data-route="lab"],
+#main-case[data-route="home"], #main-case[data-route="lab"],
+#main-lab[data-route="home"], #main-lab[data-route="case"] { display: none; }
+
+/* Lab detail: prompt/code block */
+.prompt-block {
+  margin: var(--space-5) 0 var(--space-6);
+  background: var(--color-fg);
+  color: var(--color-bg);
+  padding: var(--space-5) var(--space-6);
+  font-family: var(--font-mono);
+  font-size: calc(var(--step--1) + 0.05rem);
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  border-left: 3px solid var(--color-accent);
+}
+.prompt-block strong {
+  color: var(--color-accent-weak);
+  font-weight: 500;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--color-muted);
+  margin-top: var(--space-3);
+  cursor: pointer;
+  min-height: 40px;
+  transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+.copy-btn:hover { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+.copy-btn[data-copied="true"] { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* Section separator */
+.rule {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-6) 0;
+}
   </style>
 </head>
 <body>
@@ -1051,6 +1095,142 @@ button { font: inherit; cursor: pointer; }
 
 </main>
 
+<!-- ============================================================ -->
+<!-- MAIN LAB — Nota Lab in profondità                            -->
+<!-- ============================================================ -->
+<main id="main-lab">
+
+  <section class="cs-header container">
+    <p class="cs-header__crumb"><a href="#home">Portfolio</a> / Lab / AI come specchio critico</p>
+    <h1 class="cs-header__title">
+      Cosa succede se chiedo a un LLM di argomentare <em>contro</em> le mie decisioni di design?
+    </h1>
+    <p class="cs-header__lede">
+      Un LLM è comodo quando mi dà idee. È scomodo quando gli chiedo di demolirle. Ho passato un mese a testare un prompt "avvocato del diavolo strutturato" su tre progetti reali per capire se il valore stia nelle obiezioni che ricevo o nel fatto stesso di essere costretto a scriverle.
+    </p>
+  </section>
+
+  <section class="container">
+    <div class="role-box" aria-labelledby="lab-contains">
+      <p class="role-box__title" id="lab-contains">Cosa contiene questa nota</p>
+      <dl class="role-box__grid">
+        <div><dt>Interrogativo</dt><dd>Un LLM può funzionare come critico, non come generatore?</dd></div>
+        <div><dt>Cosa ho fatto</dt><dd>Testato un prompt su 3 progetti reali, 1 mese di iterazioni</dd></div>
+        <div><dt>Artefatto</dt><dd>Prompt template copiabile in fondo alla pagina</dd></div>
+        <div><dt>Onestà</dt><dd>Racconto anche il caso in cui non ha funzionato</dd></div>
+        <div><dt>Data</dt><dd>Giugno 2024</dd></div>
+        <div><dt>Lettura</dt><dd>~5 min</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="container section" style="padding-top: var(--space-5);">
+    <div class="cs-body">
+
+      <article class="cs-main">
+
+        <h2 id="lab-perche">Perché mi sono posto la domanda</h2>
+        <p>Uso LLM da tempo come acceleratori di ideazione: brainstorm, prime bozze di copy, sintesi di note di ricerca. In tutti questi usi il modello mi <em>aiuta</em>. Mi conferma, aggiunge, amplifica. E questo, dopo qualche mese, ha smesso di darmi comfort e ha iniziato a insospettirmi.</p>
+        <p>I designer senior che stimo hanno una qualità in comune: fanno domande scomode presto. Non aspettano la review per essere criticati. Costruiscono ambienti in cui l'opposizione arriva mentre stanno ancora pensando. Mi sono chiesto se un LLM potesse funzionare come uno di questi ambienti — non come pari, ma come <em>specchio deformante</em> che rendesse visibile quello che stavo evitando di guardare.</p>
+
+        <h2 id="lab-setup">Il setup</h2>
+        <p>Ho scelto tre decisioni di design che avevo già preso su progetti reali (una di scoping, una di flow, una di sistema). Per ciascuna ho preparato un brief sintetico: il contesto, l'opzione scelta, i tre motivi principali per cui l'avevo scelta.</p>
+        <p>Poi ho scritto un prompt con un vincolo esplicito: <em>non deve essere bilanciato</em>. Non voglio "pro e contro". Voglio solo il contro, dal più concreto al più teorico. E deve produrlo argomentandolo, non listando.</p>
+
+        <h2 id="lab-cosa-succede">Cosa è successo</h2>
+        <p>Su <strong>due progetti su tre</strong>, le prime due obiezioni erano lacune reali. Non erano brillanti, non erano nuove — erano cose che, se avessi fatto il lavoro da solo con più tempo, avrei visto io. Ma non le avevo viste. Averle sulla pagina mi ha costretto a rispondere: o ammettere che erano problemi (e correggere), o articolare perché avevo scelto di ignorarle consapevolmente (e questo si è rivelato quasi più prezioso).</p>
+        <p>Sul <strong>terzo progetto</strong>, quello con più dati raccolti a monte, l'esperimento è fallito. Le obiezioni sembravano tutte deboli, generiche, contestabili con un dato. Il modello sembrava consapevole del fatto che ero già "difeso" e ha prodotto obiezioni <em>di forma</em>, non di sostanza. Utile come diagnosi (se le obiezioni sono deboli, forse la decisione è solida), inutile come contributo (non ho imparato nulla di nuovo).</p>
+
+        <h2 id="lab-insight">La cosa che non mi aspettavo</h2>
+        <blockquote>
+          Il valore non era nelle obiezioni che ricevevo. Era nel fatto che scrivere il prompt mi obbligava a formulare la mia decisione in modo abbastanza chiaro da poter essere attaccata.
+        </blockquote>
+        <p>Quando iniziavo a scrivere il brief per il prompt, mezze verità che avevo tenuto vaghe nella mia testa dovevano diventare frasi. E in quel momento — prima ancora di premere invio — mi accorgevo di quello che non tornava. Il modello era il pretesto. Il metodo era la scrittura.</p>
+        <p>Questo mi ha fatto pensare a una versione più semplice dello stesso esperimento senza LLM: prendere una decisione difficile, aprire un documento, e scrivere <em>solo</em> le tre obiezioni più forti che qualcuno potrebbe farmi. Senza risposte. Poi chiudere e tornarci il giorno dopo. Anche senza modello, funziona.</p>
+
+        <h2 id="lab-template">Il prompt (per chi vuole provarci)</h2>
+        <p>Se ti interessa provarlo, questo è il template che ho stabilizzato dopo cinque iterazioni. Il vincolo "non commentare i pro" è essenziale — senza, il modello bilancia da solo e perdi tutto il valore.</p>
+
+        <pre class="prompt-block" id="prompt"><strong>Contesto:</strong>
+[Descrivi la situazione in 3-4 righe. Chi sono gli utenti, qual è il problema di business,
+quali vincoli operativi.]
+
+<strong>Opzione che ho scelto:</strong>
+[Descrivi la tua decisione di design in modo concreto e specifico.]
+
+<strong>Perché l'ho scelta (i miei tre motivi):</strong>
+1. [Motivo #1]
+2. [Motivo #2]
+3. [Motivo #3]
+
+<strong>Compito:</strong>
+Comportati come un Design Lead che sta facendo una review critica del mio lavoro.
+NON commentare i pro, NON bilanciare. Elenca solo le 5 obiezioni più forti che
+faresti a questa decisione, ordinate dalla più concreta e operativa (#1) alla
+più strategica e teorica (#5). Per ogni obiezione:
+
+- Formula il pensiero in una frase secca (non "potrebbe essere che", ma "questa
+  decisione fallisce se...").
+- Aggiungi un esempio concreto in cui l'obiezione si materializza.
+- Chiudi con una domanda diretta che dovrei potermi rispondere.
+
+Se le obiezioni ti sembrano deboli, dimmelo esplicitamente e spiega perché la
+decisione ti sembra difficile da attaccare. Non inventare debolezze inesistenti.</pre>
+
+        <button class="copy-btn" type="button" onclick="copyPrompt(this)" aria-label="Copia il prompt template">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <rect x="8" y="8" width="12" height="12" rx="1"/>
+            <path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/>
+          </svg>
+          <span>Copia prompt</span>
+        </button>
+
+        <h2 id="lab-limiti">Quando non usarlo</h2>
+        <ul>
+          <li><strong>Su decisioni ancora molto morbide.</strong> Se non riesci a scriverne il brief, non è il modello che ti serve, è più tempo di riflessione.</li>
+          <li><strong>Su decisioni già molto blindate dai dati.</strong> Ti darà obiezioni deboli. Meglio investire quel tempo nella review con un pari umano che vede angoli diversi.</li>
+          <li><strong>Come sostituto della review umana.</strong> È utile prima, non dopo. Non ti dà il segnale che un Design Lead reale ti darebbe su cultura, opportunità, politica interna.</li>
+        </ul>
+
+        <h2 id="lab-riflessione">Riflessione finale</h2>
+        <p>Cerco di stare attento a due modi in cui l'AI diventa performance nei portfolio: la generazione di immagini come contenuto, e il "ho fatto un GPT" come se fosse un progetto. Volevo trovare un uso in cui l'AI mi rendesse un designer <em>peggio celebrato ma migliore</em>. Un uso che, se lo racconto in un colloquio, dice qualcosa su come penso, non su quanti tool conosco.</p>
+        <p>Non so ancora se questo è quel uso. Ma è il primo esperimento in cui, dopo un mese, ho continuato a farlo anche quando ho smesso di scriverne. Questa mi sembra la prova più onesta che qualcosa serva davvero.</p>
+
+      </article>
+
+      <aside class="cs-aside" aria-label="Indice della nota">
+        <h4>In questa nota</h4>
+        <ul>
+          <li><a href="#lab-perche">Perché mi sono posto la domanda</a></li>
+          <li><a href="#lab-setup">Il setup</a></li>
+          <li><a href="#lab-cosa-succede">Cosa è successo</a></li>
+          <li><a href="#lab-insight">La cosa che non mi aspettavo</a></li>
+          <li><a href="#lab-template">Il prompt template</a></li>
+          <li><a href="#lab-limiti">Quando non usarlo</a></li>
+          <li><a href="#lab-riflessione">Riflessione finale</a></li>
+        </ul>
+
+        <h4>Tag</h4>
+        <ul>
+          <li>AI</li>
+          <li>Metodo</li>
+          <li>Prompt engineering</li>
+          <li>Critical thinking</li>
+        </ul>
+      </aside>
+
+    </div>
+
+    <nav class="next-case" aria-label="Torna al portfolio">
+      <a class="next-case__link" href="#home">
+        <p class="next-case__label">← Torna al portfolio</p>
+        <p class="next-case__title">Altre note nel Lab</p>
+      </a>
+    </nav>
+  </section>
+
+</main>
+
 <footer class="site-footer">
   <div class="container site-footer__inner">
     <span>© [Anno] [Nome Cognome] · Costruito con cura, senza template</span>
@@ -1066,18 +1246,21 @@ button { font: inherit; cursor: pointer; }
     btn.setAttribute('aria-expanded', String(!open));
   }
 
-  // Simple hash router: #case → mostra case study; altrimenti home.
+  // Hash router: #case → case study; #lab-ai → lab detail; else home.
   function route() {
-    const isCase = location.hash === '#case';
-    const home = document.getElementById('main');
-    const cs = document.getElementById('main-case');
-    home.setAttribute('data-route', isCase ? 'case' : 'home');
-    cs.setAttribute('data-route', isCase ? 'case' : 'home');
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    let mode = 'home';
+    if (location.hash === '#case') mode = 'case';
+    else if (location.hash === '#lab-ai') mode = 'lab';
+    document.getElementById('main').setAttribute('data-route', mode);
+    document.getElementById('main-case').setAttribute('data-route', mode);
+    document.getElementById('main-lab').setAttribute('data-route', mode);
+    if (!location.hash.match(/^#(lab-|)([a-z]+)$/) || ['#case','#lab-ai','#home',''].includes(location.hash)) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
   }
   window.addEventListener('hashchange', route);
 
-  // Intercept the first project link in the home to open the case study.
+  // Intercept project links (first one → case study, others → placeholder).
   document.querySelectorAll('.work-item__link').forEach((a, i) => {
     if (i === 0) {
       a.setAttribute('href', '#case');
@@ -1089,10 +1272,30 @@ button { font: inherit; cursor: pointer; }
     }
   });
 
-  // Intercept "Prossimo case study" and breadcrumb "Portfolio" in the case view.
-  document.querySelectorAll('.next-case__link').forEach(a => {
-    a.setAttribute('href', '#home');
+  // Intercept Lab card titles (first one → lab-ai detail, others → placeholder).
+  document.querySelectorAll('.lab-card__title a').forEach((a, i) => {
+    if (i === 0) {
+      a.setAttribute('href', '#lab-ai');
+    } else {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert('Segnaposto: aggiungerai qui la nota Lab #' + (i + 1));
+      });
+    }
   });
+
+  // Copy-to-clipboard for the prompt template.
+  window.copyPrompt = function(btn) {
+    const text = document.getElementById('prompt').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.setAttribute('data-copied', 'true');
+      btn.querySelector('span').textContent = 'Copiato';
+      setTimeout(() => {
+        btn.removeAttribute('data-copied');
+        btn.querySelector('span').textContent = 'Copia prompt';
+      }, 2000);
+    });
+  };
 
   route();
 </script>
