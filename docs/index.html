@@ -32,11 +32,11 @@
   --color-accent-deep:   #0B1428;      /* per pannelli scuri */
   --color-on-accent:     #F4EBD9;      /* off-cream su navy — WCAG 12:1 */
 
-  /* Card palette — 3 editorial hues che coesistono con navy */
-  --color-card-navy:     #14213D;
-  --color-card-burgundy: #6E2B2B;      /* rosso editoriale profondo */
-  --color-card-ochre:    #8F6A17;      /* giallo profondo, gold */
-  --color-on-card:       #F4EBD9;      /* off-cream — leggibile su tutti e 3 */
+  /* Card palette — gerarchia sofisticata evitando i default AI */
+  --color-card-navy:     #14213D;      /* dominante — editoriale ink */
+  --color-card-plum:     #4A2E3F;      /* secondaria — aubergine editoriale */
+  --color-card-gold:     #A67B2C;      /* terziaria — burnished gold */
+  --color-on-card:       #F4EBD9;      /* off-cream — WCAG AA su tutti */
   --color-focus:         #0F0F10;
 
   /* --- Type --- */
@@ -396,17 +396,20 @@ button { font: inherit; cursor: pointer; }
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--step-3);
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0;
-  max-width: 30ch;
+  max-width: none;
 }
 .section-title h2 em {
   font-style: italic;
   color: var(--color-muted);
   font-weight: 300;
 }
-.section-title__body { max-width: 30ch; }
+.section-title__body {
+  max-width: 62ch;
+  flex: 1;
+}
 .section-title__link {
   font-family: var(--font-body);
   font-size: 0.72rem;
@@ -439,13 +442,13 @@ button { font: inherit; cursor: pointer; }
   .work-item:nth-child(3) { grid-column: auto; }
 }
 
-.work-item { border: none; }
+.work-item { border: none; display: flex; }
 .work-item__link {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: var(--space-6);
   min-height: 360px;
+  width: 100%;
   border-radius: 4px;
   color: var(--color-on-card);
   background: var(--color-card-navy);
@@ -455,8 +458,8 @@ button { font: inherit; cursor: pointer; }
   transition: transform var(--dur-2) var(--ease);
 }
 .work-item:nth-child(1) .work-item__link { background: var(--color-card-navy); }
-.work-item:nth-child(2) .work-item__link { background: var(--color-card-burgundy); }
-.work-item:nth-child(3) .work-item__link { background: var(--color-card-ochre); }
+.work-item:nth-child(2) .work-item__link { background: var(--color-card-plum); }
+.work-item:nth-child(3) .work-item__link { background: var(--color-card-gold); }
 .work-item__link:hover { transform: translateY(-4px); text-decoration: none; }
 .work-item__link:focus-visible { outline-color: var(--color-on-card); }
 
@@ -496,7 +499,12 @@ button { font: inherit; cursor: pointer; }
   opacity: 1;
 }
 
-.work-item__body { position: relative; z-index: 1; margin-top: var(--space-6); }
+.work-item__body {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-6);
+  flex: 1;
+}
 .work-item__body h3 {
   font-family: var(--font-display);
   font-weight: 400;
@@ -519,7 +527,7 @@ button { font: inherit; cursor: pointer; }
 .work-item__meta {
   position: relative;
   z-index: 1;
-  margin-top: var(--space-5);
+  margin-top: auto;
   padding-top: var(--space-4);
   border-top: 1px solid rgba(244, 235, 217, 0.2);
   font-family: var(--font-body);
@@ -528,12 +536,12 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-on-card);
-  opacity: 0.7;
   display: flex;
   justify-content: space-between;
   gap: var(--space-3);
   align-items: center;
 }
+.work-item__meta > span:first-child { opacity: 0.75; }
 .work-item__meta span { display: inline-block; }
 .work-item__arrow {
   display: inline-flex;
@@ -572,8 +580,8 @@ button { font: inherit; cursor: pointer; }
   flex-direction: column;
 }
 .lab-card:hover { border-color: var(--color-fg); transform: translateY(-4px); }
-.lab-card:nth-child(1) .lab-card__strip { background: var(--color-card-burgundy); }
-.lab-card:nth-child(2) .lab-card__strip { background: var(--color-card-ochre); }
+.lab-card:nth-child(1) .lab-card__strip { background: var(--color-card-plum); }
+.lab-card:nth-child(2) .lab-card__strip { background: var(--color-card-gold); }
 
 .lab-card__strip {
   padding: var(--space-4) var(--space-6);
@@ -1219,7 +1227,7 @@ button { font: inherit; cursor: pointer; }
     <span class="hero__ampersand" aria-hidden="true">designer.</span>
     <p class="hero__eyebrow">Portfolio · [Città] · Aggiornato luglio 2026</p>
     <h1 class="hero__title" id="hero-title">
-      UX Designer che progetta <em>sistemi, non schermate.</em>
+      Progetto <em>sistemi</em>, non schermate.
     </h1>
     <p class="hero__lede">
       [Anni] anni tra prodotto e servizi digitali. Lavoro nel punto in cui la ricerca incontra le decisioni: framing dei problemi, sistemi di design, outcome misurabili. Sto spostando il mio focus verso ruoli di design strategy. Ultimo ruolo in [Azienda].
