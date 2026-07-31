@@ -1,11 +1,9 @@
+import { useEffect, useState } from 'react';
 import MarqueeAlongSvgPath from '@/components/ui/marquee-along-svg-path';
 
-// Percorso curvo che attraversa il contenitore.
 const path =
   'M1 165C58.5 210 388 280 483 165C601 20 526 -85 428 -20C330 45 353 200 515 225C645 245 944 140 995 115';
 
-// Tokens tipografici: parole/simboli che raccontano il tuo modo di lavorare.
-// Sostituiscibili con logo/screenshot quando avrai asset reali.
 const tokens = [
   { label: 'framing', kind: 'word' },
   { label: '&', kind: 'glyph' },
@@ -22,19 +20,33 @@ const tokens = [
 ] as const;
 
 export default function InspirationMarquee() {
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
   return (
-    <div className="relative w-full h-[220px] md:h-[280px] overflow-hidden">
+    <div
+      // touch-action pan-y = permette allo scroll verticale di passare oltre la marquee
+      // touch-none disabilita solo se drag interattivo; qui ambient auto-scroll: pan-y ok
+      className="relative w-full h-[140px] sm:h-[220px] md:h-[280px] overflow-hidden"
+      style={{ touchAction: 'pan-y' }}
+      aria-label="Il mio vocabolario progettuale — animazione decorativa"
+    >
       <MarqueeAlongSvgPath
         path={path}
         viewBox="0 0 996 330"
-        baseVelocity={6}
+        baseVelocity={reducedMotion ? 0 : 6}
         slowdownOnHover
-        draggable
+        draggable={false}
         repeat={2}
-        dragSensitivity={0.1}
         className="w-full h-full"
         responsive
-        grabCursor
       >
         {tokens.map((t, i) => {
           const isGlyph = t.kind === 'glyph';
@@ -55,6 +67,7 @@ export default function InspirationMarquee() {
                 color: isGlyph || isNum ? '#14213D' : '#5A5D6E',
                 whiteSpace: 'nowrap',
               }}
+              aria-hidden="true"
             >
               {t.label}
             </div>

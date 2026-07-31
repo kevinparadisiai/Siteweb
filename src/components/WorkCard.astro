@@ -7,15 +7,24 @@ interface Props {
   meta: string;
   href: string;
   color: 1 | 2 | 3;
+  disabled?: boolean;
 }
-const { num, eyebrow, title, description, meta, href, color } = Astro.props;
+const { num, eyebrow, title, description, meta, href, color, disabled = false } = Astro.props;
 const bgClass = color === 1 ? 'bg-card-1' : color === 2 ? 'bg-card-2' : 'bg-card-3';
+const Tag = disabled ? 'div' : 'a';
 ---
 <li class="flex">
-  <a
-    href={href}
+  <Tag
+    href={disabled ? undefined : href}
     data-num={num}
-    class={`relative overflow-hidden flex flex-col p-6 min-h-[360px] w-full rounded text-on-card ${bgClass} no-underline transition-transform duration-300 ease-editorial hover:-translate-y-1 focus-visible:outline-on-card`}
+    aria-disabled={disabled ? 'true' : undefined}
+    class:list={[
+      'group relative overflow-hidden flex flex-col p-6 min-h-[360px] w-full rounded text-on-card no-underline',
+      bgClass,
+      disabled
+        ? 'cursor-default opacity-90'
+        : 'transition-transform duration-300 ease-editorial hover:-translate-y-1 focus-visible:outline-on-card',
+    ]}
   >
     <span
       aria-hidden="true"
@@ -31,10 +40,19 @@ const bgClass = color === 1 ? 'bg-card-1' : color === 2 ? 'bg-card-2' : 'bg-card
     </div>
 
     <div class="relative z-10 mt-6 pt-4 border-t border-[rgba(20,26,42,0.18)] flex justify-between items-center gap-3 text-[0.7rem] uppercase tracking-[0.1em] font-medium text-on-card/75">
-      <span>{meta}</span>
-      <span class="inline-flex items-center justify-center w-10 h-10 border border-[rgba(20,26,42,0.55)] rounded-full transition-[border-color,transform] duration-300 ease-editorial group-hover:border-on-card">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="block"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
-      </span>
+      <span>{disabled ? 'In arrivo' : meta}</span>
+      {disabled ? (
+        <span
+          aria-hidden="true"
+          class="inline-flex items-center justify-center w-11 h-11 border border-[rgba(20,26,42,0.35)] rounded-full text-on-card/50"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="block"><circle cx="8" cy="8" r="1"/><circle cx="4" cy="8" r="1"/><circle cx="12" cy="8" r="1"/></svg>
+        </span>
+      ) : (
+        <span class="inline-flex items-center justify-center w-11 h-11 border border-[rgba(20,26,42,0.55)] rounded-full transition-[border-color,transform] duration-300 ease-editorial group-hover:border-on-card group-hover:translate-x-1">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="block"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+        </span>
+      )}
     </div>
-  </a>
+  </Tag>
 </li>
