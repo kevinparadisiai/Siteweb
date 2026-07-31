@@ -9,16 +9,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   >&</span>
 
   <section id="contact" class="container-editorial relative z-10 py-24 md:py-32" aria-labelledby="contact-title">
-    <p class="eyebrow eyebrow--on-dark mb-5">Contatti</p>
+    <p class="eyebrow eyebrow--on-dark mb-5" data-reveal>Contatti</p>
     <h2
       id="contact-title"
       class="font-display font-light italic leading-[1.02] tracking-tight m-0 mb-8 max-w-[20ch] text-on-accent"
-      style="font-size: clamp(3.5rem, 8vw + 1rem, 6rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;"
+      data-reveal
+      style="font-size: clamp(3.5rem, 8vw + 1rem, 6rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; --reveal-delay: 1;"
     >
       Se cerchi qualcuno che <span class="not-italic font-normal border-b-2 border-on-accent pb-1">pensi</span> prima di disegnare — scrivimi.
     </h2>
 
-    <ul class="list-none p-0 m-0 flex flex-wrap gap-x-8 gap-y-4 text-step-1">
+    <ul class="list-none p-0 m-0 flex flex-wrap gap-x-8 gap-y-4 text-step-1" data-reveal style="--reveal-delay: 2;">
       <li>
         <a href="mailto:[email@dominio.it]?subject=Portfolio%20—%20&body=Ciao%2C" class="inline-flex items-center gap-2 min-h-[44px] py-2 text-on-accent">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg>

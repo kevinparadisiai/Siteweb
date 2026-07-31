@@ -1,1 +1,0 @@
-const e=document.getElementById("navToggle"),n=document.getElementById("mobileNav");e?.addEventListener("click",()=>{const t=n?.classList.toggle("hidden")===!1;e.setAttribute("aria-expanded",String(t)),e.setAttribute("aria-label",t?"Chiudi navigazione":"Apri navigazione")});

@@ -21,25 +21,28 @@ const notes = [
   },
 ];
 ---
-<section class="py-16 md:py-24 bg-surface border-y border-border" id="lab" aria-labelledby="lab-title">
+<section class="py-16 md:py-24 bg-accent-weak border-y border-border" id="lab" aria-labelledby="lab-title">
   <div class="container-editorial">
-    <div class="flex items-end justify-between gap-6 mb-10 pb-4 border-b border-border">
+    <div class="flex items-end justify-between gap-6 mb-10 pb-4 border-b border-border" data-reveal>
       <div>
         <span class="eyebrow block mb-3">Lab</span>
-        <h2 id="lab-title" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight m-0 max-w-[62ch]">
-          Cosa ho pensato <em class="italic font-light text-muted">ultimamente</em>.
+        <h2 id="lab-title" class="font-display font-normal italic text-step-3 leading-[1.15] tracking-tight m-0 max-w-[62ch]" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">
+          Cosa ho pensato <span class="not-italic">ultimamente</span>.
         </h2>
       </div>
       <a href="#" class="hidden sm:inline-flex shrink-0 text-[0.72rem] uppercase tracking-[0.14em] font-medium text-muted hover:text-fg no-underline">Tutte le note →</a>
     </div>
-    <p class="max-w-[60ch] text-muted m-0 mb-8">Esperimenti brevi su AI, metodo e strumenti. Non sono progetti client: sono il modo in cui tengo mano e mente allenate.</p>
+    <p class="max-w-[60ch] text-muted m-0 mb-8" data-reveal style="--reveal-delay: 1;">Esperimenti brevi su AI, metodo e strumenti. Non sono progetti client: sono il modo in cui tengo mano e mente allenate.</p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {notes.map((n) => (
-        <article class="rounded overflow-hidden bg-surface border border-border flex flex-col transition-[border-color,transform] duration-300 ease-editorial hover:border-fg hover:-translate-y-1">
-          <div class={`py-4 px-6 ${n.strip} text-on-card flex items-center justify-between gap-3`}>
-            <div class="eyebrow" style="color: currentColor; opacity: 0.95;">{n.tag}</div>
-            <span aria-hidden="true" class="font-display italic font-light text-step-2 leading-none opacity-70" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">{n.hint}</span>
+      {notes.map((n, i) => (
+        <article class="group rounded overflow-hidden bg-bg border border-border flex flex-col transition-[border-color,transform,box-shadow] duration-300 ease-editorial hover:border-fg hover:-translate-y-1 hover:shadow-[0_12px_32px_-16px_rgba(20,26,42,0.25)]" data-reveal style={`--reveal-delay: ${i + 2};`}>
+          <div class={`relative overflow-hidden ${n.strip}`}>
+            <!-- Strip espande verticalmente al hover -->
+            <div class="py-4 px-6 text-on-card flex items-center justify-between gap-3 transition-[padding] duration-300 ease-editorial group-hover:py-6">
+              <div class="eyebrow" style="color: currentColor; opacity: 0.95;">{n.tag}</div>
+              <span aria-hidden="true" class="font-display italic font-light text-step-2 leading-none opacity-70 transition-[transform,opacity] duration-300 ease-editorial group-hover:opacity-100 group-hover:scale-110" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">{n.hint}</span>
+            </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="font-display font-normal text-step-2 leading-[1.2] tracking-tight m-0 mb-3">

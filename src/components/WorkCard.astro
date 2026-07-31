@@ -13,24 +13,23 @@ const { num, eyebrow, title, description, meta, href, color, disabled = false } 
 const bgClass = color === 1 ? 'bg-card-1' : color === 2 ? 'bg-card-2' : 'bg-card-3';
 const Tag = disabled ? 'div' : 'a';
 ---
-<li class="flex">
-  <Tag
-    href={disabled ? undefined : href}
-    data-num={num}
-    aria-disabled={disabled ? 'true' : undefined}
-    class:list={[
-      'group relative overflow-hidden flex flex-col p-6 min-h-[360px] w-full rounded text-on-card no-underline',
-      bgClass,
-      disabled
-        ? 'cursor-default opacity-90'
-        : 'transition-transform duration-300 ease-editorial hover:-translate-y-1 focus-visible:outline-on-card',
-    ]}
-  >
-    <span
-      aria-hidden="true"
-      class="pointer-events-none absolute -right-1 -bottom-8 font-display italic font-light leading-[0.8] tracking-tighter text-on-card opacity-[0.11] z-0"
-      style="font-size: clamp(12rem, 22vw, 20rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; font-variant-numeric: tabular-nums;"
-    >{num}</span>
+<Tag
+  href={disabled ? undefined : href}
+  data-num={num}
+  aria-disabled={disabled ? 'true' : undefined}
+  class:list={[
+    'group relative overflow-hidden flex flex-col p-6 min-h-[360px] w-full rounded text-on-card no-underline',
+    bgClass,
+    disabled
+      ? 'cursor-default opacity-90'
+      : 'transition-transform duration-300 ease-editorial hover:-translate-y-1 focus-visible:outline-on-card',
+  ]}
+>
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-1 -bottom-8 font-display italic font-light leading-[0.8] tracking-tighter text-on-card opacity-[0.11] z-0 transition-opacity duration-300 ease-editorial group-hover:opacity-[0.18]"
+    style="font-size: clamp(12rem, 22vw, 20rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; font-variant-numeric: tabular-nums;"
+  >{num}</span>
 
     <span class="relative z-10 text-[0.72rem] uppercase tracking-[0.14em] font-medium text-on-card/75 before:content-['—_'] before:opacity-100">{eyebrow}</span>
 
@@ -54,5 +53,4 @@ const Tag = disabled ? 'div' : 'a';
         </span>
       )}
     </div>
-  </Tag>
-</li>
+</Tag>

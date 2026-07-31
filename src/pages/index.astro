@@ -7,18 +7,11 @@ import Summary from '@/components/Summary.astro';
 import WorkList from '@/components/WorkList.astro';
 import LabList from '@/components/LabList.astro';
 import Contact from '@/components/Contact.astro';
-import InspirationMarquee from '@/components/InspirationMarquee.tsx';
 ---
 <Base title="[Nome Cognome] — UX Designer moving to strategy" bodyClass="">
   <SiteHeader slot="header" current="work" />
 
   <Hero />
-
-  <!-- Marquee — signature motion, ambient. React island, hydrated only when idle. -->
-  <section aria-label="Il mio vocabolario progettuale" class="border-y border-border bg-surface">
-    <InspirationMarquee client:idle />
-  </section>
-
   <Summary />
   <WorkList />
   <LabList />

@@ -25,9 +25,9 @@ const projects = [
   },
 ];
 ---
-<section class="py-16 md:py-24" id="work" aria-labelledby="work-title">
+<section class="py-16 md:py-24 bg-bg" id="work" aria-labelledby="work-title">
   <div class="container-editorial">
-    <div class="flex items-end justify-between gap-6 mb-10 pb-4 border-b border-border">
+    <div class="flex items-end justify-between gap-6 mb-10 pb-4 border-b border-border" data-reveal>
       <div>
         <span class="eyebrow block mb-3">Tre progetti</span>
         <h2 id="work-title" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight m-0 max-w-[62ch]">
@@ -38,8 +38,10 @@ const projects = [
     </div>
 
     <ol class="list-none p-0 m-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {projects.map((p) => (
-        <WorkCard {...p} />
+      {projects.map((p, i) => (
+        <li class="flex" data-reveal style={`--reveal-delay: ${i + 1};`}>
+          <WorkCard {...p} />
+        </li>
       ))}
     </ol>
   </div>
