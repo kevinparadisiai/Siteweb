@@ -1,0 +1,49 @@
+---
+interface Props {
+  chapter: string;   // 'II', 'III', 'IV', 'V'
+  label: string;     // 'Sintesi', 'Progetti', 'Lab', 'Contatti'
+  verb: string;      // 'Penso.', 'Progetto.', 'Provo.', 'Scrivimi.'
+  subtitle?: string;
+  onDark?: boolean;
+}
+const { chapter, label, verb, subtitle, onDark = false } = Astro.props;
+
+const cls = {
+  wrap: onDark
+    ? 'border-b border-on-accent/15'
+    : 'border-b border-border',
+  chapter: onDark ? 'text-on-accent/70' : 'text-muted',
+  rule: onDark ? 'bg-on-accent/60' : 'bg-accent',
+  verb: onDark ? 'text-on-accent' : 'text-fg',
+  subtitle: onDark ? 'text-on-accent/75' : 'text-muted',
+};
+---
+<header class:list={['pt-8 md:pt-12 pb-8 md:pb-10 mb-10 md:mb-14', cls.wrap]}>
+  <p class:list={['flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium m-0 mb-6 md:mb-8', cls.chapter]} data-reveal>
+    <span class:list={['inline-block w-10 h-px', cls.rule]} aria-hidden="true"></span>
+    <span class="tabular-nums">{chapter}</span>
+    <span aria-hidden="true" class="opacity-40">—</span>
+    <span>{label}</span>
+  </p>
+  <h2
+    class:list={['font-display italic font-light leading-[0.9] tracking-tight m-0', cls.verb]}
+    style="font-size: clamp(4.5rem, 15vw, 12rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;"
+    data-reveal
+    data-reveal-delay="1"
+  >{verb}</h2>
+  {subtitle && (
+    <p
+      class:list={['font-display font-normal leading-[1.35] max-w-[45ch] m-0 mt-6', cls.subtitle]}
+      style="font-size: clamp(1.15rem, 2vw, 1.5rem);"
+      data-reveal
+      data-reveal-delay="2"
+    >{subtitle}</p>
+  )}
+</header>
+
+<style is:global>
+  /* Support data-reveal-delay attribute as an alternative to inline style */
+  [data-reveal-delay="1"] { --reveal-delay: 1; }
+  [data-reveal-delay="2"] { --reveal-delay: 2; }
+  [data-reveal-delay="3"] { --reveal-delay: 3; }
+</style>

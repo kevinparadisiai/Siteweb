@@ -1,28 +1,28 @@
 ---
+import SectionAnchor from './SectionAnchor.astro';
 const cols = [
   { num: '01', title: 'Cosa faccio meglio', items: ['Discovery e framing', 'Design system', 'Interaction design', 'Ricerca qualitativa', 'Facilitazione workshop'] },
   { num: '02', title: 'Settori',           items: ['Fintech', 'SaaS B2B', 'Healthcare', 'Pubblico / Servizi', 'Retail'] },
   { num: '03', title: 'Come lavoro',       items: ['Da problema, non da mockup', 'Prototipare per decidere', 'Metriche prima del delivery', 'Sistemi, non schermate'] },
 ];
 ---
-<section class="bg-surface py-16 md:py-24" aria-labelledby="summary-title">
+<section class="bg-surface pb-20 md:pb-28" aria-labelledby="summary-anchor">
   <div class="container-editorial">
 
-    <div class="mb-10 pb-4 border-b border-border" data-reveal>
-      <span class="eyebrow block mb-3" id="summary-title">In sintesi</span>
-      <h2 class="font-display font-normal leading-[1.15] tracking-tight m-0 text-step-3">
-        Cosa so fare, per chi, e <em class="italic font-light text-muted">come</em>.
-      </h2>
-    </div>
+    <SectionAnchor
+      chapter="II"
+      label="Sintesi"
+      verb="Penso."
+      subtitle="Cosa so fare, per chi, e come."
+    />
 
-    <!-- Frame editoriale con colonne numerate -->
-    <div class="border border-border-strong/40 rounded" data-reveal style="--reveal-delay: 1;">
+    <div class="border border-border-strong/40 rounded" data-reveal>
       <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border-strong/40">
         {cols.map((col, i) => (
-          <div class="p-6 md:p-8" data-reveal style={`--reveal-delay: ${i + 2};`}>
+          <div class="p-6 md:p-8" data-reveal style={`--reveal-delay: ${i + 1};`}>
             <div class="flex items-baseline gap-3 mb-5">
               <span class="font-display italic font-light text-step-2 leading-none tabular-nums text-accent" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">{col.num}</span>
-              <h3 class="eyebrow m-0" style="text-transform: uppercase;">{col.title}</h3>
+              <h3 class="eyebrow m-0">{col.title}</h3>
             </div>
             <ul class="list-none p-0 m-0 font-display text-step-2 leading-tight font-normal">
               {col.items.map((it, j, arr) => (

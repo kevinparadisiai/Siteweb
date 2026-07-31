@@ -6,17 +6,21 @@
   class="relative min-h-dvh bg-accent-deep text-on-accent flex flex-col overflow-hidden"
   aria-labelledby="hero-title"
 >
-  <!-- Signature "designer." in filigrana, dietro tutto -->
+  <!-- Signature "designer." in filigrana, dietro tutto — parallax al mouse -->
   <span
+    id="heroSignature"
     aria-hidden="true"
-    class="pointer-events-none select-none absolute -left-2 bottom-[16%] font-display italic font-light text-on-accent opacity-[0.06] leading-[0.85] tracking-tight whitespace-nowrap z-0"
-    style="font-size: clamp(8rem, 26vw, 26rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;"
+    class="pointer-events-none select-none absolute -left-2 bottom-[16%] font-display italic font-light text-on-accent opacity-[0.06] leading-[0.85] tracking-tight whitespace-nowrap z-0 transition-transform duration-[600ms] ease-editorial"
+    style="font-size: clamp(8rem, 26vw, 26rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; will-change: transform;"
   >designer.</span>
 
-  <!-- Top: eyebrow -->
+  <!-- Top: chapter mark + eyebrow -->
   <div class="container-editorial pt-24 md:pt-28 relative z-10">
-    <p class="text-[0.72rem] uppercase tracking-[0.14em] font-medium text-on-accent/70 before:content-['—_'] before:opacity-100 before:text-on-accent" data-reveal>
-      Portfolio · [Città] · Aggiornato luglio 2026
+    <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-on-accent/70 m-0" data-reveal>
+      <span class="inline-block w-10 h-px bg-on-accent/60" aria-hidden="true"></span>
+      <span class="tabular-nums">I</span>
+      <span aria-hidden="true" class="opacity-40">—</span>
+      <span>Portfolio · [Città] · luglio 2026</span>
     </p>
   </div>
 
@@ -81,3 +85,29 @@
     .hero-scroll span[aria-hidden] svg { animation: none; }
   }
 </style>
+
+<script>
+  // Mouse parallax on the "designer." signature (subtle, editorial).
+  // Fine pointer only (skips touch); respects prefers-reduced-motion.
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sig = document.getElementById('heroSignature');
+  if (sig && finePointer && !reduce) {
+    let raf: number | null = null;
+    let tx = 0, ty = 0;
+    const onMove = (e: MouseEvent) => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      // -1 to 1 range, damped
+      tx = ((e.clientX / w) - 0.5) * 24; // 24px max drift horizontal
+      ty = ((e.clientY / h) - 0.5) * 16;
+      if (raf == null) {
+        raf = requestAnimationFrame(() => {
+          sig.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+          raf = null;
+        });
+      }
+    };
+    window.addEventListener('mousemove', onMove, { passive: true });
+  }
+</script>
