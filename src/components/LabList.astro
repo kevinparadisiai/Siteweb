@@ -1,0 +1,55 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const notes = [
+  {
+    tag: 'AI · Metodo',
+    hint: '?',
+    title: 'Cosa succede se chiedo a un LLM di argomentare contro le mie decisioni di design?',
+    description: 'Un LLM è comodo quando mi dà idee. È scomodo quando gli chiedo di demolire le mie. Ho testato su 3 progetti reali un prompt "avvocato del diavolo strutturato" — su 2 su 3 le prime due obiezioni erano lacune che avevo davvero sotto-esplorato. Il valore non è la lista di obiezioni: è che scriverle in prompt mi obbliga a vedere cosa avevo evitato di guardare.',
+    meta: 'Giugno 2024 · 3 min · prompt template',
+    href: `${base}/lab-ai`,
+    strip: 'bg-card-1',
+  },
+  {
+    tag: 'Metodo · Ricerca',
+    hint: '§',
+    title: 'Perché invito support al primo workshop di framing (anche se non ha voce sul design)',
+    description: 'Il team support conosce i pain point con 6 mesi di anticipo rispetto a quando arrivano in analytics. Ho smesso di trattarli come "chi risponde dopo il lancio" e ho iniziato a trattarli come co-ricercatori del framing. Nota su come li invito, cosa gli chiedo, e perché il costo è zero.',
+    meta: 'Maggio 2024 · 4 min · template invito',
+    href: '#',
+    strip: 'bg-card-3',
+  },
+];
+---
+<section class="py-16 md:py-24 bg-surface border-y border-border" id="lab" aria-labelledby="lab-title">
+  <div class="container-editorial">
+    <div class="flex items-end justify-between gap-6 mb-10 pb-4 border-b border-border">
+      <div>
+        <span class="eyebrow block mb-3">Lab</span>
+        <h2 id="lab-title" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight m-0 max-w-[62ch]">
+          Cosa ho pensato <em class="italic font-light text-muted">ultimamente</em>.
+        </h2>
+      </div>
+      <a href="#" class="hidden sm:inline-flex shrink-0 text-[0.72rem] uppercase tracking-[0.14em] font-medium text-muted hover:text-fg no-underline">Tutte le note →</a>
+    </div>
+    <p class="max-w-[60ch] text-muted m-0 mb-8">Esperimenti brevi su AI, metodo e strumenti. Non sono progetti client: sono il modo in cui tengo mano e mente allenate.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {notes.map((n) => (
+        <article class="rounded overflow-hidden bg-surface border border-border flex flex-col transition-[border-color,transform] duration-300 ease-editorial hover:border-fg hover:-translate-y-1">
+          <div class={`py-4 px-6 ${n.strip} text-on-card flex items-center justify-between gap-3`}>
+            <div class="eyebrow" style="color: currentColor; opacity: 0.95;">{n.tag}</div>
+            <span aria-hidden="true" class="font-display italic font-light text-step-2 leading-none opacity-70" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">{n.hint}</span>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="font-display font-normal text-step-2 leading-[1.2] tracking-tight m-0 mb-3">
+              <a href={n.href} class="no-underline hover:underline">{n.title}</a>
+            </h3>
+            <p class="m-0 text-muted text-step-0 leading-relaxed">{n.description}</p>
+            <p class="mt-auto pt-5 text-[0.7rem] uppercase tracking-[0.12em] font-medium text-muted-2">{n.meta}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

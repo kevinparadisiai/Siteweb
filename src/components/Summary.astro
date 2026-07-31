@@ -1,0 +1,29 @@
+---
+const cols = [
+  { title: 'Cosa faccio meglio', items: ['Discovery e framing', 'Design system', 'Interaction design', 'Ricerca qualitativa', 'Facilitazione workshop'] },
+  { title: 'Settori',           items: ['Fintech', 'SaaS B2B', 'Healthcare', 'Pubblico / Servizi', 'Retail'] },
+  { title: 'Come lavoro',       items: ['Da problema, non da mockup', 'Prototipare per decidere', 'Metriche prima del delivery', 'Sistemi, non schermate'] },
+];
+---
+<section class="border-y border-border py-16 md:py-24" aria-labelledby="summary-title">
+  <div class="container-editorial">
+    <div class="mb-10 pb-4 border-b border-border">
+      <span class="eyebrow block mb-3" id="summary-title">In sintesi</span>
+      <h2 class="font-display font-normal leading-[1.15] tracking-tight m-0 text-step-3">
+        Cosa so fare, per chi, e <em class="italic font-light text-muted">come</em>.
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14">
+      {cols.map((col) => (
+        <div>
+          <h3 class="eyebrow mb-4">{col.title}</h3>
+          <ul class="list-none p-0 m-0 font-display text-step-2 leading-tight font-normal">
+            {col.items.map((it, i, arr) => (
+              <li class={`py-3 ${i < arr.length - 1 ? 'border-b border-border' : ''}`}>{it}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

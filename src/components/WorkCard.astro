@@ -1,0 +1,40 @@
+---
+interface Props {
+  num: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  meta: string;
+  href: string;
+  color: 1 | 2 | 3;
+}
+const { num, eyebrow, title, description, meta, href, color } = Astro.props;
+const bgClass = color === 1 ? 'bg-card-1' : color === 2 ? 'bg-card-2' : 'bg-card-3';
+---
+<li class="flex">
+  <a
+    href={href}
+    data-num={num}
+    class={`relative overflow-hidden flex flex-col p-6 min-h-[360px] w-full rounded text-on-card ${bgClass} no-underline transition-transform duration-300 ease-editorial hover:-translate-y-1 focus-visible:outline-on-card`}
+  >
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute -right-1 -bottom-8 font-display italic font-light leading-[0.8] tracking-tighter text-on-card opacity-[0.11] z-0"
+      style="font-size: clamp(12rem, 22vw, 20rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; font-variant-numeric: tabular-nums;"
+    >{num}</span>
+
+    <span class="relative z-10 text-[0.72rem] uppercase tracking-[0.14em] font-medium text-on-card/75 before:content-['—_'] before:opacity-100">{eyebrow}</span>
+
+    <div class="relative z-10 mt-6 flex-1">
+      <h3 class="font-display font-normal text-step-2 leading-[1.15] tracking-tight m-0 mb-3 max-w-[22ch]">{title}</h3>
+      <p class="text-step-0 leading-[1.5] text-on-card/80 max-w-[40ch] m-0">{description}</p>
+    </div>
+
+    <div class="relative z-10 mt-6 pt-4 border-t border-[rgba(20,26,42,0.18)] flex justify-between items-center gap-3 text-[0.7rem] uppercase tracking-[0.1em] font-medium text-on-card/75">
+      <span>{meta}</span>
+      <span class="inline-flex items-center justify-center w-10 h-10 border border-[rgba(20,26,42,0.55)] rounded-full transition-[border-color,transform] duration-300 ease-editorial group-hover:border-on-card">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="block"><path d="M2 8h11M9 4l4 4-4 4"/></svg>
+      </span>
+    </div>
+  </a>
+</li>

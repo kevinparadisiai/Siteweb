@@ -1,0 +1,126 @@
+---
+import Base from '@/layouts/Base.astro';
+import SiteHeader from '@/components/SiteHeader.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import FeatureHero from '@/components/FeatureHero.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="Case study 01 — Tagliare metà onboarding">
+  <SiteHeader slot="header" current="work" />
+
+  <FeatureHero
+    crumb="Portfolio / Case study 01"
+    glyph="01"
+    title="Tagliare metà onboarding  di rifarlo."
+    titleEmWord="invece"
+    lede="Un onboarding fintech B2B perdeva il 62% degli account nei primi 7 giorni. Il ridisegno completo era stimato in 6 mesi. Ne abbiamo tolto 3 step su 6 in 8 settimane, riducendo il drop-off del 40%."
+  />
+
+  <section class="container-editorial">
+    <div class="my-14 p-6 bg-accent-weak border-l-[3px] border-accent">
+      <p class="eyebrow mb-4" style="color: var(--accent, #14213D);">Il mio ruolo</p>
+      <dl class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4">
+        {[
+          ['Ruolo', 'Senior UX Designer, design lead della discovery'],
+          ['Durata', '8 settimane · Mar–Mag 2024'],
+          ['Team', '1 PM growth, 3 dev, 1 data analyst, 1 support lead'],
+          ['Ho posseduto', 'Framing, ricerca qualitativa, prototipi, negoziazione dello scope'],
+          ['Non ho posseduto', 'Implementazione tecnica, business case iniziale, copy legale/KYC'],
+          ['Stack', 'Figma, Dovetail, Amplitude, Miro'],
+        ].map(([k, v]) => (
+          <div>
+            <dt class="text-[0.7rem] uppercase tracking-[0.12em] font-medium text-muted mb-2">{k}</dt>
+            <dd class="m-0 text-step-0 text-fg">{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-12 pb-16 items-start">
+      <article class="max-w-measure text-fg">
+        <h2 id="problema" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight mt-0 mb-4">Il problema</h2>
+        <p class="mb-4">Il PM growth mi ha portato un brief semplice: "ridisegnare l'onboarding, sta perdendo troppi utenti". Il funnel confermava: di 1000 nuovi account, 620 abbandonavano nei primi 7 giorni. Ma "ridisegnare" era già una risposta, non un problema. Prima di accettarla ho voluto capire <em>dove</em> abbandonavano e <em>perché</em>.</p>
+        <p class="mb-4">L'analisi con il data analyst ha isolato tre step (identità KYC, dati aziendali estesi, dichiarazione fiscale iniziale) responsabili di 480 dei 620 abbandoni. Cinque interviste con clienti attivi hanno confermato: quegli step chiedevano informazioni che l'utente non aveva ancora sotto mano nei primi 5 minuti dopo il signup.</p>
+        <blockquote class="font-display italic font-normal text-step-3 leading-[1.3] text-fg py-5 my-14 border-y border-border max-w-[55ch] relative" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">
+          "Ho creato l'account durante una demo con il mio commercialista. Poi mi ha chiesto il codice ATECO. Ho chiuso il tab dicendo che l'avrei fatto dopo. Non l'ho più fatto." — cliente attivato dopo 4 settimane dal signup
+        </blockquote>
+
+        <h2 id="decisione" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight mt-14 mb-4">La decisione chiave</h2>
+        <p class="mb-4">Ho deciso di <strong>non ridisegnare il flusso, ma di eliminare 3 dei 6 step</strong>, spostando la raccolta dati al primo login utile post-attivazione. Il ridisegno completo era stimato 5–6 mesi; la rimozione era testabile in 3 settimane con un rischio compliance definibile.</p>
+        <h3 class="font-display font-medium text-step-2 mt-8 mb-3">Perché</h3>
+        <p class="mb-4">Tre segnali convergevano. Uno: gli step tagliabili raccoglievano dati per obblighi KYC futuri, non per attivare valore immediato. Due: nel prototipo testato con 6 utenti target, il tempo di attivazione crollava da 22 minuti mediani a 4. Tre: il costo di ripristinare quegli step in un secondo momento era basso, il costo di lasciarli lì per 6 mesi altissimo.</p>
+        <p class="mb-4">Il PM growth era d'accordo. Il compliance officer no — temeva di perdere dati necessari per revisioni future. Ho negoziato una soluzione strutturata: raccolta dei dati posticipata a un blocco "Verifica il tuo account" sbloccato al primo accesso valore-generante, con notifica se non completato in 14 giorni.</p>
+
+        <h3 class="font-display font-medium text-step-2 mt-8 mb-3">Cosa non ho fatto (e perché)</h3>
+        <ul class="pl-5 mb-4">
+          <li class="mb-2"><strong>Non ho ridisegnato l'UI dei 3 step rimanenti.</strong> Baseline dati mostrava che quegli step avevano completion &gt;90%.</li>
+          <li class="mb-2"><strong>Non ho spinto per un onboarding "gamificato".</strong> Ricerca precedente pubblicata sul B2B fintech mostrava che le progress bar aumentano l'ansia in contesti percepiti come "compilazione fiscale".</li>
+          <li class="mb-2"><strong>Compromesso consapevole:</strong> compliance ha chiesto che il primo accesso alla dashboard fosse limitato ("read-only") finché KYC non era completo. Costo: 6% degli utenti si è fermato lì.</li>
+        </ul>
+
+        <h2 id="outcome" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight mt-14 mb-4">Outcome</h2>
+        <p class="mb-4">Metriche misurate su A/B con 3.400 nuovi account nel periodo, comparato con la baseline dei 3 mesi precedenti.</p>
+
+        <div class="my-10 py-6 border-y border-border">
+          <div class="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-6 items-end pb-5 border-b border-border mb-5">
+            <p class="font-display italic font-light text-accent m-0 leading-[0.9] tabular-nums" style="font-size: clamp(6rem, 14vw, 12rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;">−40<span aria-hidden="true">%</span></p>
+            <p class="font-display italic font-normal text-step-1 leading-[1.35] text-muted max-w-[24ch] m-0 pb-2">
+              Drop-off nei primi 7 giorni. Misurato su A/B <strong class="not-italic font-medium text-fg">di 3.400 nuovi account</strong>, sopra il target di −25%.
+            </p>
+          </div>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))]">
+            {[
+              ['+12pt', 'NPS post-onboarding'],
+              ['6→2', 'Step nel flusso critico'],
+              ['−32%', 'Ticket support onboarding'],
+              ['2 mesi', 'Dal go al ship'],
+            ].map(([num, label], i, arr) => (
+              <div class={`py-4 pr-5 ${i < arr.length - 1 ? 'border-r border-border' : ''}`}>
+                <p class="font-display italic font-light text-step-3 leading-none tracking-tight m-0 mb-3 tabular-nums" style="font-variation-settings: 'opsz' 144, 'SOFT' 100;">{num}</p>
+                <p class="text-[0.7rem] uppercase tracking-[0.12em] font-medium text-muted m-0 leading-tight">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <h2 id="riflessione" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight mt-14 mb-4">Cosa rifarei diversamente</h2>
+        <p class="mb-4">Avrei portato il support lead nel primo workshop di framing, non alla settimana 3. La persona che rispondeva ai ticket sapeva già da mesi che i tre step tagliabili erano il punto di rottura. Il costo del suo invito era zero; il costo di non farlo sono state due settimane di framing su un problema che poteva essere descritto nella prima ora.</p>
+        <p class="mb-4">Il secondo punto: ho scoperto solo alla fine che compliance aveva già proposto sei mesi prima una soluzione simile a un altro team, respinta per motivi organizzativi non tecnici. Ora, prima di framing, faccio un giro esplicito con le funzioni "spesso ostili" per raccogliere le loro proposte precedenti.</p>
+
+        <p class="flex items-center justify-center gap-4 my-14 mb-4 text-muted-2 font-display italic font-light text-step-2 before:content-[''] before:flex-1 before:h-px before:bg-border before:max-w-16 after:content-[''] after:flex-1 after:h-px after:bg-border after:max-w-16" aria-hidden="true">§</p>
+      </article>
+
+      <aside class="lg:sticky lg:top-24 font-mono text-step--1 leading-relaxed">
+        <h4 class="eyebrow mb-3">In questa pagina</h4>
+        <ul class="list-none p-0 m-0 mb-6">
+          {[
+            ['#problema', 'Il problema'],
+            ['#decisione', 'La decisione chiave'],
+            ['#outcome', 'Outcome'],
+            ['#riflessione', 'Riflessione'],
+          ].map(([h, t], i, arr) => (
+            <li class={`py-2 ${i < arr.length - 1 ? 'border-b border-border' : ''}`}>
+              <a href={h}>{t}</a>
+            </li>
+          ))}
+        </ul>
+        <h4 class="eyebrow mb-3">Meta</h4>
+        <ul class="list-none p-0 m-0">
+          <li class="py-2 border-b border-border">Anno: 2024</li>
+          <li class="py-2 border-b border-border">Cliente: Fintech B2B (nome su richiesta)</li>
+          <li class="py-2 border-b border-border">Settore: Fintech · KYC</li>
+          <li class="py-2">Lettura: ~5 min</li>
+        </ul>
+      </aside>
+    </div>
+
+    <nav class="mt-20 pt-14 border-t border-border" aria-label="Torna al portfolio">
+      <a href={`${base}/`} class="block py-6 no-underline group">
+        <p class="eyebrow mb-3">← Torna al portfolio</p>
+        <p class="font-display font-normal text-step-4 leading-[1.05] tracking-tight m-0 transition-transform duration-300 ease-editorial group-hover:translate-x-2">Vedi tutti i progetti selezionati</p>
+      </a>
+    </nav>
+  </section>
+
+  <SiteFooter slot="footer" />
+</Base>

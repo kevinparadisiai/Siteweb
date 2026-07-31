@@ -1,0 +1,46 @@
+---
+import WorkCard from './WorkCard.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const projects = [
+  {
+    num: '01', eyebrow: 'Fintech · KYC · Onboarding',
+    title: 'Tagliare metà onboarding invece di rifarlo.',
+    description: '−40% drop-off in 8 settimane su un flusso B2B a 6 step. Tolti 3, non rifatti gli altri.',
+    meta: '2024 · Senior UX',
+    href: `${base}/case-study`, color: 1 as const,
+  },
+  {
+    num: '02', eyebrow: '[Settore · Dominio · Tipo]',
+    title: '[Titolo che nomina la decisione, non il prodotto.]',
+    description: '[Una riga: cosa era in gioco, cosa è cambiato dopo.]',
+    meta: '[Anno] · [Ruolo]',
+    href: '#', color: 2 as const,
+  },
+  {
+    num: '03', eyebrow: '[Settore] · Su richiesta',
+    title: '[Terzo progetto — o caso NDA mostrato in colloquio.]',
+    description: '[Una riga sintetica. Se NDA, spiega cosa puoi mostrare a voce.]',
+    meta: '[Anno] · Su richiesta',
+    href: '#', color: 3 as const,
+  },
+];
+---
+<section class="py-16 md:py-24" id="work" aria-labelledby="work-title">
+  <div class="container-editorial">
+    <div class="flex items-end justify-between gap-6 mb-10 pb-4 border-b border-border">
+      <div>
+        <span class="eyebrow block mb-3">Tre progetti</span>
+        <h2 id="work-title" class="font-display font-normal text-step-3 leading-[1.15] tracking-tight m-0 max-w-[62ch]">
+          Tre modi di lavorare su un problema, <em class="italic font-light text-muted">non</em> tre schermate.
+        </h2>
+      </div>
+      <a href="#" class="hidden sm:inline-flex shrink-0 text-[0.72rem] uppercase tracking-[0.14em] font-medium text-muted hover:text-fg no-underline">Tutti →</a>
+    </div>
+
+    <ol class="list-none p-0 m-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {projects.map((p) => (
+        <WorkCard {...p} />
+      ))}
+    </ol>
+  </div>
+</section>
