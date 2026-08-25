@@ -16,6 +16,7 @@ const Tag = disabled ? 'div' : 'a';
 <Tag
   href={disabled ? undefined : href}
   data-num={num}
+  data-cursor-label={disabled ? undefined : 'Leggi il case study'}
   aria-disabled={disabled ? 'true' : undefined}
   class:list={[
     'group relative overflow-hidden flex flex-col p-6 min-h-[360px] w-full rounded text-on-card no-underline',

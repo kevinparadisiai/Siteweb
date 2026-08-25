@@ -1,5 +1,6 @@
 ---
 import SectionAnchor from './SectionAnchor.astro';
+import ChapterMarker from './ChapterMarker.astro';
 import WorkCard from './WorkCard.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const projects = [
@@ -27,6 +28,7 @@ const projects = [
 ];
 ---
 <section class="bg-bg pb-20 md:pb-28" id="work" aria-labelledby="work-anchor">
+  <ChapterMarker chapter="III" label="Progetti" />
   <div class="container-editorial">
 
     <SectionAnchor

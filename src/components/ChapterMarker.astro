@@ -1,0 +1,12 @@
+---
+interface Props { chapter: string; label: string; }
+const { chapter, label } = Astro.props;
+---
+<div class="chapter-marker" aria-hidden="true">
+  <span class="chapter-marker__text">
+    <span class="chapter-marker__rule"></span>
+    <span class="tabular-nums">{chapter}</span>
+    <span class="opacity-60">—</span>
+    <span>{label}</span>
+  </span>
+</div>

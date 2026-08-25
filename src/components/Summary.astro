@@ -1,5 +1,6 @@
 ---
 import SectionAnchor from './SectionAnchor.astro';
+import ChapterMarker from './ChapterMarker.astro';
 const cols = [
   { num: '01', title: 'Cosa faccio meglio', items: ['Discovery e framing', 'Design system', 'Interaction design', 'Ricerca qualitativa', 'Facilitazione workshop'] },
   { num: '02', title: 'Settori',           items: ['Fintech', 'SaaS B2B', 'Healthcare', 'Pubblico / Servizi', 'Retail'] },
@@ -7,6 +8,7 @@ const cols = [
 ];
 ---
 <section class="bg-surface pb-20 md:pb-28" aria-labelledby="summary-anchor">
+  <ChapterMarker chapter="II" label="Sintesi" />
   <div class="container-editorial">
 
     <SectionAnchor
