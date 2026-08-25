@@ -11,45 +11,145 @@ const chapters = [
   { id: 'contact', num: 'V',   verb: 'Scrivimi.', href: `${base}/#contact` },
 ];
 ---
-<aside class="site-sidebar hidden lg:flex" aria-label="Navigazione capitoli">
-  <div class="site-sidebar__inner">
+<!-- Persistent top-left: brand + Menu trigger (Sketchin pattern) -->
+<div class="site-brandbar" aria-hidden="false">
+  <a href={`${base}/`} class="site-brandbar__brand" aria-label="Home — Kevin Paradisi">
+    <span aria-hidden="true">Kevin<em>.</em></span>
+    <span class="sr-only">Kevin Paradisi</span>
+  </a>
+  <button
+    type="button"
+    class="site-brandbar__trigger"
+    id="menuTrigger"
+    aria-expanded="false"
+    aria-controls="siteMenu"
+    aria-label="Apri menu"
+    data-cursor-label="Menu"
+  >
+    <span class="site-brandbar__label" data-open-label="Menu" data-close-label="Chiudi">Menu</span>
+  </button>
+</div>
 
-    <div>
-      <a href={`${base}/`} class="site-sidebar__brand" aria-label="Home — Kevin Paradisi">
-        <span aria-hidden="true">Kevin<em class="italic font-light">.</em></span>
-        <span class="sr-only">Kevin Paradisi</span>
-      </a>
-    </div>
+<!-- Full-screen overlay menu — hidden by default, opens on trigger click -->
+<div
+  id="siteMenu"
+  class="site-menu"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="siteMenuTitle"
+  aria-hidden="true"
+  tabindex="-1"
+>
+  <h2 id="siteMenuTitle" class="sr-only">Navigazione</h2>
 
-    <nav class="site-sidebar__nav" aria-label="Capitoli">
-      {chapters.map((ch) => (
+  <button
+    type="button"
+    class="site-menu__close"
+    id="menuClose"
+    aria-label="Chiudi menu"
+    data-cursor-label="Chiudi"
+  >
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+      <path d="M6 6l20 20M26 6L6 26"/>
+    </svg>
+  </button>
+
+  <div class="site-menu__grid">
+    <nav class="site-menu__nav" aria-label="Capitoli">
+      {chapters.map((ch, i) => (
         <a
           href={ch.href}
-          class="site-sidebar__link"
+          class="site-menu__link"
+          data-menu-link
           data-chapter-link={ch.id}
           aria-current={current === ch.id ? 'true' : undefined}
+          style={`--menu-delay: ${i * 55}ms;`}
         >
-          <span class="site-sidebar__num tabular-nums" aria-hidden="true">{ch.num}</span>
-          <span class="site-sidebar__verb">{ch.verb}</span>
+          <span class="site-menu__num tabular-nums" aria-hidden="true">{ch.num}</span>
+          <span class="site-menu__verb">{ch.verb}</span>
         </a>
       ))}
     </nav>
 
-    <a
-      href={`${base}/cv.pdf`}
-      download
-      class="site-sidebar__cta"
-      data-cursor-label="Download PDF"
-    >
-      <span>Scarica CV</span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-    </a>
+    <aside class="site-menu__side" aria-label="Contatti">
+      <div class="site-menu__block">
+        <p class="site-menu__eyebrow">Scrivimi</p>
+        <a
+          href="mailto:kevinparadisiai@gmail.com"
+          class="site-menu__mail"
+          data-menu-link
+          data-cursor-label="Scrivi email"
+        >kevinparadisiai@gmail.com</a>
+      </div>
 
+      <div class="site-menu__block">
+        <p class="site-menu__eyebrow">Portfolio</p>
+        <a
+          href={`${base}/cv.pdf`}
+          download
+          class="site-menu__cta"
+          data-menu-link
+          data-cursor-label="Download PDF"
+        >
+          <span>Scarica CV</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+        </a>
+      </div>
+
+      <ul class="site-menu__socials" aria-label="Social">
+        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" data-menu-link>LinkedIn</a></li>
+        <li><a href="https://www.behance.net/" target="_blank" rel="noopener" data-menu-link>Behance</a></li>
+        <li><a href="https://read.cv/" target="_blank" rel="noopener" data-menu-link>Read.cv</a></li>
+      </ul>
+    </aside>
   </div>
-</aside>
+
+  <p class="site-menu__meta" aria-hidden="true">
+    <span>Portfolio · 2026</span>
+    <span>Disponibile da settembre</span>
+  </p>
+</div>
 
 <script>
-  // Sync current chapter with sidebar highlight based on scroll position.
+  // ================= Menu overlay (Sketchin pattern) =================
+  const trigger = document.getElementById('menuTrigger') as HTMLButtonElement | null;
+  const closeBtn = document.getElementById('menuClose') as HTMLButtonElement | null;
+  const menu = document.getElementById('siteMenu') as HTMLElement | null;
+  const label = trigger?.querySelector<HTMLElement>('.site-brandbar__label');
+
+  const setOpen = (open: boolean) => {
+    if (!menu || !trigger) return;
+    menu.classList.toggle('is-open', open);
+    menu.setAttribute('aria-hidden', String(!open));
+    trigger.setAttribute('aria-expanded', String(open));
+    trigger.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
+    document.documentElement.classList.toggle('menu-open', open);
+    if (label) label.textContent = open ? (label.dataset.closeLabel || 'Chiudi') : (label.dataset.openLabel || 'Menu');
+    if (open) {
+      // Focus first link for keyboard users
+      menu.querySelector<HTMLAnchorElement>('.site-menu__link')?.focus();
+    } else {
+      trigger.focus();
+    }
+  };
+
+  trigger?.addEventListener('click', () => {
+    const open = menu?.classList.contains('is-open');
+    setOpen(!open);
+  });
+  closeBtn?.addEventListener('click', () => setOpen(false));
+
+  // ESC key closes
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('is-open')) setOpen(false);
+  });
+
+  // Clicking any link inside menu closes it (in-page anchor navigation)
+  menu?.querySelectorAll<HTMLAnchorElement>('[data-menu-link]').forEach((a) => {
+    a.addEventListener('click', () => setOpen(false));
+  });
+
+  // ================= Chapter tracking (unchanged) =================
   const sections = ['hero', 'sintesi', 'work', 'lab', 'contact'];
   const links = new Map<string, HTMLAnchorElement>();
   document.querySelectorAll<HTMLAnchorElement>('[data-chapter-link]').forEach((a) => {
