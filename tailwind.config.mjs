@@ -4,21 +4,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#F1EEE7',
-        surface: '#F9F6ED',
-        fg: '#161A2A',
-        muted: '#5A5D6E',
-        'muted-2': '#7F8291',
-        border: '#E4DFD3',
-        'border-strong': '#8A7D6E',
-        accent: '#14213D',
-        'accent-weak': '#E9E1D0',
-        'accent-deep': '#2D2F3E',
-        'on-accent': '#F1E7D6',
-        'card-1': '#DDC7C2',
-        'card-2': '#C6D2CE',
-        'card-3': '#D4BE8B',
-        'on-card': '#161A2A',
+        bg: '#FAFAFA',
+        surface: '#FFFFFF',
+        fg: '#0A0A0A',
+        muted: '#6B7280',
+        'muted-2': '#9CA3AF',
+        border: '#E5E7EB',
+        'border-strong': '#6B7280',
+        accent: '#FF3C00',              // Sketchin signal red (graphic marks only)
+        'accent-weak': '#F3F4F6',
+        'accent-deep': '#000000',       // pure black for dark sections
+        'on-accent': '#FAFAFA',
+        'card-1': '#0A0A0A',            // featured: near-black
+        'card-2': '#F3F4F6',            // placeholder: light grey
+        'card-3': '#F3F4F6',
+        'on-card': '#0A0A0A',           // default on light cards
+        'on-card-dark': '#FAFAFA',      // for card-1 dark
       },
       fontFamily: {
         display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
