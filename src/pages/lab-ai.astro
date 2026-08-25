@@ -1,6 +1,5 @@
 ---
 import Base from '@/layouts/Base.astro';
-import SiteHeader from '@/components/SiteHeader.astro';
 import SiteSidebar from '@/components/SiteSidebar.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import FeatureHero from '@/components/FeatureHero.astro';
@@ -8,7 +7,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Base title="Lab — AI come specchio critico">
   <SiteSidebar slot="sidebar" current="lab" />
-  <SiteHeader slot="header" current="lab" />
 
   <FeatureHero
     crumb="Portfolio / Lab / AI come specchio critico"

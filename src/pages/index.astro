@@ -1,6 +1,5 @@
 ---
 import Base from '@/layouts/Base.astro';
-import SiteHeader from '@/components/SiteHeader.astro';
 import SiteSidebar from '@/components/SiteSidebar.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import Hero from '@/components/Hero.astro';
@@ -9,15 +8,16 @@ import WorkList from '@/components/WorkList.astro';
 import LabList from '@/components/LabList.astro';
 import Contact from '@/components/Contact.astro';
 ---
-<Base title="[Nome Cognome] — UX Designer moving to strategy" bodyClass="">
+<Base title="Kevin Paradisi — UX Designer moving to strategy" bodyClass="page-stack">
   <SiteSidebar slot="sidebar" current="hero" />
-  <SiteHeader slot="header" current="work" />
 
-  <Hero />
-  <Summary />
-  <WorkList />
-  <LabList />
-  <Contact />
+  <div class="stack-scope">
+    <section class="stack-item stack-item--hero"><Hero /></section>
+    <section class="stack-item"><Summary /></section>
+    <section class="stack-item"><WorkList /></section>
+    <section class="stack-item"><LabList /></section>
+    <section class="stack-item stack-item--last"><Contact /></section>
+  </div>
 
   <SiteFooter slot="footer" />
 </Base>

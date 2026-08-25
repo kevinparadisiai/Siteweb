@@ -1,6 +1,5 @@
 ---
 import Base from '@/layouts/Base.astro';
-import SiteHeader from '@/components/SiteHeader.astro';
 import SiteSidebar from '@/components/SiteSidebar.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import FeatureHero from '@/components/FeatureHero.astro';
@@ -8,7 +7,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Base title="Case study 01 — Tagliare metà onboarding">
   <SiteSidebar slot="sidebar" current="work" />
-  <SiteHeader slot="header" current="work" />
 
   <FeatureHero
     crumb="Portfolio / Case study 01"

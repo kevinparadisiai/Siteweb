@@ -3,16 +3,19 @@ interface Props { current?: string; }
 const { current } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-const chapters = [
-  { id: 'hero',    num: 'I',   verb: 'designer.', href: `${base}/#hero`    },
-  { id: 'sintesi', num: 'II',  verb: 'Penso.',    href: `${base}/#sintesi` },
-  { id: 'work',    num: 'III', verb: 'Progetto.', href: `${base}/#work`    },
-  { id: 'lab',     num: 'IV',  verb: 'Provo.',    href: `${base}/#lab`     },
-  { id: 'contact', num: 'V',   verb: 'Scrivimi.', href: `${base}/#contact` },
+const items = [
+  { id: 'work',    label: 'Work',     href: `${base}/#work`    },
+  { id: 'lab',     label: 'Lab',      href: `${base}/#lab`     },
+  { id: 'contact', label: 'Contatti', href: `${base}/#contact` },
+];
+const sublinks = [
+  { label: 'Case study',           href: `${base}/case-study/` },
+  { label: 'Lab · AI',             href: `${base}/lab-ai/`     },
+  { label: 'Scrivimi',             href: `mailto:kevinparadisiai@gmail.com` },
 ];
 ---
-<!-- Persistent top-left: brand + Menu trigger (Sketchin pattern) -->
-<div class="site-brandbar" aria-hidden="false">
+<!-- Persistent top-left: brand (always) + hamburger (only after hero) -->
+<div class="site-brandbar" data-hero-in-view="true">
   <a href={`${base}/`} class="site-brandbar__brand" aria-label="Home — Kevin Paradisi">
     <span aria-hidden="true">Kevin<em>.</em></span>
     <span class="sr-only">Kevin Paradisi</span>
@@ -26,11 +29,31 @@ const chapters = [
     aria-label="Apri menu"
     data-cursor-label="Menu"
   >
-    <span class="site-brandbar__label" data-open-label="Menu" data-close-label="Chiudi">Menu</span>
+    <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+      <path d="M0 3h26M0 11h26"/>
+    </svg>
   </button>
 </div>
 
-<!-- Full-screen overlay menu — hidden by default, opens on trigger click -->
+<!-- Exploded nav — visible only inside the hero (Sketchin homepage pattern) -->
+<nav class="hero-nav" id="heroNav" aria-label="Sezioni">
+  {items.map((it, i) => (
+    <a
+      href={it.href}
+      class="hero-nav__link"
+      data-chapter-link={it.id}
+      aria-current={current === it.id ? 'true' : undefined}
+      style={`--hn-delay: ${i * 60}ms;`}
+    >{it.label}</a>
+  ))}
+  <div class="hero-nav__sub" aria-label="Scorciatoie">
+    {sublinks.map((s) => (
+      <a href={s.href} class="hero-nav__sublink">{s.label}</a>
+    ))}
+  </div>
+</nav>
+
+<!-- Full-screen overlay menu — Sketchin big red panel -->
 <div
   id="siteMenu"
   class="site-menu"
@@ -49,25 +72,22 @@ const chapters = [
     aria-label="Chiudi menu"
     data-cursor-label="Chiudi"
   >
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
       <path d="M6 6l20 20M26 6L6 26"/>
     </svg>
+    <span class="site-menu__close-label">Chiudi</span>
   </button>
 
   <div class="site-menu__grid">
-    <nav class="site-menu__nav" aria-label="Capitoli">
-      {chapters.map((ch, i) => (
+    <nav class="site-menu__nav" aria-label="Menu principale">
+      {items.map((it, i) => (
         <a
-          href={ch.href}
+          href={it.href}
           class="site-menu__link"
           data-menu-link
-          data-chapter-link={ch.id}
-          aria-current={current === ch.id ? 'true' : undefined}
-          style={`--menu-delay: ${i * 55}ms;`}
-        >
-          <span class="site-menu__num tabular-nums" aria-hidden="true">{ch.num}</span>
-          <span class="site-menu__verb">{ch.verb}</span>
-        </a>
+          aria-current={current === it.id ? 'true' : undefined}
+          style={`--menu-delay: ${i * 65}ms;`}
+        >{it.label}</a>
       ))}
     </nav>
 
@@ -111,11 +131,12 @@ const chapters = [
 </div>
 
 <script>
-  // ================= Menu overlay (Sketchin pattern) =================
+  // ================= Menu overlay =================
   const trigger = document.getElementById('menuTrigger') as HTMLButtonElement | null;
   const closeBtn = document.getElementById('menuClose') as HTMLButtonElement | null;
   const menu = document.getElementById('siteMenu') as HTMLElement | null;
-  const label = trigger?.querySelector<HTMLElement>('.site-brandbar__label');
+  const brandbar = document.querySelector<HTMLElement>('.site-brandbar');
+  const heroNav = document.getElementById('heroNav');
 
   const setOpen = (open: boolean) => {
     if (!menu || !trigger) return;
@@ -124,54 +145,31 @@ const chapters = [
     trigger.setAttribute('aria-expanded', String(open));
     trigger.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
     document.documentElement.classList.toggle('menu-open', open);
-    if (label) label.textContent = open ? (label.dataset.closeLabel || 'Chiudi') : (label.dataset.openLabel || 'Menu');
-    if (open) {
-      // Focus first link for keyboard users
-      menu.querySelector<HTMLAnchorElement>('.site-menu__link')?.focus();
-    } else {
-      trigger.focus();
-    }
+    if (open) menu.querySelector<HTMLAnchorElement>('.site-menu__link')?.focus();
+    else trigger.focus();
   };
 
-  trigger?.addEventListener('click', () => {
-    const open = menu?.classList.contains('is-open');
-    setOpen(!open);
-  });
+  trigger?.addEventListener('click', () => setOpen(!menu?.classList.contains('is-open')));
   closeBtn?.addEventListener('click', () => setOpen(false));
-
-  // ESC key closes
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && menu?.classList.contains('is-open')) setOpen(false);
   });
-
-  // Clicking any link inside menu closes it (in-page anchor navigation)
   menu?.querySelectorAll<HTMLAnchorElement>('[data-menu-link]').forEach((a) => {
     a.addEventListener('click', () => setOpen(false));
   });
 
-  // ================= Chapter tracking (unchanged) =================
-  const sections = ['hero', 'sintesi', 'work', 'lab', 'contact'];
-  const links = new Map<string, HTMLAnchorElement>();
-  document.querySelectorAll<HTMLAnchorElement>('[data-chapter-link]').forEach((a) => {
-    const id = a.dataset.chapterLink;
-    if (id) links.set(id, a);
-  });
-
-  if ('IntersectionObserver' in window && links.size > 0) {
+  // ================= Hero-in-view: swap between exploded nav and hamburger =================
+  const hero = document.getElementById('hero');
+  if (hero && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        const id = (entry.target as HTMLElement).id;
-        if (!id) return;
-        if (entry.isIntersecting) {
-          links.forEach((a) => a.removeAttribute('aria-current'));
-          links.get(id)?.setAttribute('aria-current', 'true');
-        }
+        const inView = entry.isIntersecting;
+        if (brandbar) brandbar.dataset.heroInView = String(inView);
+        if (heroNav) heroNav.classList.toggle('is-visible', inView);
       });
-    }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-
-    sections.forEach((s) => {
-      const el = document.getElementById(s);
-      if (el) io.observe(el);
-    });
+    }, { threshold: 0.35 });
+    io.observe(hero);
+    // Initial state — hero visible on load
+    if (heroNav) heroNav.classList.add('is-visible');
   }
 </script>
