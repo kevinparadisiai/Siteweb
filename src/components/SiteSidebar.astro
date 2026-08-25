@@ -72,10 +72,10 @@ const sublinks = [
     aria-label="Chiudi menu"
     data-cursor-label="Chiudi"
   >
-    <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+    <svg width="26" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
       <path d="M6 6l20 20M26 6L6 26"/>
     </svg>
-    <span class="site-menu__close-label">Chiudi</span>
+    <span class="sr-only">Chiudi</span>
   </button>
 
   <div class="site-menu__grid">
@@ -159,17 +159,26 @@ const sublinks = [
   });
 
   // ================= Hero-in-view: swap between exploded nav and hamburger =================
+  // Uses scrollY (not IntersectionObserver) because the sticky-stack keeps the
+  // hero element intersecting the viewport even when a later section covers it.
   const hero = document.getElementById('hero');
-  if (hero && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const inView = entry.isIntersecting;
-        if (brandbar) brandbar.dataset.heroInView = String(inView);
-        if (heroNav) heroNav.classList.toggle('is-visible', inView);
-      });
-    }, { threshold: 0.35 });
-    io.observe(hero);
-    // Initial state — hero visible on load
-    if (heroNav) heroNav.classList.add('is-visible');
+  if (hero) {
+    let ticking = false;
+    const check = () => {
+      const threshold = Math.max(120, window.innerHeight * 0.45);
+      const inHero = window.scrollY < threshold;
+      if (brandbar) brandbar.dataset.heroInView = String(inHero);
+      if (heroNav) heroNav.classList.toggle('is-visible', inHero);
+      ticking = false;
+    };
+    check();
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(check); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', check);
+  } else if (heroNav) {
+    // Non-home page: hero doesn't exist → keep exploded nav hidden, hamburger visible.
+    heroNav.classList.remove('is-visible');
+    if (brandbar) brandbar.dataset.heroInView = 'false';
   }
 </script>
