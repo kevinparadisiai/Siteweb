@@ -132,16 +132,24 @@
   color: theme('colors.accent');
   font-style: normal;
 }
+/* Hamburger detached from the brandbar flex → fixed at center-left of viewport
+   (Sketchin pattern), so it lives mid-page not next to the logo. */
 .site-brandbar__trigger {
   appearance: none;
   background: transparent;
   border: 0;
-  padding: 0.35rem 0;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   color: inherit;
   cursor: pointer;
   line-height: 0;
+  position: fixed;
+  top: 50%;
+  left: clamp(1rem, 4vw, 2.5rem);
+  transform: translateY(-50%);
+  z-index: 60;
+  mix-blend-mode: difference;
+  color: #ffffff;
   opacity: 1;
-  transform: translateY(0);
   transition:
     opacity 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
     transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
@@ -149,10 +157,10 @@
 /* Hide hamburger while hero (first screen) is in view */
 .site-brandbar[data-hero-in-view="true"] .site-brandbar__trigger {
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(calc(-50% - 8px));
   pointer-events: none;
 }
-/* When menu overlay is open, hide the brandbar hamburger so only the X shows */
+/* When menu overlay is open, hide the hamburger so only the X shows */
 .menu-open .site-brandbar__trigger {
   opacity: 0;
   pointer-events: none;
@@ -266,19 +274,21 @@
 }
 .site-menu:focus { outline: none; }
 
-/* X close: sits exactly where the hamburger was in the brandbar
-   (after "Kevin.") so the swap reads as hamburger → X in place. */
+/* X close: sits exactly where the hamburger sits — fixed at center-left —
+   so the swap reads as hamburger → X in place. */
 .site-menu__close {
-  position: absolute;
-  top: 1.2rem;
-  left: calc(clamp(1rem, 4vw, 2.5rem) + 5.2rem);
+  position: fixed;
+  top: 50%;
+  left: clamp(1rem, 4vw, 2.5rem);
+  transform: translateY(-50%);
   appearance: none;
   background: transparent;
   border: 0;
   color: inherit;
-  padding: 0.35rem 0;
+  padding: 0.5rem 0.5rem 0.5rem 0;
   cursor: pointer;
   line-height: 0;
+  z-index: 61;
 }
 .site-menu__close svg { transition: transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1); }
 .site-menu__close:hover svg { transform: rotate(90deg); }
