@@ -72,6 +72,136 @@
 }
 
 /* ==========================================================================
+   Left sidebar — Sketchin-style persistent chapter navigation (desktop only)
+   ========================================================================== */
+.site-sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 240px;
+  height: 100vh;
+  padding: 2rem 1.75rem;
+  background: theme('colors.bg');
+  border-right: 1px solid theme('colors.border');
+  z-index: 30;
+  flex-direction: column;
+}
+.site-sidebar__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 2rem;
+}
+.site-sidebar__brand {
+  display: inline-block;
+  font-family: theme('fontFamily.display');
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: theme('colors.fg');
+  padding: 0.25rem 0;
+}
+.site-sidebar__brand em {
+  color: theme('colors.accent');
+  font-style: normal;
+}
+.site-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.site-sidebar__link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.35rem 0;
+  text-decoration: none;
+  color: theme('colors.muted');
+  transition: color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  font-size: 1.1rem;
+  line-height: 1.2;
+  position: relative;
+}
+.site-sidebar__link:hover,
+.site-sidebar__link[aria-current="true"] {
+  color: theme('colors.fg');
+}
+.site-sidebar__num {
+  font-family: theme('fontFamily.body');
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: theme('colors.muted-2');
+  min-width: 1.75rem;
+  transition: color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.site-sidebar__link:hover .site-sidebar__num,
+.site-sidebar__link[aria-current="true"] .site-sidebar__num {
+  color: theme('colors.accent');
+}
+.site-sidebar__verb {
+  font-family: theme('fontFamily.display');
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.site-sidebar__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  border: 1px solid theme('colors.fg');
+  color: theme('colors.fg');
+  text-decoration: none;
+  align-self: flex-start;
+  transition: background 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
+              color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.site-sidebar__cta:hover {
+  background: theme('colors.fg');
+  color: theme('colors.bg');
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-left: 240px;
+  }
+  /* Existing top header hidden on desktop — sidebar takes its place */
+  .site-header {
+    display: none;
+  }
+  /* Chapter marker sticky irrelevant with sidebar highlight */
+  .chapter-marker {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Signature graphic — radial red dashes (Sketchin hero corner)
+   ========================================================================== */
+.signature-mark {
+  color: theme('colors.accent');
+  pointer-events: none;
+  user-select: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .signature-mark {
+    animation: signature-rotate 60s linear infinite;
+  }
+}
+@keyframes signature-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
    Button fill from bottom — Sketchin-style hover
    ========================================================================== */
 .btn-fill {
