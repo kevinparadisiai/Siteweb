@@ -22,10 +22,10 @@ const [pre, post] = titleEmWord && title.includes(titleEmWord)
       ))}
     </p>
     <h1
-      class="font-display font-normal leading-[1.02] tracking-tight m-0 mt-5 mb-5 max-w-[20ch] text-on-accent"
-      style="font-size: clamp(3.5rem, 8vw + 1rem, 6rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;"
+      class="font-body font-black leading-[0.95] m-0 mt-5 mb-5 max-w-[20ch] text-on-accent"
+      style="font-size: clamp(3.5rem, 9vw + 1rem, 7.5rem); letter-spacing: -0.035em;"
     >
-      {pre}{titleEmWord && (<em class="italic font-light text-on-accent/75"> {titleEmWord} </em>)}{post}
+      {pre}{titleEmWord && (<span class="text-on-accent/75"> {titleEmWord} </span>)}{post}
     </h1>
     <p class="text-step-2 leading-[1.4] text-on-accent/80 max-w-[62ch] m-0">{lede}</p>
   </section>
