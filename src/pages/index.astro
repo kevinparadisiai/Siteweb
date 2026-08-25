@@ -4,9 +4,8 @@ import SiteSidebar from '@/components/SiteSidebar.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import Hero from '@/components/Hero.astro';
 import Summary from '@/components/Summary.astro';
-import WorkList from '@/components/WorkList.astro';
-import LabList from '@/components/LabList.astro';
-import Contact from '@/components/Contact.astro';
+import FeaturedTeaser from '@/components/FeaturedTeaser.astro';
+import ContactCta from '@/components/ContactCta.astro';
 ---
 <Base title="Kevin Paradisi — UX Designer moving to strategy" bodyClass="page-stack">
   <SiteSidebar slot="sidebar" current="hero" />
@@ -14,9 +13,8 @@ import Contact from '@/components/Contact.astro';
   <div class="stack-scope">
     <section class="stack-item stack-item--hero"><Hero /></section>
     <section class="stack-item"><Summary /></section>
-    <section class="stack-item"><WorkList /></section>
-    <section class="stack-item"><LabList /></section>
-    <section class="stack-item stack-item--last"><Contact /></section>
+    <section class="stack-item"><FeaturedTeaser /></section>
+    <section class="stack-item"><ContactCta /></section>
   </div>
 
   <SiteFooter slot="footer" />

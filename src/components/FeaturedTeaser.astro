@@ -1,0 +1,48 @@
+---
+import WorkCard from './WorkCard.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="bg-bg pb-20 md:pb-28" id="featured" aria-labelledby="featured-anchor">
+  <div class="container-editorial">
+
+    <header class="pt-8 md:pt-12 pb-8 md:pb-10 mb-10 md:mb-14 border-b border-border">
+      <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-6 md:mb-8" data-reveal>
+        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+        <span class="tabular-nums">III</span>
+        <span aria-hidden="true" class="opacity-40">—</span>
+        <span>Ultimo lavoro</span>
+      </p>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <h2
+          id="featured-anchor"
+          class="font-body font-black leading-[0.98] m-0 text-fg max-w-[16ch]"
+          style="font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: -0.035em;"
+          data-reveal
+        >
+          Un caso su cui vale la pena aprirsi.
+        </h2>
+        <a
+          href={`${base}/work/`}
+          class="btn-fill relative overflow-hidden inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] font-medium py-3 px-5 border border-fg no-underline self-start md:self-end"
+          data-cursor-label="Vedi tutti i progetti"
+        >
+          <span class="relative z-10">Tutti i progetti</span>
+          <svg class="relative z-10" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <div data-reveal>
+      <WorkCard
+        num="01"
+        eyebrow="Fintech · KYC · Onboarding"
+        title="Tagliare metà onboarding invece di rifarlo."
+        description="−40% drop-off in 8 settimane su un flusso B2B a 6 step. Tolti 3, non rifatti gli altri."
+        meta="2024 · Senior UX"
+        href={`${base}/case-study`}
+        color={1}
+      />
+    </div>
+
+  </div>
+</section>
