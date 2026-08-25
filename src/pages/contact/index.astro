@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import SiteSidebar from '@/components/SiteSidebar.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import FeatureHero from '@/components/FeatureHero.astro';
+import Contact from '@/components/Contact.astro';
+---
+<Base title="Contatti — Kevin Paradisi">
+  <SiteSidebar slot="sidebar" current="contact" />
+
+  <FeatureHero
+    crumb="Portfolio / Contatti"
+    glyph="@"
+    title="Se cerchi qualcuno che pensi prima di disegnare."
+    titleEmWord="prima"
+    lede="Disponibile da settembre per ruoli di design strategy, senior product design o principal, in remoto o a Milano. Fintech, SaaS B2B, servizi digitali."
+  />
+
+  <Contact />
+
+  <SiteFooter slot="footer" />
+</Base>

@@ -160,12 +160,12 @@
 .hero-nav {
   position: fixed;
   left: clamp(1rem, 4vw, 2.5rem);
-  top: 45%;
-  transform: translateY(-50%);
+  top: 38vh;
   z-index: 55;
   display: none;
   flex-direction: column;
   gap: 0.4rem;
+  max-width: 220px;
   color: #ffffff;
   mix-blend-mode: difference;
   pointer-events: none;
@@ -637,29 +637,23 @@
   position: sticky;
   top: 0;
   display: block;
-  background: theme('colors.bg');
-  will-change: transform;
-  isolation: isolate;
-}
-/* Hero already has bg-accent-deep and min-h-dvh */
-.page-stack .stack-item--hero { background: theme('colors.accent-deep'); }
-/* Last item releases sticky so footer flows normally */
-.page-stack .stack-item--last { position: relative; }
-
-/* Give inner sections at least a full-viewport height so overlap reads */
-.page-stack .stack-item > section,
-.page-stack .stack-item > div > section {
   min-height: 100vh;
+  background: theme('colors.bg');
+  isolation: isolate;
+  z-index: 1;
 }
-/* Soft shadow above each section reveals the stack edge */
+/* Later items in the DOM paint over earlier ones (natural stack order) */
+.page-stack .stack-item--hero { background: theme('colors.accent-deep'); }
+
+/* Soft shadow at the top edge reveals the stack seam */
 .page-stack .stack-item + .stack-item::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 32px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.06), transparent);
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.10), transparent);
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
 }
 @media (prefers-reduced-motion: reduce) {
   .page-stack .stack-item { position: relative; top: auto; }

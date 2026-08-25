@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import SiteSidebar from '@/components/SiteSidebar.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import FeatureHero from '@/components/FeatureHero.astro';
+import LabList from '@/components/LabList.astro';
+---
+<Base title="Lab — Kevin Paradisi">
+  <SiteSidebar slot="sidebar" current="lab" />
+
+  <FeatureHero
+    crumb="Portfolio / Lab"
+    glyph="L"
+    title="Ipotesi che provo, non tesi che difendo."
+    titleEmWord="provo,"
+    lede="Note brevi da esperimenti in corso. AI, metodo, ricerca. Metto in pubblico anche quello che non funziona ancora — è dove si impara più in fretta."
+  />
+
+  <LabList />
+
+  <SiteFooter slot="footer" />
+</Base>

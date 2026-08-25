@@ -1,0 +1,22 @@
+---
+import Base from '@/layouts/Base.astro';
+import SiteSidebar from '@/components/SiteSidebar.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import FeatureHero from '@/components/FeatureHero.astro';
+import WorkList from '@/components/WorkList.astro';
+---
+<Base title="Work — Kevin Paradisi">
+  <SiteSidebar slot="sidebar" current="work" />
+
+  <FeatureHero
+    crumb="Portfolio / Work"
+    glyph="W"
+    title="Progetti che spostano decisioni."
+    titleEmWord="decisioni."
+    lede="Selezione di progetti in cui il framing e la ricerca hanno cambiato l'esito prima del pixel. Ogni scheda dichiara la posta in gioco, non la feature."
+  />
+
+  <WorkList />
+
+  <SiteFooter slot="footer" />
+</Base>
