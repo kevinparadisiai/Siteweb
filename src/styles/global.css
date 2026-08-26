@@ -22,9 +22,15 @@
   img, svg { display: block; max-width: 100%; height: auto; }
   a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
   a:hover { text-decoration-thickness: 2px; }
-  a:focus-visible, button:focus-visible {
-    outline: 2px solid theme('colors.accent');
-    outline-offset: 3px;
+  /* WCAG 2.4.7 / 2.4.11 — dual-ring focus indicator that stays visible on
+     ANY background: white inner outline + dark outer ring via box-shadow.
+     On dark surfaces the white shows; on light surfaces the dark shows. */
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible,
+  input:focus-visible, textarea:focus-visible, select:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px #0A0A0A;
     border-radius: 2px;
   }
   :target { scroll-margin-top: 6rem; }
@@ -138,13 +144,16 @@
   appearance: none;
   background: transparent;
   border: 0;
-  padding: 0.5rem 0.5rem 0.5rem 0;
+  /* WCAG 2.5.5 — ensure a 44x44 hit area even though the icon is smaller */
+  padding: 14px 12px;
+  min-width: 44px;
+  min-height: 44px;
   color: inherit;
   cursor: pointer;
   line-height: 0;
   position: fixed;
   top: 50%;
-  left: clamp(1rem, 4vw, 2.5rem);
+  left: calc(clamp(1rem, 4vw, 2.5rem) - 12px);
   transform: translateY(-50%);
   z-index: 60;
   mix-blend-mode: difference;
@@ -285,13 +294,15 @@
 .site-menu-close {
   position: fixed;
   top: 50%;
-  left: clamp(1rem, 4vw, 2.5rem);
+  left: calc(clamp(1rem, 4vw, 2.5rem) - 8px);
   transform: translateY(-50%);
   appearance: none;
   background: transparent;
   border: 0;
   color: #ffffff;
-  padding: 0.5rem 0.5rem 0.5rem 0;
+  padding: 10px 8px;
+  min-width: 44px;
+  min-height: 44px;
   cursor: pointer;
   line-height: 0;
   z-index: 62;
@@ -505,6 +516,21 @@
   transition: opacity 200ms ease;
 }
 .site-menu__socials a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 0.3em; }
+.site-menu__socials a { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* aria-live status line for the contact form (invisible until non-empty). */
+.site-menu__status {
+  font-family: theme('fontFamily.body');
+  font-size: 0.78rem;
+  margin: 1rem 0 0;
+  min-height: 1.25em;
+  color: theme('colors.on-accent');
+  opacity: 0.9;
+}
+.site-menu__field input[aria-invalid="true"] {
+  border-bottom-color: #ffffff;
+  border-bottom-width: 2px;
+}
 
 .site-menu__meta {
   display: flex;

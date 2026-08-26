@@ -140,11 +140,13 @@ const sublinks = [
       </form>
 
       <ul class="site-menu__socials" aria-label="Social">
-        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" data-menu-link>LinkedIn</a></li>
-        <li><a href="https://www.behance.net/" target="_blank" rel="noopener" data-menu-link>Behance</a></li>
-        <li><a href="https://read.cv/" target="_blank" rel="noopener" data-menu-link>Read.cv</a></li>
+        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" data-menu-link>LinkedIn <span class="sr-only">(si apre in una nuova scheda)</span></a></li>
+        <li><a href="https://www.behance.net/" target="_blank" rel="noopener" data-menu-link>Behance <span class="sr-only">(si apre in una nuova scheda)</span></a></li>
+        <li><a href="https://read.cv/" target="_blank" rel="noopener" data-menu-link>Read.cv <span class="sr-only">(si apre in una nuova scheda)</span></a></li>
         <li><a href="mailto:kevinparadisiai@gmail.com" data-menu-link>Email diretto</a></li>
       </ul>
+
+      <p id="menuContactStatus" class="site-menu__status" role="status" aria-live="polite"></p>
     </aside>
   </div>
 
@@ -163,6 +165,29 @@ const sublinks = [
   const heroNav = document.getElementById('heroNav');
   const form = document.getElementById('menuContactForm') as HTMLFormElement | null;
 
+  // Remember what had focus before opening, so we can restore it on close.
+  let previousFocus: HTMLElement | null = null;
+
+  // Return every keyboard-focusable descendant in DOM order.
+  const focusableInMenu = (): HTMLElement[] => {
+    if (!menu) return [];
+    const sel = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(menu.querySelectorAll<HTMLElement>(sel))
+      .filter((el) => !el.hasAttribute('inert') && el.offsetParent !== null);
+  };
+
+  const trapKeydown = (e: KeyboardEvent) => {
+    if (e.key !== 'Tab' || !menu?.classList.contains('is-open')) return;
+    // Include the external close button in the trap cycle.
+    const nodes = [...focusableInMenu(), ...(closeBtn ? [closeBtn] : [])];
+    if (nodes.length === 0) return;
+    const first = nodes[0];
+    const last = nodes[nodes.length - 1];
+    const active = document.activeElement as HTMLElement | null;
+    if (e.shiftKey && active === first) { last.focus(); e.preventDefault(); }
+    else if (!e.shiftKey && active === last) { first.focus(); e.preventDefault(); }
+  };
+
   const setOpen = (open: boolean) => {
     if (!menu || !trigger) return;
     menu.classList.toggle('is-open', open);
@@ -170,8 +195,18 @@ const sublinks = [
     trigger.setAttribute('aria-expanded', String(open));
     trigger.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
     document.documentElement.classList.toggle('menu-open', open);
-    if (open) menu.querySelector<HTMLAnchorElement>('.site-menu__link')?.focus();
-    else trigger.focus();
+    if (open) {
+      previousFocus = (document.activeElement as HTMLElement) ?? trigger;
+      // Delay one frame so the CSS clip-path reveal begins and focusable
+      // elements have their real layout box before we focus into them.
+      requestAnimationFrame(() => {
+        (menu.querySelector<HTMLAnchorElement>('.site-menu__link') ?? closeBtn)?.focus();
+      });
+      document.addEventListener('keydown', trapKeydown);
+    } else {
+      document.removeEventListener('keydown', trapKeydown);
+      (previousFocus ?? trigger).focus();
+    }
   };
 
   trigger?.addEventListener('click', () => setOpen(!menu?.classList.contains('is-open')));
@@ -183,14 +218,27 @@ const sublinks = [
     a.addEventListener('click', () => setOpen(false));
   });
 
-  // Menu form → open mailto with prefilled subject/body
+  // Menu form → build mailto: with prefilled subject/body. Announces status
+  // via #menuContactStatus (aria-live=polite) so screen readers hear errors
+  // and success without a visual toast.
+  const statusEl = document.getElementById('menuContactStatus');
+  const announce = (text: string) => { if (statusEl) statusEl.textContent = text; };
+
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(form);
     const name = String(fd.get('name') || '').trim();
     const email = String(fd.get('email') || '').trim();
     const subject = String(fd.get('subject') || '').trim();
-    if (!email) { (form.querySelector('input[name=email]') as HTMLInputElement)?.focus(); return; }
+    const emailInput = form.querySelector('input[name=email]') as HTMLInputElement | null;
+    const emailValid = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailValid) {
+      emailInput?.setAttribute('aria-invalid', 'true');
+      announce('Inserisci una email valida per continuare.');
+      emailInput?.focus();
+      return;
+    }
+    emailInput?.removeAttribute('aria-invalid');
     const subj = subject ? `Portfolio — ${subject}` : 'Portfolio — parliamone';
     const body = [
       `Ciao Kevin,`,
@@ -200,8 +248,8 @@ const sublinks = [
       ``,
       `— ${name || ''} ${email ? `<${email}>` : ''}`.trim(),
     ].filter(Boolean).join('\n');
-    const href = `mailto:kevinparadisiai@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
-    window.location.href = href;
+    announce('Apro il tuo client email…');
+    window.location.href = `mailto:kevinparadisiai@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
   });
 
   // ================= Hero-in-view: swap between exploded nav and hamburger =================

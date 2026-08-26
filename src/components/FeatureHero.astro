@@ -38,7 +38,10 @@ const crumbBeforeClass = light
       : "before:content-['—_'] before:text-accent");
 const titleClass = light ? 'text-white' : 'text-fg';
 const titleEmClass = light ? 'text-white/80' : (dark ? 'text-fg/70' : 'text-accent');
-const ledeClass = light ? 'text-white/85' : (dark ? 'text-fg/80' : 'text-muted');
+// Lede on a colored hero: keep pure white and bump to font-medium so it
+// stays legible even on lighter signature colors (e.g. CAP #5C8CB8 where
+// text-white at regular weight would sit right at the AA large-text cliff).
+const ledeClass = light ? 'text-white font-medium' : (dark ? 'text-fg/85 font-medium' : 'text-muted');
 const glyphClass = light ? 'text-white' : 'text-fg';
 const glyphOpacity = hasSignature ? '0.10' : '0.05';
 ---
