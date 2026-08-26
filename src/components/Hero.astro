@@ -15,36 +15,24 @@
     style="font-size: clamp(8rem, 26vw, 26rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; will-change: transform;"
   >designer.</span>
 
-  <!-- Signature block: rettangolo arancione + scribble accenti, colonna destra -->
-  <div
+  <!-- Scribble marks in the corners — accent color, purely decorative,
+       kept small so they don't compete with the headline (Dribbble ref pattern) -->
+  <svg
     aria-hidden="true"
-    class="pointer-events-none absolute z-0 hidden md:block"
-    style="right: clamp(2rem, 8vw, 8rem); top: 50%; transform: translateY(-50%);"
+    class="pointer-events-none absolute top-24 right-[8vw] text-accent hidden md:block z-0"
+    width="52" height="52" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
   >
-    <div class="relative">
-      <div
-        class="bg-accent"
-        style="width: clamp(18rem, 26vw, 30rem); height: clamp(22rem, 32vw, 38rem);"
-      ></div>
-      <!-- Tick marks / scribble decorativi -->
-      <svg
-        class="absolute -top-6 -left-6 text-accent"
-        width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-      >
-        <path d="M6 6l30 30M36 6L6 36"/>
-      </svg>
-      <svg
-        class="absolute -bottom-8 -right-6 text-fg"
-        width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
-      >
-        <path d="M8 30c8-16 20-24 44-16"/>
-        <path d="M18 46c4-4 10-6 22-4"/>
-      </svg>
-      <span
-        class="absolute -top-4 right-4 text-accent font-mono text-[0.62rem] tracking-[0.16em] uppercase"
-      >01 · Portfolio</span>
-    </div>
-  </div>
+    <path d="M10 10l32 32M42 10L10 42"/>
+    <path d="M26 4v6M26 42v6M4 26h6M42 26h6"/>
+  </svg>
+  <svg
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-32 right-[6vw] text-fg opacity-40 hidden md:block z-0"
+    width="90" height="70" viewBox="0 0 90 70" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+  >
+    <path d="M6 40c14-24 34-32 76-22"/>
+    <path d="M18 58c8-6 22-8 44-4"/>
+  </svg>
 
   <!-- Top: chapter mark + eyebrow -->
   <div class="container-editorial pt-24 md:pt-28 relative z-10">
