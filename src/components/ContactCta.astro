@@ -2,20 +2,37 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <section
-  class="relative overflow-hidden bg-accent-deep text-on-accent"
+  class="relative overflow-hidden bg-bg text-fg border-t border-border"
   id="contact-cta"
   aria-labelledby="cta-anchor"
 >
-  <span
+  <!-- Signature block: rettangolo arancione + scribble come nella hero -->
+  <div
     aria-hidden="true"
-    class="pointer-events-none select-none absolute -right-2 -bottom-8 font-display italic font-light text-on-accent opacity-[0.05] leading-[0.85] z-0"
-    style="font-size: clamp(18rem, 42vw, 40rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;"
-  >&amp;</span>
+    class="pointer-events-none absolute z-0 hidden md:block"
+    style="right: clamp(2rem, 6vw, 6rem); top: 50%; transform: translateY(-50%);"
+  >
+    <div class="relative">
+      <div
+        class="bg-accent"
+        style="width: clamp(14rem, 20vw, 22rem); height: clamp(18rem, 26vw, 28rem);"
+      ></div>
+      <svg
+        class="absolute -top-4 -left-6 text-accent"
+        width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+      >
+        <path d="M5 5l24 24M29 5L5 29"/>
+      </svg>
+      <span
+        class="absolute -bottom-6 right-0 text-fg font-mono text-[0.62rem] tracking-[0.16em] uppercase opacity-60"
+      >V · Scrivimi</span>
+    </div>
+  </div>
 
   <div class="container-editorial relative z-10 py-24 md:py-32">
 
-    <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-on-accent/70 m-0 mb-8" data-reveal>
-      <span class="inline-block w-10 h-px bg-on-accent/60" aria-hidden="true"></span>
+    <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-8" data-reveal>
+      <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
       <span class="tabular-nums">V</span>
       <span aria-hidden="true" class="opacity-40">—</span>
       <span>Scrivimi</span>
@@ -23,18 +40,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     <h2
       id="cta-anchor"
-      class="font-body font-black leading-[0.95] m-0 text-on-accent max-w-[22ch]"
+      class="font-body font-black leading-[0.95] m-0 text-fg max-w-[22ch]"
       style="font-size: clamp(3rem, 8vw, 7rem); letter-spacing: -0.035em;"
       data-reveal
     >
-      Cerchi qualcuno che <span class="opacity-75">pensi prima</span> di disegnare.
+      Cerchi qualcuno che <span class="font-display italic font-light text-accent">pensi prima</span> di disegnare.
     </h2>
 
     <div class="mt-10 md:mt-14 flex flex-col md:flex-row md:items-center gap-6 md:gap-10" data-reveal>
       <a
         href={`${base}/contact/`}
-        class="btn-fill relative overflow-hidden inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] font-medium py-3 px-5 border border-on-accent no-underline text-on-accent self-start"
-        style="color: theme('colors.on-accent');"
+        class="btn-fill relative overflow-hidden inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] font-medium py-3 px-5 border border-fg no-underline text-fg self-start"
         data-cursor-label="Parliamone"
       >
         <span class="relative z-10">Parliamone</span>
@@ -43,7 +59,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       <a
         href="mailto:kevinparadisiai@gmail.com"
-        class="font-display italic font-light text-on-accent text-step-1 underline underline-offset-4 decoration-1 hover:decoration-2"
+        class="font-display italic font-light text-fg text-step-1 underline underline-offset-4 decoration-1 hover:decoration-2"
         data-cursor-label="Scrivi email"
       >kevinparadisiai@gmail.com</a>
     </div>

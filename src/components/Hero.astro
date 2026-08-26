@@ -1,26 +1,58 @@
 ---
-// Hero — full-viewport dark panel. Book cover del portfolio.
+// Hero — full-viewport light panel. Editorial "book cover" con blocco
+// arancione come signature grafica (pattern reference dribbble).
 ---
 <section
   id="hero"
-  class="relative min-h-dvh bg-accent-deep text-on-accent flex flex-col overflow-hidden"
+  class="relative min-h-dvh bg-bg text-fg flex flex-col overflow-hidden"
   aria-labelledby="hero-title"
 >
   <!-- Signature "designer." in filigrana, dietro tutto — parallax al mouse -->
   <span
     id="heroSignature"
     aria-hidden="true"
-    class="pointer-events-none select-none absolute -left-2 bottom-[16%] font-display italic font-light text-on-accent opacity-[0.06] leading-[0.85] tracking-tight whitespace-nowrap z-0 transition-transform duration-[600ms] ease-editorial"
+    class="pointer-events-none select-none absolute -left-2 bottom-[14%] font-display italic font-light text-fg opacity-[0.05] leading-[0.85] tracking-tight whitespace-nowrap z-0 transition-transform duration-[600ms] ease-editorial"
     style="font-size: clamp(8rem, 26vw, 26rem); font-variation-settings: 'opsz' 144, 'SOFT' 100; will-change: transform;"
   >designer.</span>
 
+  <!-- Signature block: rettangolo arancione + scribble accenti, colonna destra -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute z-0 hidden md:block"
+    style="right: clamp(2rem, 8vw, 8rem); top: 50%; transform: translateY(-50%);"
+  >
+    <div class="relative">
+      <div
+        class="bg-accent"
+        style="width: clamp(18rem, 26vw, 30rem); height: clamp(22rem, 32vw, 38rem);"
+      ></div>
+      <!-- Tick marks / scribble decorativi -->
+      <svg
+        class="absolute -top-6 -left-6 text-accent"
+        width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+      >
+        <path d="M6 6l30 30M36 6L6 36"/>
+      </svg>
+      <svg
+        class="absolute -bottom-8 -right-6 text-fg"
+        width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+      >
+        <path d="M8 30c8-16 20-24 44-16"/>
+        <path d="M18 46c4-4 10-6 22-4"/>
+      </svg>
+      <span
+        class="absolute -top-4 right-4 text-accent font-mono text-[0.62rem] tracking-[0.16em] uppercase"
+      >01 · Portfolio</span>
+    </div>
+  </div>
+
   <!-- Top: chapter mark + eyebrow -->
   <div class="container-editorial pt-24 md:pt-28 relative z-10">
-    <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-on-accent/70 m-0" data-reveal>
-      <span class="inline-block w-10 h-px bg-on-accent/60" aria-hidden="true"></span>
+    <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0" data-reveal>
+      <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
       <span class="tabular-nums">I</span>
       <span aria-hidden="true" class="opacity-40">—</span>
-      <span>Portfolio · [Città] · luglio 2026</span>
+      <span>Portfolio · Milano · luglio 2026</span>
     </p>
   </div>
 
@@ -28,14 +60,14 @@
   <div class="container-editorial flex-1 flex flex-col justify-center py-10 md:py-16 relative z-10">
     <h1
       id="hero-title"
-      class="font-body font-black leading-[0.95] m-0 mb-6 md:mb-8 max-w-[15ch] text-on-accent"
+      class="font-body font-black leading-[0.95] m-0 mb-6 md:mb-8 max-w-[15ch] text-fg"
       data-reveal
       style="font-size: clamp(3.5rem, 11vw + 1rem, 9.5rem); letter-spacing: -0.035em; --reveal-delay: 1;"
     >
-      Progetto sistemi, non schermate.
+      Progetto <span class="font-display italic font-light text-accent">sistemi,</span> non schermate.
     </h1>
     <p
-      class="text-step-1 md:text-step-2 leading-[1.45] text-on-accent/75 max-w-[52ch] m-0"
+      class="text-step-1 md:text-step-2 leading-[1.45] text-muted max-w-[52ch] m-0"
       data-reveal
       style="--reveal-delay: 2;"
     >
@@ -46,24 +78,24 @@
   <!-- Bottom: meta operativa + scroll indicator -->
   <div class="container-editorial pb-8 md:pb-10 relative z-10">
     <div
-      class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pt-6 border-t border-on-accent/15"
+      class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 pt-6 border-t border-border"
       data-reveal
       style="--reveal-delay: 3;"
     >
-      <div class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-step--1 text-on-accent/70" aria-label="Disponibilità e settori">
-        <span><span class="text-on-accent/50 mr-1">◦</span>Disponibile da settembre</span>
-        <span><span class="text-on-accent/50 mr-1">◦</span>Fintech · SaaS B2B · Servizi</span>
-        <span><span class="text-on-accent/50 mr-1">◦</span>Remoto o Milano</span>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-step--1 text-muted" aria-label="Disponibilità e settori">
+        <span><span class="text-accent mr-1">◦</span>Disponibile da settembre</span>
+        <span><span class="text-accent mr-1">◦</span>Fintech · SaaS B2B · Servizi</span>
+        <span><span class="text-accent mr-1">◦</span>Remoto o Milano</span>
       </div>
       <a
         href="#work"
-        class="hero-scroll group inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] font-medium text-on-accent/70 hover:text-on-accent no-underline self-start md:self-end"
+        class="hero-scroll group inline-flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.16em] font-medium text-muted hover:text-fg no-underline self-start md:self-end"
         aria-label="Scorri per vedere i progetti"
       >
-        <span>Scorri</span>
+        <span class="border-b border-current pb-0.5">Scroll down to discover</span>
         <span
           aria-hidden="true"
-          class="inline-flex items-center justify-center w-9 h-9 border border-on-accent/40 rounded-full transition-[border-color,transform] duration-300 ease-editorial group-hover:border-on-accent group-hover:translate-y-1"
+          class="inline-flex items-center justify-center w-9 h-9 border border-border rounded-full transition-[border-color,transform] duration-300 ease-editorial group-hover:border-fg group-hover:translate-y-1"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="block"><path d="M8 2v11M4 9l4 4 4-4"/></svg>
         </span>
@@ -73,7 +105,6 @@
 </section>
 
 <style>
-  /* Subtle bounce on the scroll arrow (respect reduced motion) */
   @keyframes hero-bounce {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(4px); }
@@ -87,8 +118,6 @@
 </style>
 
 <script>
-  // Mouse parallax on the "designer." signature (subtle, editorial).
-  // Fine pointer only (skips touch); respects prefers-reduced-motion.
   const finePointer = window.matchMedia('(pointer: fine)').matches;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const sig = document.getElementById('heroSignature');
@@ -98,8 +127,7 @@
     const onMove = (e: MouseEvent) => {
       const w = window.innerWidth;
       const h = window.innerHeight;
-      // -1 to 1 range, damped
-      tx = ((e.clientX / w) - 0.5) * 24; // 24px max drift horizontal
+      tx = ((e.clientX / w) - 0.5) * 24;
       ty = ((e.clientY / h) - 0.5) * 16;
       if (raf == null) {
         raf = requestAnimationFrame(() => {

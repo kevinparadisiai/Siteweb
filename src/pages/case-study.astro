@@ -98,27 +98,27 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </div>
   </section>
 
-  <!-- Outcome full-bleed BLACK (Sketchin signature) -->
-  <section id="outcome" class="bg-accent-deep text-on-accent py-20 md:py-28 relative overflow-hidden">
+  <!-- Outcome full-bleed on light bg — numero gigante arancione come signature -->
+  <section id="outcome" class="bg-bg text-fg py-20 md:py-28 relative overflow-hidden border-y border-border">
     <div class="container-editorial">
       <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 mb-12">
-        <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-on-accent/70 m-0 flex items-center gap-3">
+        <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 flex items-center gap-3">
           <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
           Outcome
         </p>
-        <p class="text-step-1 leading-[1.5] text-on-accent/90 max-w-[52ch] m-0">
+        <p class="text-step-1 leading-[1.5] text-fg/90 max-w-[52ch] m-0">
           Metriche misurate su A/B con 3.400 nuovi account, comparato con la baseline dei 3 mesi precedenti.
         </p>
       </div>
 
-      <div class="border-t border-on-accent/20 pt-10">
+      <div class="border-t border-border pt-10">
         <div class="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-8 items-end mb-10">
-          <p class="font-display italic font-light text-accent m-0 leading-[0.85] tabular-nums" style="font-size: clamp(7rem, 18vw, 15rem); font-variation-settings: 'opsz' 144, 'SOFT' 100;">−40<span aria-hidden="true">%</span></p>
-          <p class="font-display italic font-normal text-step-1 leading-[1.35] text-on-accent/75 max-w-[24ch] m-0 pb-3">
-            Drop-off nei primi 7 giorni. <strong class="not-italic font-medium text-on-accent">3.400 nuovi account</strong>, sopra il target di −25%.
+          <p class="font-body font-black text-accent m-0 leading-[0.85] tabular-nums" style="font-size: clamp(7rem, 18vw, 15rem); letter-spacing: -0.045em;">−40<span aria-hidden="true">%</span></p>
+          <p class="font-display italic font-normal text-step-1 leading-[1.35] text-muted max-w-[24ch] m-0 pb-3">
+            Drop-off nei primi 7 giorni. <strong class="not-italic font-medium text-fg">3.400 nuovi account</strong>, sopra il target di −25%.
           </p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-on-accent/20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-border">
           {[
             ['+12pt', 'NPS post-onboarding'],
             ['6→2', 'Step nel flusso critico'],
@@ -126,8 +126,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             ['2 mesi', 'Dal go al ship'],
           ].map(([num, label]) => (
             <div>
-              <p class="font-display italic font-light text-on-accent text-step-3 leading-none tracking-tight m-0 mb-3 tabular-nums" style="font-variation-settings: 'opsz' 144, 'SOFT' 100;">{num}</p>
-              <p class="text-[0.7rem] uppercase tracking-[0.12em] font-medium text-on-accent/60 m-0 leading-tight">{label}</p>
+              <p class="font-body font-black text-fg text-step-3 leading-none tracking-tight m-0 mb-3 tabular-nums" style="letter-spacing: -0.03em;"><span class="text-accent">◦</span> {num}</p>
+              <p class="text-[0.7rem] uppercase tracking-[0.12em] font-medium text-muted m-0 leading-tight">{label}</p>
             </div>
           ))}
         </div>
