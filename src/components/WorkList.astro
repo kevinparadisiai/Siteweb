@@ -2,26 +2,8 @@
 import { projects } from '@/data/projects';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<section class="bg-bg pb-20 md:pb-28" id="work" aria-labelledby="work-anchor">
+<section class="bg-bg pb-20 md:pb-28 pt-12 md:pt-16" id="work" aria-label="Lista progetti">
   <div class="container-editorial">
-
-    <header class="pt-8 md:pt-12 pb-8 md:pb-10 mb-10 md:mb-14 border-b border-border">
-      <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-6 md:mb-8" data-reveal>
-        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
-        <span class="tabular-nums">III</span>
-        <span aria-hidden="true" class="opacity-40">—</span>
-        <span>Progetti</span>
-      </p>
-      <h2
-        id="work-anchor"
-        class="font-body font-black leading-[0.98] m-0 text-fg max-w-[20ch]"
-        style="font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: -0.035em;"
-        data-reveal
-      >
-        Progetti scelti per <span class="font-display italic font-light text-accent">decisione</span>, non per output.
-      </h2>
-    </header>
-
     <ul class="list-none p-0 m-0 flex flex-col gap-6 md:gap-8">
       {projects.map((p) => {
         const dark = !!p.onSignatureDark;
