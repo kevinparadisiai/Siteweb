@@ -29,6 +29,10 @@ export interface Project {
   /** true when the signature color is light (yellow/pastel) and needs dark
    *  text on top instead of white; false (default) uses white text. */
   onSignatureDark?: boolean;
+  /** Cover mockup shown after the intro paragraph */
+  cover?: { caption: string; urlHint?: string; variant?: 'overview' | 'form' | 'tree' | 'grid' | 'detail'; shape?: 'browser' | 'portrait' };
+  /** Detail mockups shown as a gallery after the phases */
+  gallery?: Array<{ caption: string; variant?: 'overview' | 'form' | 'tree' | 'grid' | 'detail'; shape?: 'browser' | 'portrait' }>;
 }
 
 export const projects: Project[] = [
@@ -73,6 +77,16 @@ export const projects: Project[] = [
     role:
       "Nel progetto ho coordinato un piccolo gruppo di designer e seguito l'intero ciclo di progettazione della pagina post-chiamata, lavorando su analisi degli insight, strutturazione dei contenuti e progettazione della soluzione. Ho validato le scelte tramite survey e A/B test, collaborando con stakeholder di business per allineare bisogni utente e obiettivi aziendali.",
     signatureColor: '#1E39A0',
+    cover: {
+      caption: 'Area privata TIM — vista di insieme, linea mobile',
+      urlHint: 'timfibra.tim.it/area-clienti',
+      variant: 'overview',
+    },
+    gallery: [
+      { caption: 'Area privata — vista di insieme, linea fissa', variant: 'grid' },
+      { caption: 'Schermata post-chiamata — mobile', variant: 'form', shape: 'portrait' },
+      { caption: 'Dashboard KPI di efficacia', variant: 'detail' },
+    ],
   },
 
   {
@@ -120,6 +134,16 @@ export const projects: Project[] = [
     role:
       "Ho seguito il redesign completo dell'area privata, occupandomi dell'analisi dei requisiti in collaborazione con il cliente e della loro traduzione in epic, feature e user story, a supporto della pianificazione delle attività in un contesto Agile. Ho guidato la progettazione delle interfacce in cicli iterativi, confrontandomi a ogni sprint con gli stakeholder. Ho inoltre definito le specifiche funzionali e gestito l'handoff al team di sviluppo, assicurando continuità progettuale e chiarezza nell'implementazione. Nelle fasi avanzate del progetto, ho verificato le soluzioni sviluppate per assicurare coerenza con i requisiti, correttezza funzionale e qualità complessiva dell'esperienza utente.",
     signatureColor: '#5C8CB8',
+    cover: {
+      caption: 'Area privata Gruppo CAP — home dopo il redesign',
+      urlHint: 'gruppocap.it/area-clienti',
+      variant: 'overview',
+    },
+    gallery: [
+      { caption: 'Procedura di allacciamento — step 3 di 5', variant: 'form' },
+      { caption: 'Creazione nuova utenza operatore', variant: 'form' },
+      { caption: 'Vista amministratori di condominio', variant: 'grid' },
+    ],
   },
 
   {
@@ -169,5 +193,15 @@ export const projects: Project[] = [
       "Nel progetto ho seguito l'intero ciclo di progettazione, contribuendo in modo continuativo alle diverse fasi di realizzazione del portale. In particolare, mi sono occupato della creazione delle pagine a partire dai layout progettuali, traducendo le soluzioni di design in interfacce funzionali e coerenti con l'esperienza definita. Ho inoltre gestito la fase di validazione direttamente con il cliente, occupandomi del confronto sui contenuti, sulle funzionalità e sulla resa visiva delle pagine, fino alla loro approvazione finale.",
     signatureColor: '#F5D33A',
     onSignatureDark: true,
+    cover: {
+      caption: 'Portale Archivio Storico Eni — vista di insieme della soluzione',
+      urlHint: 'archiviostorico.eni.com',
+      variant: 'overview',
+    },
+    gallery: [
+      { caption: 'Navigazione ad albero — consultazione tecnica', variant: 'tree' },
+      { caption: 'Scheda documento — metadata e contesto', variant: 'detail' },
+      { caption: 'Ricerca avanzata multi-criterio', variant: 'form' },
+    ],
   },
 ];

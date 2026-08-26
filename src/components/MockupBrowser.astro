@@ -1,0 +1,170 @@
+---
+interface Props {
+  /** Signature color for the accented UI regions inside the mockup */
+  signatureColor: string;
+  /** true when the sig color is light (yellow) — flips inside labels to dark */
+  dark?: boolean;
+  /** Which abstract composition to render */
+  variant?: 'overview' | 'form' | 'tree' | 'grid' | 'detail';
+  /** Small label shown under the mockup (caption) */
+  caption?: string;
+  /** Cosmetic label shown in the browser address bar */
+  urlHint?: string;
+  /** aspect ratio; use "portrait" for phone-shaped mockups */
+  shape?: 'browser' | 'portrait';
+  /** ARIA label — describes what the placeholder represents */
+  alt: string;
+}
+const {
+  signatureColor,
+  dark = false,
+  variant = 'overview',
+  caption,
+  urlHint = 'portfolio.kevinparadisi.it',
+  shape = 'browser',
+  alt,
+} = Astro.props;
+
+const surface = '#F7F5F0';
+const surfaceDim = '#EDEAE3';
+const stroke = 'rgba(10,10,10,0.10)';
+const ink = '#1A1A1A';
+const inkSoft = 'rgba(26,26,26,0.55)';
+const onSig = dark ? '#0A0A0A' : '#FFFFFF';
+
+// Grid line arrangements per variant — kept as small integer arrays so the
+// same base SVG stays visually varied across the case study.
+const rows = variant === 'form' ? [8, 5, 7, 4, 6]
+           : variant === 'tree' ? [3, 5, 4, 6, 5, 4]
+           : variant === 'grid' ? [6, 6, 6, 6]
+           : variant === 'detail' ? [7, 4, 6, 5]
+           : /* overview */ [7, 5, 6, 4, 5];
+
+// Viewbox: browser is landscape 1600x1000, portrait phone is 720x1440
+const isPortrait = shape === 'portrait';
+const vbW = isPortrait ? 720 : 1600;
+const vbH = isPortrait ? 1440 : 1000;
+---
+<figure class="mockup" role="figure" aria-label={alt}>
+  <div class="mockup__frame">
+    <svg
+      viewBox={`0 0 ${vbW} ${vbH}`}
+      role="img"
+      aria-hidden="true"
+      preserveAspectRatio="xMidYMid meet"
+      class="mockup__svg"
+    >
+      <!-- Base surface -->
+      <rect x="0" y="0" width={vbW} height={vbH} fill={surface} />
+
+      {!isPortrait && (
+        <g>
+          <!-- Chrome bar -->
+          <rect x="0" y="0" width={vbW} height="60" fill={surfaceDim} />
+          <line x1="0" y1="60" x2={vbW} y2="60" stroke={stroke} stroke-width="1" />
+          <!-- Traffic lights -->
+          <circle cx="34" cy="30" r="9" fill="#E56060" />
+          <circle cx="60" cy="30" r="9" fill="#E0B247" />
+          <circle cx="86" cy="30" r="9" fill="#66B978" />
+          <!-- Address bar -->
+          <rect x="220" y="15" width={vbW - 440} height="30" rx="6" fill={surface} stroke={stroke} />
+          <text x={vbW / 2} y="35" text-anchor="middle" font-family="ui-monospace, monospace" font-size="14" fill={inkSoft}>{urlHint}</text>
+        </g>
+      )}
+
+      {isPortrait && (
+        <g>
+          <!-- Phone notch -->
+          <rect x={vbW/2 - 90} y="30" width="180" height="26" rx="13" fill="#0A0A0A" />
+        </g>
+      )}
+
+      <!-- Content area -->
+      <g transform={`translate(0, ${isPortrait ? 100 : 60})`}>
+        <!-- Left rail (browser only): logo + nav dots -->
+        {!isPortrait && (
+          <g>
+            <rect x="60" y="60" width={vbW - 120} height="1" fill={stroke} />
+            <text x="60" y="42" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill={ink}>Kevin.</text>
+            <g fill={inkSoft} font-family="Inter, sans-serif" font-size="12" letter-spacing="1.6">
+              <text x={vbW - 260} y="42">WORK</text>
+              <text x={vbW - 180} y="42">LAB</text>
+              <text x={vbW - 120} y="42">CONTATTI</text>
+            </g>
+          </g>
+        )}
+
+        <!-- Hero block: signature color band with a title placeholder -->
+        <g transform={`translate(${isPortrait ? 40 : 80}, ${isPortrait ? 40 : 110})`}>
+          <rect
+            x="0" y="0"
+            width={vbW - (isPortrait ? 80 : 160)}
+            height={isPortrait ? 360 : 300}
+            fill={signatureColor}
+          />
+          <!-- Title bars (short + long) -->
+          <rect x="30" y={isPortrait ? 60 : 40} width={isPortrait ? 260 : 320} height={isPortrait ? 22 : 28} rx="2" fill={onSig} opacity="0.85" />
+          <rect x="30" y={isPortrait ? 100 : 90} width={isPortrait ? 520 : 780} height={isPortrait ? 40 : 60} rx="4" fill={onSig} opacity="0.95" />
+          <rect x="30" y={isPortrait ? 160 : 170} width={isPortrait ? 420 : 560} height={isPortrait ? 40 : 60} rx="4" fill={onSig} opacity="0.75" />
+          <!-- CTA pill -->
+          <rect x="30" y={isPortrait ? 260 : 240} width={isPortrait ? 180 : 220} height={isPortrait ? 46 : 46} rx="23" fill={onSig} opacity="0.15" stroke={onSig} stroke-opacity="0.6" />
+          <rect x="60" y={isPortrait ? 274 : 254} width={isPortrait ? 90 : 100} height="18" rx="2" fill={onSig} opacity="0.9" />
+        </g>
+
+        <!-- Content rows: stack of horizontal bars sized per variant -->
+        <g transform={`translate(${isPortrait ? 40 : 80}, ${isPortrait ? 460 : 460})`} fill={ink} opacity="0.7">
+          {rows.map((cols, r) => (
+            <g transform={`translate(0, ${r * (isPortrait ? 44 : 60)})`}>
+              {Array.from({ length: cols }).map((_, c) => {
+                const totalW = vbW - (isPortrait ? 80 : 160);
+                const gap = 12;
+                const cellW = (totalW - gap * (cols - 1)) / cols;
+                return (
+                  <rect
+                    x={c * (cellW + gap)}
+                    y="0"
+                    width={cellW}
+                    height={isPortrait ? 12 : 18}
+                    rx="2"
+                    fill={ink}
+                    opacity={(0.55 - r * 0.06).toFixed(2)}
+                  />
+                );
+              })}
+            </g>
+          ))}
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  {caption && (
+    <figcaption class="mockup__caption">
+      <span aria-hidden="true" class="mockup__tick" style={`background:${signatureColor};`}></span>
+      {caption}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .mockup { margin: 0; }
+  .mockup__frame {
+    background: #E8E4DD;
+    border: 1px solid rgba(10, 10, 10, 0.10);
+    padding: 10px;
+    box-shadow: 0 20px 40px -20px rgba(10, 10, 10, 0.25);
+    line-height: 0;
+  }
+  .mockup__svg { width: 100%; height: auto; display: block; }
+  .mockup__caption {
+    margin-top: 0.75rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: theme('colors.muted');
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mockup__tick { width: 6px; height: 6px; border-radius: 999px; display: inline-block; }
+</style>

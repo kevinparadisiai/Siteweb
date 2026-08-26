@@ -3,6 +3,7 @@ import Base from '@/layouts/Base.astro';
 import SiteSidebar from '@/components/SiteSidebar.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import FeatureHero from '@/components/FeatureHero.astro';
+import MockupBrowser from '@/components/MockupBrowser.astro';
 import type { Project } from '@/data/projects';
 
 interface Props { project: Project; }
@@ -78,6 +79,21 @@ const crumb = `Portfolio / Work / ${project.client}`;
       </div>
     </div>
   </section>
+
+  <!-- Cover mockup: full-width placeholder for the hero screen of the project -->
+  {project.cover && (
+    <section class="container-editorial pb-16 md:pb-24" aria-label="Anteprima progetto">
+      <MockupBrowser
+        signatureColor={project.signatureColor}
+        dark={!!project.onSignatureDark}
+        caption={project.cover.caption}
+        urlHint={project.cover.urlHint}
+        variant={project.cover.variant}
+        shape={project.cover.shape}
+        alt={`Placeholder — ${project.cover.caption}. Mockup di anteprima; l'immagine reale del progetto è NDA.`}
+      />
+    </section>
+  )}
 
   <!-- Outcome / Risultati — griglia di numeri con trattamento uniforme -->
   <section
@@ -156,6 +172,38 @@ const crumb = `Portfolio / Work / ${project.client}`;
       ))}
     </div>
   </section>
+
+  <!-- Detail gallery: smaller mockups showing other views of the product -->
+  {project.gallery && project.gallery.length > 0 && (
+    <section class="bg-bg py-16 md:py-24 border-t border-border" aria-labelledby="gallery-anchor">
+      <div class="container-editorial">
+        <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 mb-12">
+          <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 flex items-center gap-3">
+            <span class="inline-block w-10 h-px" style={`background:${project.signatureColor};`} aria-hidden="true"></span>
+            Dettagli
+          </p>
+          <h2
+            id="gallery-anchor"
+            class="font-body font-black text-fg m-0"
+            style="font-size: clamp(1.75rem, 3vw, 2.25rem); letter-spacing: -0.02em; line-height: 1.15;"
+          >Altre viste della soluzione</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {project.gallery.map((m) => (
+            <MockupBrowser
+              signatureColor={project.signatureColor}
+              dark={!!project.onSignatureDark}
+              caption={m.caption}
+              variant={m.variant}
+              shape={m.shape}
+              alt={`Placeholder — ${m.caption}. Mockup di dettaglio, l'immagine reale del progetto è NDA.`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- Il mio ruolo (box "Il mio ruolo" — strategy S9) -->
   <section
