@@ -258,7 +258,8 @@
   z-index: 50;
   background: theme('colors.accent');
   color: theme('colors.on-accent');
-  padding: 6rem clamp(1rem, 4vw, 2.5rem) 2.5rem;
+  /* Extra left padding so the X (fixed center-left) has clear space */
+  padding: 6rem clamp(1.25rem, 4vw, 2.5rem) 2.5rem calc(clamp(1rem, 4vw, 2.5rem) + 4.5rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -268,15 +269,20 @@
   pointer-events: none;
   overflow-y: auto;
 }
+@media (min-width: 900px) {
+  .site-menu {
+    padding-left: calc(clamp(1rem, 4vw, 2.5rem) + 6rem);
+  }
+}
 .site-menu.is-open {
   clip-path: inset(0 0 0 0);
   pointer-events: auto;
 }
 .site-menu:focus { outline: none; }
 
-/* X close: sits exactly where the hamburger sits — fixed at center-left —
-   so the swap reads as hamburger → X in place. */
-.site-menu__close {
+/* X close: TOP-LEVEL sibling (not inside .site-menu) so ancestor clip-path
+   can't affect visibility. Fixed center-left mirrors the hamburger position. */
+.site-menu-close {
   position: fixed;
   top: 50%;
   left: clamp(1rem, 4vw, 2.5rem);
@@ -284,14 +290,23 @@
   appearance: none;
   background: transparent;
   border: 0;
-  color: inherit;
+  color: #ffffff;
   padding: 0.5rem 0.5rem 0.5rem 0;
   cursor: pointer;
   line-height: 0;
-  z-index: 61;
+  z-index: 62;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 260ms cubic-bezier(0.2, 0.6, 0.2, 1) 180ms,
+    transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
 }
-.site-menu__close svg { transition: transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1); }
-.site-menu__close:hover svg { transform: rotate(90deg); }
+.menu-open .site-menu-close {
+  opacity: 1;
+  pointer-events: auto;
+}
+.site-menu-close svg { transition: transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1); }
+.site-menu-close:hover svg { transform: rotate(90deg); }
 
 .site-menu__grid {
   display: grid;
@@ -348,21 +363,45 @@
   text-decoration-thickness: 4px;
 }
 
-.site-menu__side {
+/* ---- Sublinks under the main nav (left column bottom) ---- */
+.site-menu__sub {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0.4rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 500ms cubic-bezier(0.2, 0.6, 0.2, 1) 320ms,
+    transform 520ms cubic-bezier(0.2, 0.6, 0.2, 1) 320ms;
+}
+.site-menu.is-open .site-menu__sub { opacity: 1; transform: translateY(0); }
+.site-menu__sublink {
+  font-family: theme('fontFamily.body');
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: theme('colors.on-accent');
+  text-decoration: none;
+  opacity: 0.65;
+  transition: opacity 200ms ease;
+}
+.site-menu__sublink:hover { opacity: 1; text-decoration: underline; text-underline-offset: 0.3em; }
+
+/* ---- Contact block on the right (Sketchin newsletter block pattern) ---- */
+.site-menu__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   opacity: 0;
   transform: translateY(24px);
   transition:
     opacity 500ms cubic-bezier(0.2, 0.6, 0.2, 1) 380ms,
     transform 620ms cubic-bezier(0.2, 0.6, 0.2, 1) 380ms;
 }
-.site-menu.is-open .site-menu__side {
-  opacity: 1;
-  transform: translateY(0);
-}
-.site-menu__block { display: flex; flex-direction: column; gap: 0.5rem; }
+.site-menu.is-open .site-menu__contact { opacity: 1; transform: translateY(0); }
+
 .site-menu__eyebrow {
   font-family: theme('fontFamily.body');
   font-size: 0.68rem;
@@ -370,59 +409,102 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: theme('colors.on-accent');
-  opacity: 0.65;
+  opacity: 0.7;
   margin: 0;
 }
-.site-menu__mail {
-  font-family: theme('fontFamily.display');
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+.site-menu__contact-title {
+  font-family: theme('fontFamily.body');
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.2vw, 2.15rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: theme('colors.on-accent');
-  text-decoration: underline;
-  text-underline-offset: 0.25em;
-  text-decoration-thickness: 1px;
+  margin: 0 0 0.5rem;
+  max-width: 22ch;
 }
-.site-menu__mail:hover { text-decoration-thickness: 2px; }
-.site-menu__cta {
+
+/* ---- Form: underline-only fields (Sketchin style) ---- */
+.site-menu__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.site-menu__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.site-menu__field-label {
+  font-family: theme('fontFamily.body');
+  font-size: 0.78rem;
+  color: theme('colors.on-accent');
+  opacity: 0.85;
+}
+.site-menu__field input {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.45);
+  color: theme('colors.on-accent');
+  font-family: theme('fontFamily.body');
+  font-size: 1rem;
+  padding: 0.4rem 0 0.5rem;
+  outline: none;
+  transition: border-color 220ms ease;
+}
+.site-menu__field input:hover { border-bottom-color: rgba(255,255,255,0.75); }
+.site-menu__field input:focus-visible { border-bottom-color: #ffffff; border-bottom-width: 2px; }
+.site-menu__field input::placeholder { color: rgba(255,255,255,0.55); }
+
+.site-menu__consent {
+  font-size: 0.78rem;
+  color: theme('colors.on-accent');
+  opacity: 0.75;
+  margin: 0.25rem 0 0;
+  max-width: 38ch;
+}
+.site-menu__consent strong { font-weight: 600; opacity: 1; }
+
+.site-menu__submit {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: theme('colors.on-accent');
+  font-family: theme('fontFamily.body');
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
+  cursor: pointer;
   align-self: flex-start;
-  padding: 0.9rem 1.2rem;
-  border: 1px solid theme('colors.on-accent');
-  color: theme('colors.on-accent');
-  text-decoration: none;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  transition: background 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
-              color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  border-bottom: 1px solid currentColor;
+  margin-top: 0.5rem;
+  transition: gap 220ms ease;
 }
-.site-menu__cta:hover {
-  background: theme('colors.on-accent');
-  color: theme('colors.accent');
-}
+.site-menu__submit:hover { gap: 1.1rem; }
+.site-menu__submit svg { transition: transform 220ms ease; }
+.site-menu__submit:hover svg { transform: translateX(2px); }
+
+/* ---- Socials vertical list (Sketchin pattern: right column bottom) ---- */
 .site-menu__socials {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 2rem 0 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 .site-menu__socials a {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-family: theme('fontFamily.body');
+  font-size: 1rem;
   color: theme('colors.on-accent');
   text-decoration: none;
-  opacity: 0.75;
+  opacity: 0.85;
   transition: opacity 200ms ease;
 }
-.site-menu__socials a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 0.35em; }
+.site-menu__socials a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 0.3em; }
 
 .site-menu__meta {
   display: flex;

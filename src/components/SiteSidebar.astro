@@ -14,7 +14,7 @@ const sublinks = [
   { label: 'Scarica CV',           href: `${base}/cv.pdf`      },
 ];
 ---
-<!-- Persistent top-left: brand (always) + hamburger (only after hero) -->
+<!-- Persistent top-left brand + fixed center-left hamburger (Sketchin pattern) -->
 <div class="site-brandbar" data-hero-in-view="true">
   <a href={`${base}/`} class="site-brandbar__brand" aria-label="Home — Kevin Paradisi">
     <span aria-hidden="true">Kevin<em>.</em></span>
@@ -29,11 +29,25 @@ const sublinks = [
     aria-label="Apri menu"
     data-cursor-label="Menu"
   >
-    <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-      <path d="M0 3h26M0 11h26"/>
+    <svg width="30" height="18" viewBox="0 0 30 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <path d="M0 4h30M0 14h30"/>
     </svg>
   </button>
 </div>
+
+<!-- X close: sibling of the overlay so no ancestor clip-path can hide it -->
+<button
+  type="button"
+  class="site-menu-close"
+  id="menuClose"
+  aria-label="Chiudi menu"
+  data-cursor-label="Chiudi"
+>
+  <svg width="44" height="44" viewBox="0 0 32 32" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+    <path d="M7 7l18 18M25 7L7 25"/>
+  </svg>
+  <span class="sr-only">Chiudi menu</span>
+</button>
 
 <!-- Exploded nav — visible only inside the hero (Sketchin homepage pattern) -->
 <nav class="hero-nav" id="heroNav" aria-label="Sezioni">
@@ -65,19 +79,6 @@ const sublinks = [
 >
   <h2 id="siteMenuTitle" class="sr-only">Navigazione</h2>
 
-  <button
-    type="button"
-    class="site-menu__close"
-    id="menuClose"
-    aria-label="Chiudi menu"
-    data-cursor-label="Chiudi"
-  >
-    <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
-      <path d="M6 6l20 20M26 6L6 26"/>
-    </svg>
-    <span class="sr-only">Chiudi</span>
-  </button>
-
   <div class="site-menu__grid">
     <nav class="site-menu__nav" aria-label="Menu principale">
       {items.map((it, i) => (
@@ -89,44 +90,67 @@ const sublinks = [
           style={`--menu-delay: ${i * 65}ms;`}
         >{it.label}</a>
       ))}
+
+      <ul class="site-menu__sub" aria-label="Scorciatoie">
+        {sublinks.map((s) => (
+          <li><a href={s.href} class="site-menu__sublink" data-menu-link>{s.label}</a></li>
+        ))}
+      </ul>
     </nav>
 
-    <aside class="site-menu__side" aria-label="Contatti">
-      <div class="site-menu__block">
-        <p class="site-menu__eyebrow">Scrivimi</p>
-        <a
-          href="mailto:kevinparadisiai@gmail.com"
-          class="site-menu__mail"
-          data-menu-link
-          data-cursor-label="Scrivi email"
-        >kevinparadisiai@gmail.com</a>
-      </div>
+    <aside class="site-menu__contact" aria-labelledby="menuContactTitle">
+      <p class="site-menu__eyebrow">Parliamone</p>
+      <h3
+        id="menuContactTitle"
+        class="site-menu__contact-title"
+      >Raccontami il prossimo progetto.</h3>
 
-      <div class="site-menu__block">
-        <p class="site-menu__eyebrow">Portfolio</p>
-        <a
-          href={`${base}/cv.pdf`}
-          download
-          class="site-menu__cta"
-          data-menu-link
-          data-cursor-label="Download PDF"
-        >
-          <span>Scarica CV</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
-        </a>
-      </div>
+      <form
+        class="site-menu__form"
+        id="menuContactForm"
+        action="mailto:kevinparadisiai@gmail.com"
+        method="post"
+        enctype="text/plain"
+        novalidate
+      >
+        <label class="site-menu__field">
+          <span class="site-menu__field-label">Nome</span>
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label class="site-menu__field">
+          <span class="site-menu__field-label">E-mail *</span>
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label class="site-menu__field">
+          <span class="site-menu__field-label">Di che si tratta?</span>
+          <input type="text" name="subject" />
+        </label>
+
+        <p class="site-menu__consent">
+          Nessuna newsletter, nessun tracker.
+          Rispondo entro <strong>48h</strong> in giorni feriali.
+        </p>
+
+        <button type="submit" class="site-menu__submit" data-cursor-label="Scrivimi">
+          <span>Scrivimi</span>
+          <svg width="18" height="14" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M1 9h22M15 2l7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
 
       <ul class="site-menu__socials" aria-label="Social">
         <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener" data-menu-link>LinkedIn</a></li>
         <li><a href="https://www.behance.net/" target="_blank" rel="noopener" data-menu-link>Behance</a></li>
         <li><a href="https://read.cv/" target="_blank" rel="noopener" data-menu-link>Read.cv</a></li>
+        <li><a href="mailto:kevinparadisiai@gmail.com" data-menu-link>Email diretto</a></li>
       </ul>
     </aside>
   </div>
 
   <p class="site-menu__meta" aria-hidden="true">
     <span>Portfolio · 2026</span>
-    <span>Disponibile da settembre</span>
+    <span>Disponibile da settembre · Remoto o Milano</span>
   </p>
 </div>
 
@@ -137,6 +161,7 @@ const sublinks = [
   const menu = document.getElementById('siteMenu') as HTMLElement | null;
   const brandbar = document.querySelector<HTMLElement>('.site-brandbar');
   const heroNav = document.getElementById('heroNav');
+  const form = document.getElementById('menuContactForm') as HTMLFormElement | null;
 
   const setOpen = (open: boolean) => {
     if (!menu || !trigger) return;
@@ -158,6 +183,27 @@ const sublinks = [
     a.addEventListener('click', () => setOpen(false));
   });
 
+  // Menu form → open mailto with prefilled subject/body
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const name = String(fd.get('name') || '').trim();
+    const email = String(fd.get('email') || '').trim();
+    const subject = String(fd.get('subject') || '').trim();
+    if (!email) { (form.querySelector('input[name=email]') as HTMLInputElement)?.focus(); return; }
+    const subj = subject ? `Portfolio — ${subject}` : 'Portfolio — parliamone';
+    const body = [
+      `Ciao Kevin,`,
+      ``,
+      name ? `Sono ${name}.` : '',
+      `[racconta cosa hai in mente]`,
+      ``,
+      `— ${name || ''} ${email ? `<${email}>` : ''}`.trim(),
+    ].filter(Boolean).join('\n');
+    const href = `mailto:kevinparadisiai@gmail.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+    window.location.href = href;
+  });
+
   // ================= Hero-in-view: swap between exploded nav and hamburger =================
   // Uses scrollY (not IntersectionObserver) because the sticky-stack keeps the
   // hero element intersecting the viewport even when a later section covers it.
@@ -177,7 +223,6 @@ const sublinks = [
     }, { passive: true });
     window.addEventListener('resize', check);
   } else if (heroNav) {
-    // Non-home page: hero doesn't exist → keep exploded nav hidden, hamburger visible.
     heroNav.classList.remove('is-visible');
     if (brandbar) brandbar.dataset.heroInView = 'false';
   }
