@@ -141,7 +141,7 @@ export const projects: Project[] = [
     },
     gallery: [
       { caption: 'Procedura di allacciamento — step 3 di 5', variant: 'form' },
-      { caption: 'Creazione nuova utenza operatore', variant: 'form' },
+      { caption: 'Creazione utenza operatore — app operativa', variant: 'form', shape: 'portrait' },
       { caption: 'Vista amministratori di condominio', variant: 'grid' },
     ],
   },
@@ -200,7 +200,7 @@ export const projects: Project[] = [
     },
     gallery: [
       { caption: 'Navigazione ad albero — consultazione tecnica', variant: 'tree' },
-      { caption: 'Scheda documento — metadata e contesto', variant: 'detail' },
+      { caption: 'Scheda documento — lettura mobile in archivio', variant: 'detail', shape: 'portrait' },
       { caption: 'Ricerca avanzata multi-criterio', variant: 'form' },
     ],
   },

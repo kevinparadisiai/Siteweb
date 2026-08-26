@@ -80,18 +80,37 @@ const crumb = `Portfolio / Work / ${project.client}`;
     </div>
   </section>
 
-  <!-- Cover mockup: full-width placeholder for the hero screen of the project -->
+  <!-- Cover mockup: dynamic composition — big browser tilted left, optional
+       phone-style detail floating on top-right at an opposing tilt. -->
   {project.cover && (
-    <section class="container-editorial pb-16 md:pb-24" aria-label="Anteprima progetto">
-      <MockupBrowser
-        signatureColor={project.signatureColor}
-        dark={!!project.onSignatureDark}
-        caption={project.cover.caption}
-        urlHint={project.cover.urlHint}
-        variant={project.cover.variant}
-        shape={project.cover.shape}
-        alt={`Placeholder — ${project.cover.caption}. Mockup di anteprima; l'immagine reale del progetto è NDA.`}
-      />
+    <section class="container-editorial pb-24 md:pb-32 overflow-visible" aria-label="Anteprima progetto">
+      <div class="relative">
+        <div class="md:-mr-16 lg:-mr-24 md:-rotate-[1deg] transition-transform duration-500">
+          <MockupBrowser
+            signatureColor={project.signatureColor}
+            dark={!!project.onSignatureDark}
+            caption={project.cover.caption}
+            urlHint={project.cover.urlHint}
+            variant={project.cover.variant}
+            shape={project.cover.shape}
+            alt={`Placeholder — ${project.cover.caption}. Mockup di anteprima; l'immagine reale del progetto è NDA.`}
+          />
+        </div>
+        {project.gallery && project.gallery[1] && (
+          <div
+            aria-hidden="true"
+            class="hidden lg:block absolute right-0 -bottom-24 w-[220px] rotate-[3deg] pointer-events-none"
+          >
+            <MockupBrowser
+              signatureColor={project.signatureColor}
+              dark={!!project.onSignatureDark}
+              variant={project.gallery[1].variant}
+              shape="portrait"
+              alt=""
+            />
+          </div>
+        )}
+      </div>
     </section>
   )}
 
@@ -175,7 +194,7 @@ const crumb = `Portfolio / Work / ${project.client}`;
 
   <!-- Detail gallery: smaller mockups showing other views of the product -->
   {project.gallery && project.gallery.length > 0 && (
-    <section class="bg-bg py-16 md:py-24 border-t border-border" aria-labelledby="gallery-anchor">
+    <section class="bg-bg py-16 md:py-24 md:pb-40 border-t border-border overflow-hidden" aria-labelledby="gallery-anchor">
       <div class="container-editorial">
         <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 mb-12">
           <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 flex items-center gap-3">
@@ -189,17 +208,33 @@ const crumb = `Portfolio / Work / ${project.client}`;
           >Altre viste della soluzione</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-          {project.gallery.map((m) => (
-            <MockupBrowser
-              signatureColor={project.signatureColor}
-              dark={!!project.onSignatureDark}
-              caption={m.caption}
-              variant={m.variant}
-              shape={m.shape}
-              alt={`Placeholder — ${m.caption}. Mockup di dettaglio, l'immagine reale del progetto è NDA.`}
-            />
-          ))}
+        <!-- Bento layout: varied spans + subtle rotations + vertical offsets
+             so the mockups read as a composition, not a uniform 3-col grid. -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-x-10 md:gap-y-16 items-start">
+          {project.gallery.map((m, i) => {
+            // Item 0 → wide left, tilt -1deg
+            // Item 1 → tall right (portrait), spans 2 rows, tilt +2deg
+            // Item 2 → medium bottom-left with column offset, tilt -1.5deg, pushed down
+            const layout = i === 0
+              ? 'md:col-span-8 md:-rotate-[1deg] md:origin-top-left'
+              : i === 1
+              ? 'md:col-span-4 md:row-span-2 md:mt-16 md:rotate-[2deg] md:origin-top'
+              : i === 2
+              ? 'md:col-span-7 md:col-start-2 md:mt-14 md:-rotate-[1.5deg] md:origin-top-right'
+              : 'md:col-span-6';
+            return (
+              <div class:list={['transition-transform duration-500', layout]}>
+                <MockupBrowser
+                  signatureColor={project.signatureColor}
+                  dark={!!project.onSignatureDark}
+                  caption={m.caption}
+                  variant={m.variant}
+                  shape={m.shape}
+                  alt={`Placeholder — ${m.caption}. Mockup di dettaglio, l'immagine reale del progetto è NDA.`}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
