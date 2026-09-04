@@ -3,19 +3,15 @@ import Base from '@/layouts/Base.astro';
 import SiteSidebar from '@/components/SiteSidebar.astro';
 import SiteFooter from '@/components/SiteFooter.astro';
 import Hero from '@/components/Hero.astro';
-import Summary from '@/components/Summary.astro';
-import FeaturedTeaser from '@/components/FeaturedTeaser.astro';
+import WorkBento from '@/components/WorkBento.astro';
 import ContactCta from '@/components/ContactCta.astro';
 ---
-<Base title="Kevin Paradisi — UX Designer moving to strategy" bodyClass="page-stack">
+<Base title="Kevin Paradisi — UX Designer moving to strategy" bodyClass="">
   <SiteSidebar slot="sidebar" current="hero" />
 
-  <div class="stack-scope">
-    <section class="stack-item stack-item--hero"><Hero /></section>
-    <section class="stack-item"><Summary /></section>
-    <section class="stack-item"><FeaturedTeaser /></section>
-    <section class="stack-item"><ContactCta /></section>
-  </div>
+  <Hero />
+  <WorkBento />
+  <ContactCta />
 
   <SiteFooter slot="footer" />
 </Base>
