@@ -1,59 +1,176 @@
 ---
-// HeroReveal — unified hero: one passage that starts with the manifesto
-// and ends with the finale statement. Scroll-linked word reveal on all of
-// it. No side mark, no separate accent screen — everything on white bg.
-const passage =
-  `Sette anni tra prodotto e servizi digitali. ` +
-  `Framing, sistemi, outcome misurabili. ` +
-  `Sposto il focus verso design strategy. ` +
-  `Progetto sistemi, non schermate.`;
-const words = passage.split(/\s+/);
+// HeroReveal — Sketchin auto-play sequence.
+// The passage is broken into 3 phases + 1 finale. On landing the sequence
+// starts automatically: each phase reveals its words with a staggered
+// animation, then fades out for the next phase.
+// If the user scrolls before it finishes, the animation snaps to the
+// finale so the projects block below is immediately reachable.
+// prefers-reduced-motion opts out of the animation entirely and shows
+// the finale statically.
+const phases: string[][] = [
+  ['Sette', 'anni', 'tra', 'prodotto', 'e', 'servizi', 'digitali.'],
+  ['Framing,', 'sistemi,', 'outcome', 'misurabili.'],
+  ['Sposto', 'il', 'focus', 'verso', 'design', 'strategy.'],
+];
+const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
 ---
 <section
   id="hero"
-  class="relative bg-bg min-h-dvh flex items-center overflow-hidden"
+  class="hero-auto relative bg-bg min-h-dvh flex items-center overflow-hidden"
   aria-labelledby="hero-title"
 >
-  <div class="container-editorial relative z-0 py-24 md:py-32">
-    <h1
-      id="hero-title"
-      class="hero-reveal__passage font-body font-medium leading-[1.1] m-0 max-w-[22ch] text-fg"
-      style="letter-spacing: -0.025em;"
-      data-reveal-words
-    >
-      {words.map((w, i, arr) => {
-        // Highlight the final sentence typographically: bump weight,
-        // and swap "sistemi," to Fraunces italic light as the accent.
-        const finaleStart = words.indexOf('Progetto');
-        const inFinale = finaleStart >= 0 && i >= finaleStart;
-        const isItalicAccent = /^sistemi/i.test(w);
-        return (
-          <>
-            <span
-              class:list={[
-                'rw-word',
-                inFinale && 'font-black',
-                isItalicAccent && 'font-display italic font-light text-accent',
-              ]}
-              style={inFinale ? 'letter-spacing: -0.035em;' : ''}
-            >{w}</span>
-            {i < arr.length - 1 ? ' ' : ''}
-          </>
-        );
-      })}
-    </h1>
+  <div class="container-editorial relative w-full">
 
-    <!-- Meta operativa (S4) as a small caption below the passage -->
+    <!-- Stage: phases are absolutely stacked, only one visible at a time -->
+    <div class="hero-auto__stage relative min-h-[52vh]">
+      {phases.map((words, i) => (
+        <p
+          class="hero-phase"
+          data-phase={i}
+          aria-hidden={i === 0 ? undefined : 'true'}
+        >
+          {words.map((w, j) => (
+            <>
+              <span class="hero-word" style={`--i:${j};`}>{w}</span>
+              {j < words.length - 1 ? ' ' : ''}
+            </>
+          ))}
+        </p>
+      ))}
+
+      <!-- Finale phase — same stage, larger + accent italic on "sistemi," -->
+      <h1
+        id="hero-title"
+        class="hero-phase hero-phase--finale"
+        data-phase={phases.length}
+        aria-hidden="true"
+      >
+        {finale.map((w, j) => {
+          const italic = /^sistemi/i.test(w);
+          return (
+            <>
+              <span
+                class:list={['hero-word', italic && 'font-display italic font-light text-accent']}
+                style={`--i:${j};`}
+              >{w}</span>
+              {j < finale.length - 1 ? ' ' : ''}
+            </>
+          );
+        })}
+      </h1>
+    </div>
+
+    <!-- Meta operativa (S4) — always visible below the stage -->
     <p class="mt-12 md:mt-16 font-mono text-[0.72rem] tracking-[0.14em] uppercase text-muted flex flex-wrap gap-x-6 gap-y-2 max-w-[70ch]">
       <span><span class="text-accent mr-1">◦</span>Disponibile da settembre</span>
       <span><span class="text-accent mr-1">◦</span>Telco · Utilities · Fintech · SaaS B2B</span>
       <span><span class="text-accent mr-1">◦</span>Remoto o Milano</span>
     </p>
+
   </div>
 </section>
 
 <style>
-  .hero-reveal__passage {
+  .hero-auto__stage { min-height: 52vh; }
+
+  .hero-phase {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    max-width: 22ch;
+    font-family: theme('fontFamily.body');
+    font-weight: 500;
     font-size: clamp(2rem, 4.6vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .hero-phase.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hero-phase.is-done {
+    opacity: 0;
+  }
+
+  .hero-word {
+    display: inline-block;
+    color: rgba(10, 10, 10, 0.20);
+    transition: color 260ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    will-change: color;
+  }
+  .hero-phase.is-active .hero-word {
+    animation: hero-word-lit 480ms forwards;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+  @keyframes hero-word-lit {
+    to { color: #0A0A0A; }
+  }
+
+  .hero-phase--finale {
+    max-width: 15ch;
+    font-weight: 900;
+    font-size: clamp(3rem, 9vw + 1rem, 8rem);
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+  }
+  .hero-phase--finale .hero-word.font-display { color: theme('colors.accent'); }
+  .hero-phase--finale.is-active .hero-word.font-display { animation: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-phase { transition: none; }
+    .hero-phase.is-active .hero-word { animation: none; color: #0A0A0A; }
+    .hero-phase--finale .hero-word.font-display { color: theme('colors.accent'); }
   }
 </style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const phases = Array.from(document.querySelectorAll<HTMLElement>('.hero-phase'));
+
+  const activate = (i: number) => {
+    phases.forEach((p, j) => {
+      p.classList.toggle('is-active', j === i);
+      p.classList.toggle('is-done', j < i);
+      if (j === i) p.removeAttribute('aria-hidden');
+      else p.setAttribute('aria-hidden', 'true');
+    });
+  };
+
+  if (phases.length > 0) {
+    if (reduce) {
+      // Skip animation: show finale immediately.
+      activate(phases.length - 1);
+    } else {
+      // Auto-play: each phase visible for ~2.6s, then advance.
+      const PHASE_MS = 2600;
+      let idx = 0;
+      activate(0);
+      let timer: number | null = window.setInterval(() => {
+        idx += 1;
+        if (idx >= phases.length) {
+          if (timer) { window.clearInterval(timer); timer = null; }
+          return;
+        }
+        activate(idx);
+      }, PHASE_MS);
+
+      // Skip to finale on first scroll — so the projects below are
+      // immediately reachable without waiting out the sequence.
+      const onScroll = () => {
+        if (window.scrollY <= 40) return;
+        if (idx < phases.length - 1) {
+          if (timer) { window.clearInterval(timer); timer = null; }
+          idx = phases.length - 1;
+          activate(idx);
+        }
+        window.removeEventListener('scroll', onScroll);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  }
+</script>
