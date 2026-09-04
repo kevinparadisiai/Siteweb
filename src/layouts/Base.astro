@@ -64,6 +64,46 @@ const base = import.meta.env.BASE_URL;
         document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('is-in-view'));
       }
 
+      // ================= Scroll-linked word reveal =================
+      // Any element with [data-reveal-words] has its .rw-word children lit
+      // progressively as it crosses the middle of the viewport. Skipped
+      // entirely on prefers-reduced-motion (CSS forces the lit color).
+      if (!reduce) {
+        const passages = Array.from(document.querySelectorAll('[data-reveal-words]'));
+        if (passages.length > 0) {
+          const cached = passages.map((el) => ({
+            el,
+            words: Array.from(el.querySelectorAll('.rw-word')),
+          }));
+          let ticking = false;
+          const update = () => {
+            const vh = window.innerHeight;
+            const start = vh * 0.85;
+            const end = vh * 0.20;
+            for (const { el, words } of cached) {
+              const rect = el.getBoundingClientRect();
+              // If the passage is far off-screen, skip the math for perf.
+              if (rect.bottom < -vh || rect.top > vh * 2) continue;
+              const raw = (start - rect.top) / (start - end);
+              const progress = Math.max(0, Math.min(1, raw));
+              const litCount = Math.floor(progress * words.length);
+              for (let i = 0; i < words.length; i++) {
+                const shouldLit = i < litCount;
+                if (shouldLit !== words[i].classList.contains('is-lit')) {
+                  words[i].classList.toggle('is-lit', shouldLit);
+                }
+              }
+            }
+            ticking = false;
+          };
+          update();
+          window.addEventListener('scroll', () => {
+            if (!ticking) { requestAnimationFrame(update); ticking = true; }
+          }, { passive: true });
+          window.addEventListener('resize', update);
+        }
+      }
+
       // ================= Custom cursor =================
       // Sketchin-style: dot follows mouse, grows to ring on interactive elements.
       // Skips touch devices and reduced-motion. Uses mix-blend-difference so

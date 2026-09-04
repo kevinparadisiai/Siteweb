@@ -1,0 +1,49 @@
+---
+// Strategy §S2 — "In sintesi" as a single editorial passage.
+// Scroll-linked word reveal (same pattern as hero lede) — the passage
+// carries skill/settori/metodo/target dell'HR gate, but reads as a
+// manifesto, not a resume table.
+// Font: Inter medium (500), size in between the hero H1 (black 900) and
+// the lede (regular 400) — a "middle ground" per request.
+
+// Split into words that keep punctuation attached, so the reveal reads
+// naturally as prose (no orphan periods lighting on their own).
+const passage =
+  `Sette anni a fare design, poco a decidere design. ` +
+  `Sposto il focus sulla strategia: framing prima del pixel, sistemi come infrastruttura, outcome come contratto con il business. ` +
+  `Progetto da problema, non da mockup. ` +
+  `Prototipo per decidere, non per illustrare. ` +
+  `Metto le metriche prima del delivery. ` +
+  `Lavoro tra telco, utilities e cultura — dove le decisioni pesano più delle schermate. ` +
+  `Cerco ruoli senior o strategy lead: il valore sta nel decidere cosa costruire, non nel disegnarlo tutto.`;
+
+const words = passage.split(/\s+/);
+---
+<section
+  class="bg-bg py-24 md:py-32 border-t border-border"
+  id="sintesi"
+  aria-labelledby="sintesi-anchor"
+>
+  <div class="container-editorial">
+
+    <header class="mb-10 md:mb-14 max-w-[65ch]">
+      <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0" data-reveal>
+        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+        <span class="tabular-nums">II</span>
+        <span aria-hidden="true" class="opacity-40">—</span>
+        <span id="sintesi-anchor">In sintesi</span>
+      </p>
+    </header>
+
+    <p
+      class="font-body font-medium leading-[1.35] max-w-[24ch] md:max-w-[28ch] lg:max-w-[30ch] m-0"
+      style="font-size: clamp(2rem, 4.2vw, 3.6rem); letter-spacing: -0.02em;"
+      data-reveal-words
+    >
+      {words.map((w, i, arr) => (
+        <><span class="rw-word">{w}</span>{i < arr.length - 1 ? ' ' : ''}</>
+      ))}
+    </p>
+
+  </div>
+</section>

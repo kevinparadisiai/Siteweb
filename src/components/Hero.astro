@@ -57,8 +57,8 @@
 
     {/* Lede with scroll-linked word-by-word color reveal */}
     <p
-      id="heroLede"
-      class="hero-lede text-step-1 md:text-step-2 leading-[1.45] max-w-[54ch] m-0"
+      class="text-step-1 md:text-step-2 leading-[1.45] max-w-[54ch] m-0 font-medium"
+      data-reveal-words
       data-reveal
       style="--reveal-delay: 2;"
     >
@@ -70,7 +70,7 @@
         'Sto', 'spostando', 'il', 'mio', 'focus', 'verso', 'ruoli',
         'di', 'design', 'strategy.',
       ].map((w, i, arr) => (
-        <><span class="hero-lede__word">{w}</span>{i < arr.length - 1 ? ' ' : ''}</>
+        <><span class="rw-word">{w}</span>{i < arr.length - 1 ? ' ' : ''}</>
       ))}
     </p>
   </div>
@@ -112,53 +112,14 @@
   .hero-scroll span[aria-hidden] svg {
     animation: hero-bounce 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-
-  /* Scroll-linked word reveal: words start muted, transition to fg color
-     as the user scrolls past them. */
-  .hero-lede { color: rgba(10, 10, 10, 0.28); }
-  .hero-lede__word {
-    display: inline-block;
-    color: inherit;
-    transition: color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
-  }
-  .hero-lede__word.is-lit { color: #0A0A0A; }
-
   @media (prefers-reduced-motion: reduce) {
     .hero-scroll span[aria-hidden] svg { animation: none; }
-    .hero-lede { color: #0A0A0A; }
-    .hero-lede__word { transition: none; }
   }
 </style>
 
 <script>
   const finePointer = window.matchMedia('(pointer: fine)').matches;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ============ Scroll-linked word reveal on the hero lede ============
-  const lede = document.getElementById('heroLede');
-  const hero = document.getElementById('hero');
-  if (lede && hero && !reduce) {
-    const words = Array.from(lede.querySelectorAll<HTMLSpanElement>('.hero-lede__word'));
-    let ticking = false;
-    const update = () => {
-      const rect = lede.getBoundingClientRect();
-      const vh = window.innerHeight;
-      // Progress: 0 when the lede is fully below the middle of the viewport,
-      // 1 when its top has scrolled past the middle. Reveals as user reads.
-      const start = vh * 0.75;
-      const end = vh * 0.15;
-      const raw = (start - rect.top) / (start - end);
-      const progress = Math.max(0, Math.min(1, raw));
-      const litCount = Math.floor(progress * words.length);
-      words.forEach((w, i) => w.classList.toggle('is-lit', i < litCount));
-      ticking = false;
-    };
-    update();
-    window.addEventListener('scroll', () => {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', update);
-  }
 
   const sig = document.getElementById('heroSignature');
   if (sig && finePointer && !reduce) {

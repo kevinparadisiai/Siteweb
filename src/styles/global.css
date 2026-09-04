@@ -734,7 +734,25 @@
     scroll-behavior: auto !important;
   }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
+  [data-reveal-words] { color: #0A0A0A !important; }
+  .rw-word { transition: none !important; }
 }
+
+/* ==========================================================================
+   Scroll-linked word reveal — passage starts muted, each word transitions
+   to fg color as the user scrolls past it. Attach [data-reveal-words] to
+   any container and wrap each word in a <span class="rw-word">.
+   ========================================================================== */
+[data-reveal-words] {
+  color: rgba(10, 10, 10, 0.28);
+}
+.rw-word {
+  display: inline-block;
+  color: inherit;
+  transition: color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  will-change: color;
+}
+.rw-word.is-lit { color: #0A0A0A; }
 
 /* ==========================================================================
    Scroll stack — each section sticks and the next slides over it
