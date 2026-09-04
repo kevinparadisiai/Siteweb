@@ -1,0 +1,88 @@
+---
+import MockupBrowser from './MockupBrowser.astro';
+import { projects } from '@/data/projects';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const tim = projects.find((p) => p.slug === 'tim')!;
+const cap = projects.find((p) => p.slug === 'cap')!;
+const eni = projects.find((p) => p.slug === 'eni')!;
+
+const lab = {
+  href: `${base}/lab-ai/`,
+  eyebrow: 'Lab · AI',
+  client: 'Sperimentazione',
+  title: 'Cosa succede se chiedo a un LLM di argomentare contro le mie decisioni?',
+  signatureColor: '#0A0A0A',
+  onSignatureDark: false,
+  kind: 'lab' as const,
+  cover: { caption: 'Prompt "avvocato del diavolo" — 3 progetti reali', variant: 'form' as const, shape: 'browser' as const },
+};
+
+// Sketchin pattern: two rows, alternate weights.
+// Row 1: TIM (col-6) + CAP (col-6) — side by side
+// Row 2: Eni (col-5) + Lab (col-7)  — asymmetric
+const rows = [
+  [
+    { data: tim,  span: 'md:col-span-6' },
+    { data: cap,  span: 'md:col-span-6' },
+  ],
+  [
+    { data: eni,  span: 'md:col-span-5' },
+    { data: lab,  span: 'md:col-span-7' },
+  ],
+];
+
+const kindLabel = (t: any) => (t.kind === 'lab' ? 'Sperimentazione' : 'Consulenza');
+---
+<section class="bg-bg py-20 md:py-28" id="work" aria-labelledby="work-anchor">
+  <div class="container-editorial">
+
+    <header class="mb-14 md:mb-20 max-w-[65ch]">
+      <p class="flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-5">
+        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+        <span class="tabular-nums">III</span>
+        <span aria-hidden="true" class="opacity-40">—</span>
+        <span id="work-anchor">Progetti &amp; Lab</span>
+      </p>
+    </header>
+
+    <div class="flex flex-col gap-16 md:gap-20">
+      {rows.map((row) => (
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
+          {row.map(({ data, span }) => (
+            <a
+              href={data.href}
+              class:list={['group block no-underline', span]}
+              data-cursor-label={data.kind === 'lab' ? 'Leggi la nota' : 'Leggi il case study'}
+            >
+              <!-- Image-first: mockup takes the top ~65% of the card -->
+              <div class="mb-6 md:mb-8 transition-transform duration-500 ease-editorial group-hover:-translate-y-1">
+                <MockupBrowser
+                  signatureColor={data.signatureColor}
+                  dark={!!data.onSignatureDark}
+                  variant={data.cover?.variant}
+                  shape={data.cover?.shape}
+                  alt={`Placeholder — ${data.client}: ${data.title}. Mockup di anteprima.`}
+                />
+              </div>
+
+              <!-- Caption block below the image (Sketchin pattern) -->
+              <div class="max-w-[52ch]">
+                <p class="text-[0.72rem] uppercase tracking-[0.14em] font-medium text-muted m-0 mb-3">
+                  <span>{kindLabel(data)}</span>
+                  <span class="mx-2 opacity-40" aria-hidden="true">·</span>
+                  <strong class="font-medium text-fg">{data.client}</strong>
+                </p>
+                <h3
+                  class="font-body font-black text-fg m-0 leading-[1.05]"
+                  style="font-size: clamp(1.5rem, 2.6vw, 2.5rem); letter-spacing: -0.03em;"
+                >{data.title}</h3>
+              </div>
+            </a>
+          ))}
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
