@@ -1,77 +1,57 @@
 ---
-// HeroReveal — Sketchin-style reading sequence.
-// Phrases share the same font/size — only color changes. The current
-// phrase is black, the previous one fades to gray and floats up
-// briefly during the transition, giving a reading rhythm. First
-// scroll skips to the finale so the projects below are reachable.
-// Adds a persistent "Kevin." wordmark on the left of the stage as
-// the animation's brand signal (Sketchin uses their asterisk logo).
-const phases: string[][] = [
-  ['Sette', 'anni', 'tra', 'prodotto', 'e', 'servizi', 'digitali.'],
-  ['Framing,', 'sistemi,', 'outcome', 'misurabili.'],
-  ['Sposto', 'il', 'focus', 'verso', 'design', 'strategy.'],
+// HeroReveal — Sketchin reading-rail pattern.
+// The phrases are stacked vertically. The container translates upward
+// by one phrase per step, so the current phrase always sits in the
+// middle of the viewport while the previous one stays visible above
+// in gray. Plain-string phrases keep native whitespace between words.
+// A small pulsing mark on the left signals "this area is animating"
+// (replaces the static "Kevin." wordmark that read like a logo, not
+// like a loading indicator).
+const phases: string[] = [
+  'Sette anni tra prodotto e servizi digitali.',
+  'Framing, sistemi, outcome misurabili.',
+  'Sposto il focus verso design strategy.',
+  // Finale is the last phrase, gets italic accent on "sistemi,"
 ];
-const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
 ---
 <section
   id="hero"
-  class="hero-auto relative bg-bg min-h-dvh overflow-hidden"
+  class="hero-auto relative bg-bg h-dvh overflow-hidden"
   aria-labelledby="hero-title"
 >
-  <!-- Persistent brand mark, left of the stage, marks the animation. -->
-  <a
-    href="#hero"
-    class="hero-auto__brand"
-    aria-label="Kevin Paradisi"
+  <!-- Pulsing signature mark, left of the rail. Signals animation. -->
+  <span
+    class="hero-auto__mark"
+    aria-hidden="true"
+    data-animation-mark
   >
-    <span aria-hidden="true">Kevin<em>.</em></span>
-  </a>
+    <svg viewBox="0 0 32 32" width="34" height="34" fill="currentColor">
+      <path d="M14 0h4v13.2l9.3-4.6 2 3.5-9.3 4.6 9.3 4.6-2 3.5-9.3-4.6V32h-4V18.8L4.7 23.4l-2-3.5 9.3-4.6-9.3-4.6 2-3.5L14 12z"/>
+    </svg>
+  </span>
 
-  <div class="container-editorial relative h-dvh flex items-center">
+  <div class="hero-auto__viewport">
+    <div class="hero-auto__rail" style="--idx: 0;">
 
-    <div class="hero-auto__stage relative w-full">
-      {phases.map((words, i) => (
+      {phases.map((text, i) => (
         <p
           class="hero-phase"
           data-phase={i}
           aria-hidden={i === 0 ? undefined : 'true'}
-        >
-          <span class="hero-phase__text">
-            {words.map((w, j) => (
-              <>
-                <span class="hero-word">{w}</span>
-                {j < words.length - 1 ? ' ' : ''}
-              </>
-            ))}
-          </span>
-        </p>
+        >{text}</p>
       ))}
 
-      <!-- Finale: same font/size as the phases, just the italic accent
-           on "sistemi," survives -->
       <h1
         id="hero-title"
-        class="hero-phase"
+        class="hero-phase hero-phase--finale"
         data-phase={phases.length}
         aria-hidden="true"
-      >
-        <span class="hero-phase__text">
-          {finale.map((w, j) => {
-            const italic = /^sistemi/i.test(w);
-            return (
-              <>
-                <span class:list={['hero-word', italic && 'font-display italic font-light text-accent']}>{w}</span>
-                {j < finale.length - 1 ? ' ' : ''}
-              </>
-            );
-          })}
-        </span>
-      </h1>
-    </div>
+      >Progetto <span class="font-display italic font-light text-accent">sistemi,</span> non schermate.</h1>
 
+    </div>
   </div>
 
-  <!-- Meta operativa (S4) — bottom of the hero, always visible -->
+  <!-- Meta operativa (S4) — bottom of hero, always visible -->
   <div class="hero-auto__meta container-editorial">
     <p class="font-mono text-[0.72rem] tracking-[0.14em] uppercase text-muted flex flex-wrap gap-x-6 gap-y-2 m-0 max-w-[70ch]">
       <span><span class="text-accent mr-1">◦</span>Disponibile da settembre</span>
@@ -82,27 +62,23 @@ const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
 </section>
 
 <style>
-  /* Persistent brand mark on the left of the animation stage */
-  .hero-auto__brand {
+  /* Pulsing animation mark on the left */
+  .hero-auto__mark {
     position: absolute;
     top: 50%;
     left: clamp(1rem, 4vw, 2.5rem);
     transform: translateY(-50%);
     z-index: 3;
-    font-family: theme('fontFamily.display');
-    font-size: 1.35rem;
-    line-height: 1;
-    letter-spacing: -0.02em;
     color: theme('colors.fg');
-    text-decoration: none;
+    display: inline-flex;
+    line-height: 0;
+    animation: hero-mark-pulse 1.6s ease-in-out infinite;
   }
-  .hero-auto__brand em {
-    color: theme('colors.accent');
-    font-style: normal;
+  @keyframes hero-mark-pulse {
+    0%, 100% { opacity: 0.35; transform: translateY(-50%) scale(1); }
+    50%      { opacity: 1;    transform: translateY(-50%) scale(1.08); }
   }
-  @media (min-width: 900px) {
-    .hero-auto__brand { font-size: 1.6rem; }
-  }
+  .hero-auto__mark.is-done { animation: none; opacity: 0.5; }
 
   .hero-auto__meta {
     position: absolute;
@@ -110,111 +86,96 @@ const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
     z-index: 3;
   }
 
-  /* Stage — reserves enough vertical room for the tallest phrase */
-  .hero-auto__stage { min-height: 60vh; padding-left: 5rem; }
-  @media (min-width: 900px) { .hero-auto__stage { padding-left: 8rem; } }
-
-  /* Phrases stacked absolutely in the same spot; transitions crossfade
-     via opacity + a small vertical drift so the past phrase floats up
-     while the next one appears from below. */
-  .hero-phase {
+  /* Viewport: masks the rail so only one "slot" is visible at a time. */
+  .hero-auto__viewport {
     position: absolute;
-    top: 0; left: 0; right: 0;
+    inset: 0;
+    padding-left: clamp(4.5rem, 8vw, 8rem);
+    padding-right: clamp(1rem, 4vw, 2.5rem);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Rail: vertical stack of phrases. Translates up by one PHASE_HEIGHT
+     per step, so the active phrase lands in view and the previous one
+     drifts up to the top. */
+  .hero-auto__rail {
+    --phase-h: clamp(9rem, 20vh, 16rem);
+    position: relative;
+    width: 100%;
+    transform: translateY(calc(var(--idx, 0) * (-1 * var(--phase-h))));
+    transition: transform 780ms cubic-bezier(0.6, 0.02, 0.2, 1);
+  }
+
+  .hero-phase {
     margin: 0;
-    display: block;
-    /* SAME font/size for ALL phases (phases + finale) — Sketchin rule */
+    padding: 0;
+    min-height: var(--phase-h);
+    display: flex;
+    align-items: center;
+    max-width: 22ch;
+    /* SAME font/size for every phase — Sketchin rule */
     font-family: theme('fontFamily.body');
     font-weight: 700;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 1.05;
+    font-size: clamp(2.5rem, 5.8vw, 4.6rem);
+    line-height: 1.06;
     letter-spacing: -0.03em;
-    color: rgba(10, 10, 10, 0.25); /* gray = past / not-yet-active */
-    opacity: 0;
-    transform: translateY(24px);
-    transition:
-      opacity 620ms cubic-bezier(0.2, 0.6, 0.2, 1),
-      transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1),
-      color 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
-    will-change: opacity, transform, color;
+    color: rgba(10, 10, 10, 0.28); /* default: gray = past or upcoming */
+    transition: color 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
   }
-  .hero-phase__text {
-    display: block;
-    max-width: 22ch;
-  }
-  .hero-word {
-    display: inline;
-  }
-
-  /* Current phrase — black, in place, fully visible */
-  .hero-phase.is-active {
-    opacity: 1;
-    color: #0A0A0A;
-    transform: translateY(0);
-  }
-  /* Previous phrase — visible in gray, drifted up */
-  .hero-phase.is-past {
-    opacity: 1;
-    color: rgba(10, 10, 10, 0.28);
-    transform: translateY(-32px);
-  }
-  /* Older phrases — hidden */
-  .hero-phase.is-done {
-    opacity: 0;
-    transform: translateY(-64px);
-  }
-
-  /* Preserve accent color even when the phrase is muted */
-  .hero-phase .text-accent { color: theme('colors.accent') !important; }
+  .hero-phase.is-active { color: #0A0A0A; }
+  .hero-phase--finale .text-accent { color: theme('colors.accent'); }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-auto__mark { animation: none; opacity: 0.5; }
+    .hero-auto__rail { transition: none; }
     .hero-phase { transition: none; }
-    .hero-phase.is-active, .hero-phase.is-past, .hero-phase.is-done {
-      transition: none;
-    }
   }
 </style>
 
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rail = document.querySelector<HTMLElement>('.hero-auto__rail');
   const phases = Array.from(document.querySelectorAll<HTMLElement>('.hero-phase'));
+  const mark = document.querySelector<HTMLElement>('[data-animation-mark]');
 
-  const setState = (activeIdx: number) => {
+  const setActive = (i: number) => {
+    if (!rail) return;
+    rail.style.setProperty('--idx', String(i));
     phases.forEach((p, j) => {
-      p.classList.remove('is-active', 'is-past', 'is-done');
-      if (j < activeIdx - 1) p.classList.add('is-done');
-      else if (j === activeIdx - 1) p.classList.add('is-past');
-      else if (j === activeIdx) p.classList.add('is-active');
-      // future phases: keep default (invisible, waiting)
-      if (j === activeIdx) p.removeAttribute('aria-hidden');
+      p.classList.toggle('is-active', j === i);
+      if (j === i) p.removeAttribute('aria-hidden');
       else p.setAttribute('aria-hidden', 'true');
     });
+    // Signal end of animation
+    if (i >= phases.length - 1 && mark) mark.classList.add('is-done');
   };
 
   if (phases.length > 0) {
     if (reduce) {
-      // Show the finale immediately for reduced-motion users
-      setState(phases.length - 1);
+      setActive(phases.length - 1);
     } else {
-      const PHASE_MS = 2600;
+      const PHASE_MS = 2500;
       let idx = 0;
-      setState(0);
+      setActive(0);
       let timer: number | null = window.setInterval(() => {
         idx += 1;
         if (idx >= phases.length) {
           if (timer) { window.clearInterval(timer); timer = null; }
           return;
         }
-        setState(idx);
+        setActive(idx);
       }, PHASE_MS);
 
-      // First real scroll skips the sequence to the finale so the
-      // projects below are reachable without waiting the animation out.
+      // First real scroll → snap to finale so the next block is
+      // immediately reachable without waiting the sequence out.
       const onScroll = () => {
         if (window.scrollY <= 40) return;
         if (idx < phases.length - 1) {
           if (timer) { window.clearInterval(timer); timer = null; }
           idx = phases.length - 1;
-          setState(idx);
+          setActive(idx);
         }
         window.removeEventListener('scroll', onScroll);
       };

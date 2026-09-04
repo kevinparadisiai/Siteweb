@@ -93,8 +93,8 @@
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  mix-blend-mode: difference;
-  color: #ffffff;
+  /* Fixed dark colour — no mix-blend so it doesn't morph per section */
+  color: theme('colors.fg');
   padding: 0.35rem 0;
   pointer-events: none;
   user-select: none;
@@ -121,8 +121,10 @@
   display: inline-flex;
   align-items: baseline;
   gap: 1.25rem;
-  mix-blend-mode: difference;
-  color: #ffffff;
+  /* Fixed dark color — no mix-blend so it doesn't morph per section.
+     The rare case of a very dark card scrolling under it is handled
+     by the .menu-open override further down. */
+  color: theme('colors.fg');
   pointer-events: auto;
 }
 .site-brandbar__brand {
@@ -148,7 +150,6 @@
   padding: 14px 12px;
   min-width: 44px;
   min-height: 44px;
-  color: inherit;
   cursor: pointer;
   line-height: 0;
   position: fixed;
@@ -156,12 +157,17 @@
   left: calc(clamp(1rem, 4vw, 2.5rem) - 12px);
   transform: translateY(-50%);
   z-index: 60;
-  mix-blend-mode: difference;
-  color: #ffffff;
+  /* Fixed dark stroke — one consistent hamburger across the whole site */
+  color: theme('colors.fg');
   opacity: 1;
   transition:
     opacity 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
     transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.site-brandbar__trigger svg {
+  /* Subtle light halo so the icon reads even when it briefly overlaps
+     a darker card during scroll. */
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.55));
 }
 /* Hide hamburger while hero (first screen) is in view */
 .site-brandbar[data-hero-in-view="true"] .site-brandbar__trigger {
@@ -188,8 +194,7 @@
   flex-direction: column;
   gap: 0.4rem;
   max-width: 220px;
-  color: #ffffff;
-  mix-blend-mode: difference;
+  color: theme('colors.fg');
   pointer-events: none;
 }
 @media (min-width: 900px) { .hero-nav { display: flex; } }
@@ -251,12 +256,14 @@
 /* Body scroll lock when overlay open */
 .menu-open { overflow: hidden; }
 .menu-open body { overflow: hidden; }
-/* When menu (red) is open, drop mix-blend so text reads pure white on red */
+/* When the red menu overlay is open, the persistent brandbar / lang
+   switch / hamburger flip to pure white so they read on the red bg. */
 .menu-open .site-brandbar,
-.menu-open .lang-switch {
-  mix-blend-mode: normal;
+.menu-open .lang-switch,
+.menu-open .site-brandbar__trigger {
   color: #ffffff;
 }
+.menu-open .site-brandbar__trigger svg { filter: none; }
 
 /* ==========================================================================
    Full-screen overlay menu — Sketchin big-red panel
@@ -602,7 +609,8 @@
   top: 0; left: 0;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: difference;
+  /* NO mix-blend-mode — colors would morph per backdrop, we want a
+     single consistent cursor treatment across the whole site. */
   will-change: transform;
   opacity: 0;
   transition: opacity 220ms cubic-bezier(0.2, 0.6, 0.2, 1);
@@ -614,7 +622,9 @@
   position: absolute;
   top: -3px; left: -3px;
   width: 6px; height: 6px;
-  background: #ffffff;
+  background: #0A0A0A;
+  /* Halo: white ring around the dot so it stays visible on dark backdrops */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
   border-radius: 50%;
   transition: transform 280ms cubic-bezier(0.2, 0.6, 0.2, 1);
 }
@@ -622,8 +632,10 @@
   position: absolute;
   top: -22px; left: -22px;
   width: 44px; height: 44px;
-  border: 1px solid #ffffff;
+  border: 1.5px solid #0A0A0A;
   border-radius: 50%;
+  /* Faint white outer halo — 3:1 minimum against any surface */
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.70);
   opacity: 0;
   transform: scale(0.4);
   transition:
@@ -642,8 +654,11 @@
   position: absolute;
   top: -12px; left: 22px;
   padding: 6px 10px;
-  background: #ffffff;
-  color: #000000;
+  /* Fixed black pill + white text — one consistent look on any backdrop
+     (no more mix-blend colour morphing per section). */
+  background: #0A0A0A;
+  color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
   font-family: theme('fontFamily.body');
   font-size: 0.68rem;
   font-weight: 500;
@@ -683,7 +698,6 @@
   top: 5rem;
   z-index: 20;
   pointer-events: none;
-  mix-blend-mode: difference;
   padding-left: clamp(1rem, 4vw, 2.5rem);
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -698,14 +712,14 @@
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: theme('colors.fg');
   opacity: 0.85;
 }
 .chapter-marker__rule {
   display: inline-block;
   width: 1.5rem;
   height: 1px;
-  background: #ffffff;
+  background: theme('colors.fg');
   opacity: 0.85;
 }
 
