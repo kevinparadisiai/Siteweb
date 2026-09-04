@@ -1,54 +1,65 @@
 ---
-// HeroReveal — Sketchin reading-rail pattern.
-// The phrases are stacked vertically. The container translates upward
-// by one phrase per step, so the current phrase always sits in the
-// middle of the viewport while the previous one stays visible above
-// in gray. Plain-string phrases keep native whitespace between words.
-// A small pulsing mark on the left signals "this area is animating"
-// (replaces the static "Kevin." wordmark that read like a logo, not
-// like a loading indicator).
-const phases: string[] = [
-  'Sette anni tra prodotto e servizi digitali.',
-  'Framing, sistemi, outcome misurabili.',
-  'Sposto il focus verso design strategy.',
-  // Finale is the last phrase, gets italic accent on "sistemi,"
+// HeroReveal — classic slideshow: one phrase visible at a time. The
+// previous one slides up + fades out at the same moment the new one
+// slides in from below + fades in. Auto-plays on landing (2.5s per
+// slide). First scroll skips to the finale so the projects below are
+// reachable. Pulsing asterisk mark above the phrase area signals
+// animation activity.
+const phases: string[][] = [
+  ['Sette', 'anni', 'tra', 'prodotto', 'e', 'servizi', 'digitali.'],
+  ['Framing,', 'sistemi,', 'outcome', 'misurabili.'],
+  ['Sposto', 'il', 'focus', 'verso', 'design', 'strategy.'],
 ];
+const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
 ---
 <section
   id="hero"
-  class="hero-auto relative bg-bg h-dvh overflow-hidden"
+  class="hero-auto relative bg-bg h-dvh flex items-center overflow-hidden"
   aria-labelledby="hero-title"
 >
-  <!-- Pulsing signature mark, left of the rail. Signals animation. -->
-  <span
-    class="hero-auto__mark"
-    aria-hidden="true"
-    data-animation-mark
-  >
-    <svg viewBox="0 0 32 32" width="34" height="34" fill="currentColor">
-      <path d="M14 0h4v13.2l9.3-4.6 2 3.5-9.3 4.6 9.3 4.6-2 3.5-9.3-4.6V32h-4V18.8L4.7 23.4l-2-3.5 9.3-4.6-9.3-4.6 2-3.5L14 12z"/>
-    </svg>
-  </span>
+  <div class="container-editorial relative w-full pl-[5rem] md:pl-[10rem]">
 
-  <div class="hero-auto__viewport">
-    <div class="hero-auto__rail" style="--idx: 0;">
+    <!-- Pulsing signature mark just above the phrase — sits inside the
+         main content column so it doesn't collide with the sidebar nav. -->
+    <span class="hero-auto__mark" aria-hidden="true" data-animation-mark>
+      <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor">
+        <path d="M14 0h4v13.2l9.3-4.6 2 3.5-9.3 4.6 9.3 4.6-2 3.5-9.3-4.6V32h-4V18.8L4.7 23.4l-2-3.5 9.3-4.6-9.3-4.6 2-3.5L14 12z"/>
+      </svg>
+    </span>
 
-      {phases.map((text, i) => (
+    <!-- Slot: exactly one phrase visible at any moment. Each phrase
+         reveals its words with a staggered timing so the reader
+         actually reads it left-to-right, not all-at-once. -->
+    <div class="hero-auto__slot" role="region" aria-live="polite" aria-atomic="true">
+      {phases.map((words, i) => (
         <p
           class="hero-phase"
           data-phase={i}
           aria-hidden={i === 0 ? undefined : 'true'}
-        >{text}</p>
+        >
+          {words.map((w, j) => (
+            <span class="hero-word" style={`--i:${j};`}>{w}</span>
+          ))}
+        </p>
       ))}
-
       <h1
         id="hero-title"
         class="hero-phase hero-phase--finale"
         data-phase={phases.length}
         aria-hidden="true"
-      >Progetto <span class="font-display italic font-light text-accent">sistemi,</span> non schermate.</h1>
-
+      >
+        {finale.map((w, j) => {
+          const italic = /^sistemi/i.test(w);
+          return (
+            <span
+              class:list={['hero-word', italic && 'font-display italic font-light text-accent']}
+              style={`--i:${j};`}
+            >{w}</span>
+          );
+        })}
+      </h1>
     </div>
+
   </div>
 
   <!-- Meta operativa (S4) — bottom of hero, always visible -->
@@ -62,23 +73,18 @@ const phases: string[] = [
 </section>
 
 <style>
-  /* Pulsing animation mark on the left */
   .hero-auto__mark {
-    position: absolute;
-    top: 50%;
-    left: clamp(1rem, 4vw, 2.5rem);
-    transform: translateY(-50%);
-    z-index: 3;
+    display: inline-block;
     color: theme('colors.fg');
-    display: inline-flex;
     line-height: 0;
+    margin-bottom: 1.5rem;
     animation: hero-mark-pulse 1.6s ease-in-out infinite;
   }
   @keyframes hero-mark-pulse {
-    0%, 100% { opacity: 0.35; transform: translateY(-50%) scale(1); }
-    50%      { opacity: 1;    transform: translateY(-50%) scale(1.08); }
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.10); }
   }
-  .hero-auto__mark.is-done { animation: none; opacity: 0.5; }
+  .hero-auto__mark.is-done { animation: none; opacity: 0.45; }
 
   .hero-auto__meta {
     position: absolute;
@@ -86,77 +92,118 @@ const phases: string[] = [
     z-index: 3;
   }
 
-  /* Viewport: masks the rail so only one "slot" is visible at a time. */
-  .hero-auto__viewport {
-    position: absolute;
-    inset: 0;
-    padding-left: clamp(4.5rem, 8vw, 8rem);
-    padding-right: clamp(1rem, 4vw, 2.5rem);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Rail: vertical stack of phrases. Translates up by one PHASE_HEIGHT
-     per step, so the active phrase lands in view and the previous one
-     drifts up to the top. */
-  .hero-auto__rail {
-    --phase-h: clamp(9rem, 20vh, 16rem);
+  /* Slot: fixed-height area with absolutely-stacked phrases — only one
+     is visible at a time (opacity + translate transitions). */
+  .hero-auto__slot {
     position: relative;
-    width: 100%;
-    transform: translateY(calc(var(--idx, 0) * (-1 * var(--phase-h))));
-    transition: transform 780ms cubic-bezier(0.6, 0.02, 0.2, 1);
+    min-height: clamp(11rem, 26vh, 20rem);
   }
 
   .hero-phase {
+    position: absolute;
+    top: 0; left: 0; right: 0;
     margin: 0;
-    padding: 0;
-    min-height: var(--phase-h);
-    display: flex;
-    align-items: center;
     max-width: 22ch;
-    /* SAME font/size for every phase — Sketchin rule */
+    /* SAME font / size / weight for EVERY phase (including finale) */
     font-family: theme('fontFamily.body');
     font-weight: 700;
     font-size: clamp(2.5rem, 5.8vw, 4.6rem);
     line-height: 1.06;
     letter-spacing: -0.03em;
-    color: rgba(10, 10, 10, 0.28); /* default: gray = past or upcoming */
-    transition: color 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    color: #0A0A0A;
+    /* Phrase container fades in/out as a whole for entry/exit direction. */
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 420ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    pointer-events: none;
   }
-  .hero-phase.is-active { color: #0A0A0A; }
+  .hero-phase.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .hero-phase.is-past {
+    opacity: 0;
+    transform: translateY(-28px);
+  }
+
+  /* Word-by-word reveal — each word slides in from below with a
+     staggered delay driven by --i, giving a real reading rhythm. */
+  .hero-word {
+    display: inline-block;
+    /* margin-right acts as the inter-word space independent of flex/whitespace */
+    margin-right: 0.28em;
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 440ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 520ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .hero-phase.is-active .hero-word {
+    opacity: 1;
+    transform: translateY(0);
+    /* per-word stagger: 100ms per word */
+    transition-delay: calc(var(--i, 0) * 100ms);
+  }
+  .hero-phase.is-past .hero-word {
+    /* leave together, no stagger on exit — feels snappier */
+    opacity: 0;
+    transform: translateY(-16px);
+    transition-delay: 0ms;
+  }
+
+  /* Finale keeps the italic accent color even during transitions */
   .hero-phase--finale .text-accent { color: theme('colors.accent'); }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-auto__mark { animation: none; opacity: 0.5; }
-    .hero-auto__rail { transition: none; }
-    .hero-phase { transition: none; }
+    .hero-auto__mark { animation: none; opacity: 0.45; }
+    .hero-phase, .hero-word { transition: none; }
+    .hero-phase.is-active .hero-word { transition-delay: 0ms; }
   }
 </style>
 
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const rail = document.querySelector<HTMLElement>('.hero-auto__rail');
   const phases = Array.from(document.querySelectorAll<HTMLElement>('.hero-phase'));
   const mark = document.querySelector<HTMLElement>('[data-animation-mark]');
 
+  const root = document.documentElement;
+
+  const finishAnimation = () => {
+    if (mark) mark.classList.add('is-done');
+    root.classList.remove('hero-animating');
+  };
+
   const setActive = (i: number) => {
-    if (!rail) return;
-    rail.style.setProperty('--idx', String(i));
     phases.forEach((p, j) => {
-      p.classList.toggle('is-active', j === i);
-      if (j === i) p.removeAttribute('aria-hidden');
-      else p.setAttribute('aria-hidden', 'true');
+      p.classList.remove('is-active', 'is-past');
+      if (j === i) {
+        p.classList.add('is-active');
+        p.removeAttribute('aria-hidden');
+      } else if (j < i) {
+        p.classList.add('is-past');
+        p.setAttribute('aria-hidden', 'true');
+      } else {
+        p.setAttribute('aria-hidden', 'true');
+      }
     });
-    // Signal end of animation
-    if (i >= phases.length - 1 && mark) mark.classList.add('is-done');
+    if (i >= phases.length - 1) finishAnimation();
   };
 
   if (phases.length > 0) {
     if (reduce) {
+      // Reduced motion: no sequence at all, jump to finale and let the
+      // hero-nav appear immediately.
       setActive(phases.length - 1);
     } else {
-      const PHASE_MS = 2500;
+      // While the sequence is playing, hide the hero-nav sidebar so it
+      // doesn't sit under the pulsing mark. Removed on finish / scroll.
+      root.classList.add('hero-animating');
+
+      const PHASE_MS = 2900;
       let idx = 0;
       setActive(0);
       let timer: number | null = window.setInterval(() => {
@@ -168,8 +215,6 @@ const phases: string[] = [
         setActive(idx);
       }, PHASE_MS);
 
-      // First real scroll → snap to finale so the next block is
-      // immediately reachable without waiting the sequence out.
       const onScroll = () => {
         if (window.scrollY <= 40) return;
         if (idx < phases.length - 1) {
