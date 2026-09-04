@@ -78,11 +78,15 @@ const base = import.meta.env.BASE_URL;
           let ticking = false;
           const update = () => {
             const vh = window.innerHeight;
-            const start = vh * 0.85;
-            const end = vh * 0.20;
+            // Progress starts at 0 when the passage top is roughly at the
+            // center of the viewport (landing state for a centered hero),
+            // and hits 1 when the passage top has scrolled ~half a viewport
+            // above the fold. This ensures only the first word is lit on
+            // landing and reveal marches forward with scroll.
+            const start = vh * 0.30;
+            const end = vh * -0.50;
             for (const { el, words } of cached) {
               const rect = el.getBoundingClientRect();
-              // If the passage is far off-screen, skip the math for perf.
               if (rect.bottom < -vh || rect.top > vh * 2) continue;
               const raw = (start - rect.top) / (start - end);
               const progress = Math.max(0, Math.min(1, raw));

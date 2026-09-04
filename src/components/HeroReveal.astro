@@ -1,102 +1,59 @@
 ---
-// HeroReveal — unified hero + sintesi in one Sketchin-style block:
-// small asterisk mark top-left, scroll-reveal passage in the middle,
-// then a bold finale statement on the accent background.
-// Replaces the previous Hero + SintesiStrip pair.
+// HeroReveal — unified hero: one passage that starts with the manifesto
+// and ends with the finale statement. Scroll-linked word reveal on all of
+// it. No side mark, no separate accent screen — everything on white bg.
 const passage =
   `Sette anni tra prodotto e servizi digitali. ` +
   `Framing, sistemi, outcome misurabili. ` +
-  `Sposto il focus verso design strategy.`;
+  `Sposto il focus verso design strategy. ` +
+  `Progetto sistemi, non schermate.`;
 const words = passage.split(/\s+/);
-
-const finale = 'Progetto sistemi, non schermate.';
-const finaleWords = finale.split(/\s+/);
 ---
-<section id="hero" class="relative bg-bg" aria-label="Introduzione">
-
-  <!-- Passage screen — scroll-reveal manifesto -->
-  <div class="hero-reveal min-h-dvh flex items-center relative overflow-hidden">
-    <!-- Signature asterisk mark, left aligned, vertically centered -->
-    <svg
-      aria-hidden="true"
-      class="hero-reveal__mark absolute z-10 text-fg"
-      viewBox="0 0 32 32"
-      fill="currentColor"
+<section
+  id="hero"
+  class="relative bg-bg min-h-dvh flex items-center overflow-hidden"
+  aria-labelledby="hero-title"
+>
+  <div class="container-editorial relative z-0 py-24 md:py-32">
+    <h1
+      id="hero-title"
+      class="hero-reveal__passage font-body font-medium leading-[1.1] m-0 max-w-[22ch] text-fg"
+      style="letter-spacing: -0.025em;"
+      data-reveal-words
     >
-      <path d="M14 0h4v13.2l9.3-4.6 2 3.5-9.3 4.6 9.3 4.6-2 3.5-9.3-4.6V32h-4V18.8L4.7 23.4l-2-3.5 9.3-4.6-9.3-4.6 2-3.5L14 12z"/>
-    </svg>
+      {words.map((w, i, arr) => {
+        // Highlight the final sentence typographically: bump weight,
+        // and swap "sistemi," to Fraunces italic light as the accent.
+        const finaleStart = words.indexOf('Progetto');
+        const inFinale = finaleStart >= 0 && i >= finaleStart;
+        const isItalicAccent = /^sistemi/i.test(w);
+        return (
+          <>
+            <span
+              class:list={[
+                'rw-word',
+                inFinale && 'font-black',
+                isItalicAccent && 'font-display italic font-light text-accent',
+              ]}
+              style={inFinale ? 'letter-spacing: -0.035em;' : ''}
+            >{w}</span>
+            {i < arr.length - 1 ? ' ' : ''}
+          </>
+        );
+      })}
+    </h1>
 
-    <div class="container-editorial relative z-0 pl-[6rem] md:pl-[9rem]">
-      <p
-        class="hero-reveal__passage font-body font-medium leading-[1.1] m-0 max-w-[22ch]"
-        style="letter-spacing: -0.02em;"
-        data-reveal-words
-      >
-        {words.map((w, i, arr) => (
-          <><span class="rw-word">{w}</span>{i < arr.length - 1 ? ' ' : ''}</>
-        ))}
-      </p>
-    </div>
+    <!-- Meta operativa (S4) as a small caption below the passage -->
+    <p class="mt-12 md:mt-16 font-mono text-[0.72rem] tracking-[0.14em] uppercase text-muted flex flex-wrap gap-x-6 gap-y-2 max-w-[70ch]">
+      <span><span class="text-accent mr-1">◦</span>Disponibile da settembre</span>
+      <span><span class="text-accent mr-1">◦</span>Telco · Utilities · Fintech · SaaS B2B</span>
+      <span><span class="text-accent mr-1">◦</span>Remoto o Milano</span>
+    </p>
   </div>
-
-  <!-- Finale screen — bold statement on accent background, white text -->
-  <div class="hero-reveal-finale min-h-dvh flex items-center relative overflow-hidden"
-       style={`background-color: ${'#EB4B1B'}; color: #ffffff;`}>
-    <svg
-      aria-hidden="true"
-      class="hero-reveal__mark absolute z-10 text-white"
-      viewBox="0 0 32 32"
-      fill="currentColor"
-    >
-      <path d="M14 0h4v13.2l9.3-4.6 2 3.5-9.3 4.6 9.3 4.6-2 3.5-9.3-4.6V32h-4V18.8L4.7 23.4l-2-3.5 9.3-4.6-9.3-4.6 2-3.5L14 12z"/>
-    </svg>
-
-    <div class="container-editorial relative z-0 pl-[6rem] md:pl-[9rem]">
-      <h1
-        id="hero-title"
-        class="hero-reveal__statement font-body font-black leading-[0.95] m-0 max-w-[15ch]"
-        style="font-size: clamp(3.5rem, 11vw + 1rem, 9.5rem); letter-spacing: -0.035em;"
-        data-reveal-words
-      >
-        {finaleWords.map((w, i, arr) => {
-          const isItalic = /^sistemi/i.test(w);
-          return (
-            <>
-              <span class:list={['rw-word', isItalic && 'font-display italic font-light']}>{w}</span>
-              {i < arr.length - 1 ? ' ' : ''}
-            </>
-          );
-        })}
-      </h1>
-
-      <!-- Meta operativa (S4) — small caption below the statement -->
-      <p class="mt-10 md:mt-14 font-mono text-[0.72rem] tracking-[0.14em] uppercase opacity-80 flex flex-wrap gap-x-6 gap-y-2">
-        <span>Disponibile da settembre</span>
-        <span aria-hidden="true" class="opacity-50">·</span>
-        <span>Telco · Utilities · Fintech · SaaS B2B</span>
-        <span aria-hidden="true" class="opacity-50">·</span>
-        <span>Remoto o Milano</span>
-      </p>
-    </div>
-  </div>
-
 </section>
 
 <style>
-  .hero-reveal__mark {
-    top: 50%;
-    left: clamp(1rem, 4vw, 2.5rem);
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-  }
-  @media (min-width: 900px) {
-    .hero-reveal__mark { width: 56px; height: 56px; }
-  }
   .hero-reveal__passage {
     font-size: clamp(2rem, 4.6vw, 4rem);
   }
-  /* Ensure the finale statement's rw-word italic accent inherits color */
-  .hero-reveal-finale .rw-word.is-lit { color: #ffffff; }
-  .hero-reveal-finale [data-reveal-words] { color: rgba(255,255,255,0.35); }
 </style>

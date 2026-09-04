@@ -1,0 +1,121 @@
+---
+interface Props {
+  signatureColor: string;
+  onSignatureDark?: boolean;
+  client: string;
+  num: string;
+  variant: 'telco' | 'water' | 'archive' | 'lab';
+  alt: string;
+  aspect?: string; // e.g. 'aspect-[4/3]', 'aspect-[3/4]'
+}
+const {
+  signatureColor,
+  onSignatureDark = false,
+  client,
+  num,
+  variant,
+  alt,
+  aspect = 'aspect-[4/3]',
+} = Astro.props;
+
+const onSig = onSignatureDark ? '#0A0A0A' : '#FFFFFF';
+const softInk = 'rgba(10,10,10,0.55)';
+const surface = '#F5F1EA';
+---
+<figure class:list={['project-artwork', aspect]} aria-label={alt} role="figure">
+  <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+    <!-- Base canvas: warm off-white -->
+    <rect x="0" y="0" width="800" height="600" fill={surface} />
+
+    <!-- Big signature color block: upper-right ~2/3 of canvas -->
+    <rect x="260" y="0" width="540" height="600" fill={signatureColor} />
+
+    <!-- Number chip, top-left on the light surface -->
+    <text
+      x="40" y="60"
+      font-family="ui-monospace, SF Mono, Menlo, monospace"
+      font-size="18" fill={softInk} letter-spacing="2"
+    >{num.padStart(2, '0')} · Portfolio</text>
+
+    <!-- Client name big, bottom-left on the light surface -->
+    <text
+      x="40" y="560"
+      font-family="Inter, system-ui, sans-serif"
+      font-weight="900" font-size="110"
+      fill="#0A0A0A" letter-spacing="-4"
+    >{client}</text>
+
+    {/* Variant-specific decorative overlays on the signature color panel */}
+    {variant === 'telco' && (
+      <g fill="none" stroke={onSig} stroke-width="3" opacity="0.85">
+        <!-- Chat bubble stack (self-caring pattern) -->
+        <rect x="330" y="120" width="220" height="70" rx="35" />
+        <rect x="380" y="220" width="280" height="70" rx="35" />
+        <rect x="340" y="320" width="200" height="70" rx="35" />
+        <!-- Big signal-arc top-right (call ended) -->
+        <path d="M580 380 Q640 340 700 380" opacity="0.6" />
+        <path d="M570 420 Q640 360 720 420" opacity="0.4" />
+        <circle cx="700" cy="110" r="10" fill={onSig} stroke="none" opacity="0.9" />
+      </g>
+    )}
+
+    {variant === 'water' && (
+      <g fill="none" stroke={onSig} stroke-width="3" opacity="0.85">
+        <!-- Flow diagram: pipes converging (multi-profile area privata) -->
+        <path d="M310 150 L520 300 L310 450" />
+        <path d="M420 100 L650 300 L420 500" opacity="0.7" />
+        <path d="M340 300 L700 300" opacity="0.5" stroke-dasharray="6 8" />
+        <circle cx="520" cy="300" r="16" fill={onSig} stroke="none" />
+        <circle cx="310" cy="150" r="10" fill={onSig} stroke="none" opacity="0.7" />
+        <circle cx="310" cy="450" r="10" fill={onSig} stroke="none" opacity="0.7" />
+      </g>
+    )}
+
+    {variant === 'archive' && (
+      <g opacity="0.9">
+        <!-- Stacked folder/document layers (archive) -->
+        <rect x="330" y="120" width="380" height="60" fill={onSig} opacity="0.35" />
+        <rect x="330" y="200" width="380" height="60" fill={onSig} opacity="0.55" />
+        <rect x="330" y="280" width="380" height="60" fill={onSig} opacity="0.75" />
+        <rect x="330" y="360" width="380" height="60" fill={onSig} opacity="0.95" />
+        <!-- Tree navigation nodes -->
+        <g fill="none" stroke={onSig} stroke-width="3" opacity="0.6">
+          <path d="M400 470 v40 h60" />
+          <path d="M400 510 h60" />
+          <path d="M400 510 v30 h60" />
+        </g>
+        <circle cx="460" cy="510" r="7" fill={onSig} />
+        <circle cx="460" cy="540" r="7" fill={onSig} />
+        <circle cx="460" cy="470" r="7" fill={onSig} />
+      </g>
+    )}
+
+    {variant === 'lab' && (
+      <g fill={onSig}>
+        <!-- Big question mark motif for the "avvocato del diavolo" prompt -->
+        <text
+          x="530" y="380" text-anchor="middle"
+          font-family="Fraunces, serif"
+          font-weight="300" font-style="italic"
+          font-size="380"
+        >?</text>
+        <g stroke={onSig} stroke-width="3" fill="none" opacity="0.75">
+          <path d="M310 470 L410 470" />
+          <path d="M310 490 L370 490" />
+        </g>
+      </g>
+    )}
+  </svg>
+</figure>
+
+<style>
+  .project-artwork {
+    margin: 0;
+    line-height: 0;
+    overflow: hidden;
+    background: #F5F1EA;
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    box-shadow: 0 20px 40px -24px rgba(10, 10, 10, 0.20);
+  }
+  .project-artwork svg { width: 100%; height: 100%; display: block; }
+</style>

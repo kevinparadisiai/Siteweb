@@ -1,5 +1,5 @@
 ---
-import MockupBrowser from './MockupBrowser.astro';
+import ProjectArtwork from './ProjectArtwork.astro';
 import { projects } from '@/data/projects';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -8,27 +8,32 @@ const cap = projects.find((p) => p.slug === 'cap')!;
 const eni = projects.find((p) => p.slug === 'eni')!;
 
 const lab = {
+  slug: 'lab-ai',
   href: `${base}/lab-ai/`,
   eyebrow: 'Lab · AI',
-  client: 'Sperimentazione',
+  client: 'Lab',
+  num: '§',
   title: 'Cosa succede se chiedo a un LLM di argomentare contro le mie decisioni?',
   signatureColor: '#0A0A0A',
   onSignatureDark: false,
   kind: 'lab' as const,
-  cover: { caption: 'Prompt "avvocato del diavolo" — 3 progetti reali', variant: 'form' as const, shape: 'browser' as const },
 };
 
-// Sketchin pattern: two rows, alternate weights.
-// Row 1: TIM (col-6) + CAP (col-6) — side by side
-// Row 2: Eni (col-5) + Lab (col-7)  — asymmetric
-const rows = [
+type Tile = {
+  data: typeof tim | typeof lab;
+  span: string;
+  aspect: string;
+  variant: 'telco' | 'water' | 'archive' | 'lab';
+};
+
+const rows: Tile[][] = [
   [
-    { data: tim,  span: 'md:col-span-6' },
-    { data: cap,  span: 'md:col-span-6' },
+    { data: tim, span: 'md:col-span-7', aspect: 'aspect-[4/3]',  variant: 'telco'   },
+    { data: eni, span: 'md:col-span-5', aspect: 'aspect-[3/4]',  variant: 'archive' },
   ],
   [
-    { data: eni,  span: 'md:col-span-5' },
-    { data: lab,  span: 'md:col-span-7' },
+    { data: cap, span: 'md:col-span-5', aspect: 'aspect-[4/5]',  variant: 'water'   },
+    { data: lab, span: 'md:col-span-7', aspect: 'aspect-[4/3]',  variant: 'lab'     },
   ],
 ];
 
@@ -46,27 +51,27 @@ const kindLabel = (t: any) => (t.kind === 'lab' ? 'Sperimentazione' : 'Consulenz
       </p>
     </header>
 
-    <div class="flex flex-col gap-16 md:gap-20">
+    <div class="flex flex-col gap-16 md:gap-24">
       {rows.map((row) => (
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
-          {row.map(({ data, span }) => (
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start">
+          {row.map(({ data, span, aspect, variant }) => (
             <a
               href={data.href}
               class:list={['group block no-underline', span]}
               data-cursor-label={data.kind === 'lab' ? 'Leggi la nota' : 'Leggi il case study'}
             >
-              <!-- Image-first: mockup takes the top ~65% of the card -->
               <div class="mb-6 md:mb-8 transition-transform duration-500 ease-editorial group-hover:-translate-y-1">
-                <MockupBrowser
+                <ProjectArtwork
                   signatureColor={data.signatureColor}
-                  dark={!!data.onSignatureDark}
-                  variant={data.cover?.variant}
-                  shape={data.cover?.shape}
-                  alt={`Placeholder — ${data.client}: ${data.title}. Mockup di anteprima.`}
+                  onSignatureDark={!!data.onSignatureDark}
+                  client={data.client}
+                  num={data.num}
+                  variant={variant}
+                  aspect={aspect}
+                  alt={`Grafica editoriale — ${data.client}: ${data.title}`}
                 />
               </div>
 
-              <!-- Caption block below the image (Sketchin pattern) -->
               <div class="max-w-[52ch]">
                 <p class="text-[0.72rem] uppercase tracking-[0.14em] font-medium text-muted m-0 mb-3">
                   <span>{kindLabel(data)}</span>
@@ -74,7 +79,7 @@ const kindLabel = (t: any) => (t.kind === 'lab' ? 'Sperimentazione' : 'Consulenz
                   <strong class="font-medium text-fg">{data.client}</strong>
                 </p>
                 <h3
-                  class="font-body font-black text-fg m-0 leading-[1.05]"
+                  class="font-body font-black text-fg m-0 leading-[1.05] group-hover:underline underline-offset-4 decoration-1"
                   style="font-size: clamp(1.5rem, 2.6vw, 2.5rem); letter-spacing: -0.03em;"
                 >{data.title}</h3>
               </div>
