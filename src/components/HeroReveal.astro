@@ -1,12 +1,11 @@
 ---
-// HeroReveal — Sketchin auto-play sequence.
-// The passage is broken into 3 phases + 1 finale. On landing the sequence
-// starts automatically: each phase reveals its words with a staggered
-// animation, then fades out for the next phase.
-// If the user scrolls before it finishes, the animation snaps to the
-// finale so the projects block below is immediately reachable.
-// prefers-reduced-motion opts out of the animation entirely and shows
-// the finale statically.
+// HeroReveal — Sketchin-style reading sequence.
+// Phrases share the same font/size — only color changes. The current
+// phrase is black, the previous one fades to gray and floats up
+// briefly during the transition, giving a reading rhythm. First
+// scroll skips to the finale so the projects below are reachable.
+// Adds a persistent "Kevin." wordmark on the left of the stage as
+// the animation's brand signal (Sketchin uses their asterisk logo).
 const phases: string[][] = [
   ['Sette', 'anni', 'tra', 'prodotto', 'e', 'servizi', 'digitali.'],
   ['Framing,', 'sistemi,', 'outcome', 'misurabili.'],
@@ -16,115 +15,162 @@ const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
 ---
 <section
   id="hero"
-  class="hero-auto relative bg-bg min-h-dvh flex items-center overflow-hidden"
+  class="hero-auto relative bg-bg min-h-dvh overflow-hidden"
   aria-labelledby="hero-title"
 >
-  <div class="container-editorial relative w-full">
+  <!-- Persistent brand mark, left of the stage, marks the animation. -->
+  <a
+    href="#hero"
+    class="hero-auto__brand"
+    aria-label="Kevin Paradisi"
+  >
+    <span aria-hidden="true">Kevin<em>.</em></span>
+  </a>
 
-    <!-- Stage: phases are absolutely stacked, only one visible at a time -->
-    <div class="hero-auto__stage relative min-h-[52vh]">
+  <div class="container-editorial relative h-dvh flex items-center">
+
+    <div class="hero-auto__stage relative w-full">
       {phases.map((words, i) => (
         <p
           class="hero-phase"
           data-phase={i}
           aria-hidden={i === 0 ? undefined : 'true'}
         >
-          {words.map((w, j) => (
-            <>
-              <span class="hero-word" style={`--i:${j};`}>{w}</span>
-              {j < words.length - 1 ? ' ' : ''}
-            </>
-          ))}
+          <span class="hero-phase__text">
+            {words.map((w, j) => (
+              <>
+                <span class="hero-word">{w}</span>
+                {j < words.length - 1 ? ' ' : ''}
+              </>
+            ))}
+          </span>
         </p>
       ))}
 
-      <!-- Finale phase — same stage, larger + accent italic on "sistemi," -->
+      <!-- Finale: same font/size as the phases, just the italic accent
+           on "sistemi," survives -->
       <h1
         id="hero-title"
-        class="hero-phase hero-phase--finale"
+        class="hero-phase"
         data-phase={phases.length}
         aria-hidden="true"
       >
-        {finale.map((w, j) => {
-          const italic = /^sistemi/i.test(w);
-          return (
-            <>
-              <span
-                class:list={['hero-word', italic && 'font-display italic font-light text-accent']}
-                style={`--i:${j};`}
-              >{w}</span>
-              {j < finale.length - 1 ? ' ' : ''}
-            </>
-          );
-        })}
+        <span class="hero-phase__text">
+          {finale.map((w, j) => {
+            const italic = /^sistemi/i.test(w);
+            return (
+              <>
+                <span class:list={['hero-word', italic && 'font-display italic font-light text-accent']}>{w}</span>
+                {j < finale.length - 1 ? ' ' : ''}
+              </>
+            );
+          })}
+        </span>
       </h1>
     </div>
 
-    <!-- Meta operativa (S4) — always visible below the stage -->
-    <p class="mt-12 md:mt-16 font-mono text-[0.72rem] tracking-[0.14em] uppercase text-muted flex flex-wrap gap-x-6 gap-y-2 max-w-[70ch]">
+  </div>
+
+  <!-- Meta operativa (S4) — bottom of the hero, always visible -->
+  <div class="hero-auto__meta container-editorial">
+    <p class="font-mono text-[0.72rem] tracking-[0.14em] uppercase text-muted flex flex-wrap gap-x-6 gap-y-2 m-0 max-w-[70ch]">
       <span><span class="text-accent mr-1">◦</span>Disponibile da settembre</span>
       <span><span class="text-accent mr-1">◦</span>Telco · Utilities · Fintech · SaaS B2B</span>
       <span><span class="text-accent mr-1">◦</span>Remoto o Milano</span>
     </p>
-
   </div>
 </section>
 
 <style>
-  .hero-auto__stage { min-height: 52vh; }
+  /* Persistent brand mark on the left of the animation stage */
+  .hero-auto__brand {
+    position: absolute;
+    top: 50%;
+    left: clamp(1rem, 4vw, 2.5rem);
+    transform: translateY(-50%);
+    z-index: 3;
+    font-family: theme('fontFamily.display');
+    font-size: 1.35rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: theme('colors.fg');
+    text-decoration: none;
+  }
+  .hero-auto__brand em {
+    color: theme('colors.accent');
+    font-style: normal;
+  }
+  @media (min-width: 900px) {
+    .hero-auto__brand { font-size: 1.6rem; }
+  }
 
+  .hero-auto__meta {
+    position: absolute;
+    left: 0; right: 0; bottom: 2rem;
+    z-index: 3;
+  }
+
+  /* Stage — reserves enough vertical room for the tallest phrase */
+  .hero-auto__stage { min-height: 60vh; padding-left: 5rem; }
+  @media (min-width: 900px) { .hero-auto__stage { padding-left: 8rem; } }
+
+  /* Phrases stacked absolutely in the same spot; transitions crossfade
+     via opacity + a small vertical drift so the past phrase floats up
+     while the next one appears from below. */
   .hero-phase {
     position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
+    top: 0; left: 0; right: 0;
     margin: 0;
-    max-width: 22ch;
+    display: block;
+    /* SAME font/size for ALL phases (phases + finale) — Sketchin rule */
     font-family: theme('fontFamily.body');
-    font-weight: 500;
-    font-size: clamp(2rem, 4.6vw, 4rem);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: rgba(10, 10, 10, 0.25); /* gray = past / not-yet-active */
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    transform: translateY(24px);
+    transition:
+      opacity 620ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      color 500ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    will-change: opacity, transform, color;
   }
+  .hero-phase__text {
+    display: block;
+    max-width: 22ch;
+  }
+  .hero-word {
+    display: inline;
+  }
+
+  /* Current phrase — black, in place, fully visible */
   .hero-phase.is-active {
     opacity: 1;
-    pointer-events: auto;
+    color: #0A0A0A;
+    transform: translateY(0);
   }
+  /* Previous phrase — visible in gray, drifted up */
+  .hero-phase.is-past {
+    opacity: 1;
+    color: rgba(10, 10, 10, 0.28);
+    transform: translateY(-32px);
+  }
+  /* Older phrases — hidden */
   .hero-phase.is-done {
     opacity: 0;
+    transform: translateY(-64px);
   }
 
-  .hero-word {
-    display: inline-block;
-    color: rgba(10, 10, 10, 0.20);
-    transition: color 260ms cubic-bezier(0.2, 0.6, 0.2, 1);
-    will-change: color;
-  }
-  .hero-phase.is-active .hero-word {
-    animation: hero-word-lit 480ms forwards;
-    animation-delay: calc(var(--i, 0) * 90ms);
-  }
-  @keyframes hero-word-lit {
-    to { color: #0A0A0A; }
-  }
-
-  .hero-phase--finale {
-    max-width: 15ch;
-    font-weight: 900;
-    font-size: clamp(3rem, 9vw + 1rem, 8rem);
-    letter-spacing: -0.035em;
-    line-height: 0.95;
-  }
-  .hero-phase--finale .hero-word.font-display { color: theme('colors.accent'); }
-  .hero-phase--finale.is-active .hero-word.font-display { animation: none; }
+  /* Preserve accent color even when the phrase is muted */
+  .hero-phase .text-accent { color: theme('colors.accent') !important; }
 
   @media (prefers-reduced-motion: reduce) {
     .hero-phase { transition: none; }
-    .hero-phase.is-active .hero-word { animation: none; color: #0A0A0A; }
-    .hero-phase--finale .hero-word.font-display { color: theme('colors.accent'); }
+    .hero-phase.is-active, .hero-phase.is-past, .hero-phase.is-done {
+      transition: none;
+    }
   }
 </style>
 
@@ -132,41 +178,43 @@ const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const phases = Array.from(document.querySelectorAll<HTMLElement>('.hero-phase'));
 
-  const activate = (i: number) => {
+  const setState = (activeIdx: number) => {
     phases.forEach((p, j) => {
-      p.classList.toggle('is-active', j === i);
-      p.classList.toggle('is-done', j < i);
-      if (j === i) p.removeAttribute('aria-hidden');
+      p.classList.remove('is-active', 'is-past', 'is-done');
+      if (j < activeIdx - 1) p.classList.add('is-done');
+      else if (j === activeIdx - 1) p.classList.add('is-past');
+      else if (j === activeIdx) p.classList.add('is-active');
+      // future phases: keep default (invisible, waiting)
+      if (j === activeIdx) p.removeAttribute('aria-hidden');
       else p.setAttribute('aria-hidden', 'true');
     });
   };
 
   if (phases.length > 0) {
     if (reduce) {
-      // Skip animation: show finale immediately.
-      activate(phases.length - 1);
+      // Show the finale immediately for reduced-motion users
+      setState(phases.length - 1);
     } else {
-      // Auto-play: each phase visible for ~2.6s, then advance.
       const PHASE_MS = 2600;
       let idx = 0;
-      activate(0);
+      setState(0);
       let timer: number | null = window.setInterval(() => {
         idx += 1;
         if (idx >= phases.length) {
           if (timer) { window.clearInterval(timer); timer = null; }
           return;
         }
-        activate(idx);
+        setState(idx);
       }, PHASE_MS);
 
-      // Skip to finale on first scroll — so the projects below are
-      // immediately reachable without waiting out the sequence.
+      // First real scroll skips the sequence to the finale so the
+      // projects below are reachable without waiting the animation out.
       const onScroll = () => {
         if (window.scrollY <= 40) return;
         if (idx < phases.length - 1) {
           if (timer) { window.clearInterval(timer); timer = null; }
           idx = phases.length - 1;
-          activate(idx);
+          setState(idx);
         }
         window.removeEventListener('scroll', onScroll);
       };
