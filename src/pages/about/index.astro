@@ -5,18 +5,35 @@ import SiteFooter from '@/components/SiteFooter.astro';
 import FeatureHero from '@/components/FeatureHero.astro';
 
 // Placeholder — sostituire con i dati reali quando disponibili.
+// Esperienza — placeholder cronologico basato sui clienti dichiarati.
+// Da rivedere con date/ruoli reali quando disponibili.
 const experience = [
-  { years: '2024 — oggi', role: 'Senior UX Designer', company: 'TIM',        note: 'Self-caring digitale, KPI post-chiamata, coordinamento designer.' },
-  { years: '2020 — 2024', role: 'UX Designer',        company: 'Gruppo CAP', note: "Redesign area privata multi-profilo, Agile handoff." },
-  { years: '2018 — 2020', role: 'UX Consultant',      company: 'Eni',        note: "Archivio storico digitale — 20+ pagine, migliaia di documenti." },
-  { years: '2017 — 2018', role: 'Junior Designer',    company: '[Studio precedente]', note: 'Placeholder — sostituire con esperienza reale.' },
+  { years: '2024 — oggi', role: 'Senior UX Designer',      company: 'TIM',            note: 'Self-caring digitale, KPI post-chiamata, coordinamento di un gruppo di designer.' },
+  { years: '2022 — 2024', role: 'UX Designer',             company: 'Unipol',         note: '[Placeholder — sostituire con la sintesi reale del ruolo.]' },
+  { years: '2021 — 2022', role: 'UX Designer',             company: 'Eolo',           note: '[Placeholder — sostituire con la sintesi reale del ruolo.]' },
+  { years: '2020 — 2021', role: 'UX Designer',             company: 'Gruppo CAP',     note: "Redesign completo dell'area privata multi-profilo (10+ processi digitalizzati)." },
+  { years: '2019 — 2020', role: 'UX Consultant',           company: 'Eni',            note: "Archivio storico digitale — 20+ pagine, migliaia di documenti indicizzati." },
+  { years: '2018 — 2019', role: 'UX Consultant',           company: 'Lastminute.com', note: '[Placeholder — sostituire con la sintesi reale del ruolo.]' },
 ];
 
-// Loghi come wordmark tipografici — sostituire con SVG loghi reali quando arrivano.
-// La lista è duplicata dal marquee JS per un loop seamless.
-const logos = [
-  'TIM', 'Gruppo CAP', 'Eni', 'BIP',
-  '[Cliente 05]', '[Cliente 06]', '[Cliente 07]', '[Cliente 08]',
+// Clienti reali con cui Kevin ha lavorato. Wordmark tipografici nel
+// colore-brand di ciascuno — placeholder in attesa dei loghi vettoriali
+// ufficiali (che vanno inseriti come SVG quando disponibili).
+const clients = [
+  { name: 'lastminute.com', color: '#E7237C', sector: 'Travel' },
+  { name: 'eni',            color: '#0A0A0A', sector: 'Energy',   accent: '#F5C518' },
+  { name: 'TIM',            color: '#E4002B', sector: 'Telco' },
+  { name: 'Gruppo CAP',     color: '#003C7E', sector: 'Utilities' },
+  { name: 'Unipol',         color: '#007F3F', sector: 'Insurance' },
+  { name: 'Eolo',           color: '#005EB8', sector: 'Telco',    accent: '#E4002B' },
+];
+const sectors = [
+  'Energy & Utilities',
+  'Telco',
+  'Insurance',
+  'Travel',
+  'Fintech',
+  'Cultura & Archivi',
 ];
 
 const principi = [
@@ -70,32 +87,57 @@ const principi = [
     </ol>
   </section>
 
-  <!-- Marquee verticale di clienti/loghi -->
-  <section class="bg-bg border-y border-border py-16 md:py-24 overflow-hidden" aria-labelledby="loghi-anchor">
-    <div class="container-editorial grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 items-center">
+  <!-- Clienti: layout Sketchin "Our expertise" — big number a sinistra,
+       grid di wordmark a destra. -->
+  <section class="bg-bg border-y border-border py-20 md:py-28" aria-labelledby="loghi-anchor">
+    <div class="container-editorial grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-12 lg:gap-16 items-start">
 
+      <!-- LEFT — expertise -->
       <div>
-        <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-4 flex items-center gap-3">
+        <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-6 flex items-center gap-3">
           <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
           <span class="tabular-nums">II</span>
           <span aria-hidden="true" class="opacity-40">—</span>
           <span id="loghi-anchor">Clienti</span>
         </p>
-        <p class="font-body text-step-1 text-fg m-0 max-w-[36ch] leading-[1.35]">
-          Aziende con cui ho lavorato, direttamente o in consulenza. Wordmark come placeholder, in attesa dei loghi ufficiali.
+
+        <p
+          class="font-body font-black text-accent m-0 leading-none tabular-nums"
+          style="font-size: clamp(5rem, 12vw, 10rem); letter-spacing: -0.045em;"
+        >6</p>
+        <p class="font-body text-step-1 text-fg m-0 mt-3 max-w-[26ch] leading-[1.35]">
+          aziende enterprise con cui ho lavorato negli ultimi sette anni.
+        </p>
+
+        <p class="text-[0.72rem] uppercase tracking-[0.16em] font-medium text-muted m-0 mt-12 mb-4">
+          Settori
+        </p>
+        <p class="font-body text-fg text-step-0 leading-[1.65] m-0 max-w-[40ch]">
+          {sectors.map((s, i) => (
+            <><span>{s}</span>{i < sectors.length - 1 ? <span class="text-muted mx-2" aria-hidden="true">·</span> : null}</>
+          ))}
         </p>
       </div>
 
-      <div class="logo-marquee" aria-hidden="true">
-        <div class="logo-marquee__track">
-          {[...logos, ...logos].map((l) => (
-            <span class="logo-marquee__item">{l}</span>
-          ))}
-        </div>
-        <!-- Top/bottom fade -->
-        <div class="logo-marquee__fade logo-marquee__fade--top" aria-hidden="true"></div>
-        <div class="logo-marquee__fade logo-marquee__fade--bottom" aria-hidden="true"></div>
-      </div>
+      <!-- RIGHT — client wordmarks grid -->
+      <ul class="list-none p-0 m-0 grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-6">
+        {clients.map((c) => (
+          <li class="client-cell relative flex flex-col items-start justify-between p-6 min-h-[10rem] border border-border transition-colors duration-300 hover:border-fg">
+            <span
+              class="client-wordmark font-body font-black"
+              style={`color: ${c.color}; font-size: clamp(1.3rem, 2vw, 1.8rem); letter-spacing: -0.03em; line-height: 1;`}
+            >
+              {c.name}
+              {c.accent && (
+                <span aria-hidden="true" style={`display:inline-block; width:0.5em; height:0.5em; border-radius:999px; background:${c.accent}; margin-left:0.2em; vertical-align:baseline;`}></span>
+              )}
+            </span>
+            <span class="font-mono text-[0.62rem] tracking-[0.16em] uppercase text-muted mt-4">
+              {c.sector}
+            </span>
+          </li>
+        ))}
+      </ul>
 
     </div>
   </section>
@@ -130,37 +172,11 @@ const principi = [
 </Base>
 
 <style>
-  /* Vertical logo marquee — infinite loop scroll upward. */
-  .logo-marquee {
-    position: relative;
-    height: clamp(18rem, 34vh, 26rem);
-    overflow: hidden;
-    mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+  /* Client cell — subtle hover lift + tinted bg for the brand color */
+  .client-cell {
+    background: theme('colors.bg');
+    transition: transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
+                border-color 320ms cubic-bezier(0.2, 0.6, 0.2, 1);
   }
-  .logo-marquee__track {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    animation: marquee-scroll 24s linear infinite;
-  }
-  .logo-marquee__item {
-    font-family: theme('fontFamily.body');
-    font-weight: 900;
-    font-size: clamp(1.75rem, 3vw, 2.6rem);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: theme('colors.fg');
-    padding-block: 0.35rem;
-    text-align: left;
-    white-space: nowrap;
-  }
-  @keyframes marquee-scroll {
-    from { transform: translateY(0); }
-    to   { transform: translateY(-50%); }
-  }
-  .logo-marquee:hover .logo-marquee__track { animation-play-state: paused; }
-  @media (prefers-reduced-motion: reduce) {
-    .logo-marquee__track { animation: none; }
-    .logo-marquee { mask-image: none; }
-  }
+  .client-cell:hover { transform: translateY(-2px); }
 </style>
