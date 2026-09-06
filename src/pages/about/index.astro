@@ -1,0 +1,166 @@
+---
+import Base from '@/layouts/Base.astro';
+import SiteSidebar from '@/components/SiteSidebar.astro';
+import SiteFooter from '@/components/SiteFooter.astro';
+import FeatureHero from '@/components/FeatureHero.astro';
+
+// Placeholder — sostituire con i dati reali quando disponibili.
+const experience = [
+  { years: '2024 — oggi', role: 'Senior UX Designer', company: 'TIM',        note: 'Self-caring digitale, KPI post-chiamata, coordinamento designer.' },
+  { years: '2020 — 2024', role: 'UX Designer',        company: 'Gruppo CAP', note: "Redesign area privata multi-profilo, Agile handoff." },
+  { years: '2018 — 2020', role: 'UX Consultant',      company: 'Eni',        note: "Archivio storico digitale — 20+ pagine, migliaia di documenti." },
+  { years: '2017 — 2018', role: 'Junior Designer',    company: '[Studio precedente]', note: 'Placeholder — sostituire con esperienza reale.' },
+];
+
+// Loghi come wordmark tipografici — sostituire con SVG loghi reali quando arrivano.
+// La lista è duplicata dal marquee JS per un loop seamless.
+const logos = [
+  'TIM', 'Gruppo CAP', 'Eni', 'BIP',
+  '[Cliente 05]', '[Cliente 06]', '[Cliente 07]', '[Cliente 08]',
+];
+
+const principi = [
+  'Progetto da problema, non da mockup.',
+  'Prototipo per decidere, non per illustrare.',
+  'Metto le metriche prima del delivery.',
+  'Sistemi, non schermate.',
+  'La scrittura è artefatto di design.',
+  'Non farei mai un design system senza governance.',
+  'Preferisco decisioni tracciate a decisioni condivise.',
+];
+---
+<Base title="About — Kevin Paradisi">
+  <SiteSidebar slot="sidebar" current="about" />
+
+  <FeatureHero
+    crumb="Portfolio / About"
+    glyph="K"
+    title="Chi sono, e cosa penso del mestiere."
+    titleEmWord="cosa penso"
+    lede="Sette anni di UX tra prodotto e servizi digitali. Sposto il focus verso design strategy — dove il valore sta nel decidere cosa costruire, non nel disegnarlo tutto. Questa pagina è un placeholder in continua evoluzione."
+  />
+
+  <!-- Esperienza — timeline -->
+  <section class="container-editorial py-16 md:py-24" aria-labelledby="esp-anchor">
+    <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 mb-10">
+      <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 flex items-center gap-3">
+        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+        <span class="tabular-nums">I</span>
+        <span aria-hidden="true" class="opacity-40">—</span>
+        <span>Esperienza</span>
+      </p>
+      <h2
+        id="esp-anchor"
+        class="font-body font-bold text-fg m-0 max-w-[24ch]"
+        style="font-size: clamp(1.75rem, 3vw, 2.25rem); letter-spacing: -0.02em; line-height: 1.15;"
+      >Dove ho lavorato, cosa ho posseduto.</h2>
+    </div>
+
+    <ol class="list-none p-0 m-0 flex flex-col">
+      {experience.map((e, i) => (
+        <li class:list={['grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,2fr)] gap-4 md:gap-10 items-baseline py-6 md:py-8', i < experience.length - 1 ? 'border-b border-border' : '']}>
+          <p class="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-muted m-0 tabular-nums">{e.years}</p>
+          <p class="font-body font-bold text-fg m-0 leading-tight" style="font-size: clamp(1.15rem, 1.6vw, 1.4rem);">
+            {e.role}
+            <span class="block font-normal text-muted mt-1 text-step-0">{e.company}</span>
+          </p>
+          <p class="text-step-0 text-fg leading-[1.5] m-0 max-w-[52ch]">{e.note}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Marquee verticale di clienti/loghi -->
+  <section class="bg-bg border-y border-border py-16 md:py-24 overflow-hidden" aria-labelledby="loghi-anchor">
+    <div class="container-editorial grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 items-center">
+
+      <div>
+        <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 mb-4 flex items-center gap-3">
+          <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+          <span class="tabular-nums">II</span>
+          <span aria-hidden="true" class="opacity-40">—</span>
+          <span id="loghi-anchor">Clienti</span>
+        </p>
+        <p class="font-body text-step-1 text-fg m-0 max-w-[36ch] leading-[1.35]">
+          Aziende con cui ho lavorato, direttamente o in consulenza. Wordmark come placeholder, in attesa dei loghi ufficiali.
+        </p>
+      </div>
+
+      <div class="logo-marquee" aria-hidden="true">
+        <div class="logo-marquee__track">
+          {[...logos, ...logos].map((l) => (
+            <span class="logo-marquee__item">{l}</span>
+          ))}
+        </div>
+        <!-- Top/bottom fade -->
+        <div class="logo-marquee__fade logo-marquee__fade--top" aria-hidden="true"></div>
+        <div class="logo-marquee__fade logo-marquee__fade--bottom" aria-hidden="true"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Principi (S14) -->
+  <section class="container-editorial py-16 md:py-24" aria-labelledby="princ-anchor">
+    <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16 mb-10">
+      <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 flex items-center gap-3">
+        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+        <span class="tabular-nums">III</span>
+        <span aria-hidden="true" class="opacity-40">—</span>
+        <span>Principi</span>
+      </p>
+      <h2
+        id="princ-anchor"
+        class="font-body font-bold text-fg m-0 max-w-[24ch]"
+        style="font-size: clamp(1.75rem, 3vw, 2.25rem); letter-spacing: -0.02em; line-height: 1.15;"
+      >Cosa credo del mestiere.</h2>
+    </div>
+
+    <ol class="list-none p-0 m-0 flex flex-col divide-y divide-border">
+      {principi.map((p, i) => (
+        <li class="grid grid-cols-[3rem_1fr] gap-4 py-5 items-baseline">
+          <span class="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-accent tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+          <p class="font-body text-fg m-0" style="font-size: clamp(1.15rem, 2vw, 1.6rem); line-height: 1.35;">{p}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <SiteFooter slot="footer" />
+</Base>
+
+<style>
+  /* Vertical logo marquee — infinite loop scroll upward. */
+  .logo-marquee {
+    position: relative;
+    height: clamp(18rem, 34vh, 26rem);
+    overflow: hidden;
+    mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+  }
+  .logo-marquee__track {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    animation: marquee-scroll 24s linear infinite;
+  }
+  .logo-marquee__item {
+    font-family: theme('fontFamily.body');
+    font-weight: 900;
+    font-size: clamp(1.75rem, 3vw, 2.6rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: theme('colors.fg');
+    padding-block: 0.35rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+  .logo-marquee:hover .logo-marquee__track { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee__track { animation: none; }
+    .logo-marquee { mask-image: none; }
+  }
+</style>

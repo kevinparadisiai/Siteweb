@@ -1,9 +1,46 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const year = new Date().getFullYear();
+// S18 — real last-updated date. Bump when you touch real content.
+const lastUpdated = 'settembre 2026';
 ---
-<footer class="border-t border-border py-8 text-step--1 text-muted">
-  <div class="container-editorial flex flex-wrap justify-between gap-4">
-    <span>© {year} [Nome Cognome] · Costruito con cura, senza template</span>
-    <span>Ultimo aggiornamento: luglio 2026</span>
+<footer class="border-t border-border py-10 md:py-12 text-step--1 text-muted">
+  <div class="container-editorial grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+
+    <!-- Left: identity + copyright -->
+    <div class="flex flex-col gap-3">
+      <a href={`${base}/`} class="font-display text-fg text-step-1 no-underline">
+        Kevin<em class="text-accent not-italic">.</em>
+      </a>
+      <p class="m-0">© {year} Kevin Paradisi · Costruito con cura, senza template.</p>
+      <p class="m-0 opacity-70">Ultimo aggiornamento: {lastUpdated}</p>
+    </div>
+
+    <!-- Middle: quick contacts -->
+    <div class="flex flex-col gap-2">
+      <p class="text-[0.68rem] uppercase tracking-[0.16em] font-medium text-muted m-0 mb-1">Scrivimi</p>
+      <a href="mailto:kevinparadisiai@gmail.com" class="text-fg no-underline hover:underline underline-offset-4">kevinparadisiai@gmail.com</a>
+      <a href="https://www.linkedin.com/in/kevinparadisi" target="_blank" rel="noopener" class="text-fg no-underline hover:underline underline-offset-4">LinkedIn <span class="sr-only">(nuova scheda)</span></a>
+    </div>
+
+    <!-- Right: CV + navigation -->
+    <div class="flex flex-col gap-3 md:items-end">
+      <a
+        href={`${base}/cv.pdf`}
+        download="Kevin-Paradisi-CV.pdf"
+        class="inline-flex items-center gap-2 py-2 px-4 border border-fg text-fg no-underline text-[0.72rem] uppercase tracking-[0.14em] font-medium hover:bg-fg hover:text-bg transition-colors"
+        data-cursor-label="Scarica CV"
+      >
+        <span>Scarica CV (PDF)</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+      </a>
+      <nav class="flex flex-wrap gap-x-4 gap-y-1 text-[0.72rem] uppercase tracking-[0.14em] font-medium md:justify-end" aria-label="Footer">
+        <a href={`${base}/work/`} class="text-muted no-underline hover:text-fg">Work</a>
+        <a href={`${base}/lab/`} class="text-muted no-underline hover:text-fg">Lab</a>
+        <a href={`${base}/about/`} class="text-muted no-underline hover:text-fg">About</a>
+        <a href={`${base}/contact/`} class="text-muted no-underline hover:text-fg">Contatti</a>
+      </nav>
+    </div>
+
   </div>
 </footer>

@@ -80,6 +80,37 @@
 /* ==========================================================================
    Language switcher — top-right persistent (Sketchin pattern)
    ========================================================================== */
+/* Persistent CV download pill — top-right, before the lang switch. */
+.site-cv {
+  position: fixed;
+  top: 1.15rem;
+  right: calc(clamp(1rem, 4vw, 2.5rem) + 6rem);
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid theme('colors.fg');
+  color: theme('colors.fg');
+  background: theme('colors.bg');
+  font-family: theme('fontFamily.body');
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 220ms ease, color 220ms ease;
+  line-height: 1;
+}
+.site-cv:hover { background: theme('colors.fg'); color: theme('colors.bg'); }
+.menu-open .site-cv { color: #ffffff; border-color: #ffffff; background: transparent; }
+.menu-open .site-cv:hover { background: #ffffff; color: theme('colors.accent'); }
+@media (max-width: 640px) {
+  .site-cv span { display: none; } /* keep just the icon on mobile */
+  .site-cv { padding: 0.55rem 0.6rem; }
+}
+
 .lang-switch {
   position: fixed;
   top: 1.5rem;
