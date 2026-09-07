@@ -1,4 +1,3 @@
-<img width="1493" height="611" alt="Unipol_Gruppo_Logo" src="https://github.com/user-attachments/assets/a7200042-869d-46e0-83f1-6b283f6a4fa7" />
 # Client logos
 
 Drop the SVG file for each client here, using these exact filenames:
@@ -20,6 +19,7 @@ Notes:
   the .client-logo class caps max-height at 3.5rem and lets width auto.
 - PNG is also OK (change the extension in the src). SVG is preferred
   for crispness at any zoom.
+  <img width="1493" height="611" alt="Unipol_Gruppo_Logo" src="https://github.com/user-attachments/assets/a7200042-869d-46e0-83f1-6b283f6a4fa7" />
 <img width="3508" height="2481" alt="EOLO-PAYOFF-CIANO" src="https://github.com/user-attachments/assets/5f00bace-346d-43b5-aacd-b68b09352f2a" /><img width="1493" height="611" alt="Unipol_Gruppo_Logo" src="https://github.com/user-attachments/assets/3a206311-f787-4ab3-ab45-0a562dc26770" />
 <img width="500" height="183" alt="Eni_2023 svg" src="https://github.com/user-attachments/assets/e6acfe73-1234-4fa5-8fc6-72a2ef4552f1" />
 <img width="3840" height="1011" alt="TIM_logo_(2016-present) svg" src="https://github.com/user-attachments/assets/ce3159a8-26ba-44f2-a12b-edf8f6bd019d" /><img width="1493" height="611" alt="Unipol_Gruppo_Logo" src="https://github.com/user-attachments/assets/d97a1297-77a7-47f0-9d69-d2858e079220" />
