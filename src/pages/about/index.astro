@@ -197,28 +197,30 @@ const principi = [
   }
   .client-cell:hover { transform: translateY(-2px); }
 
-  /* Fixed logo footprint — every brand mark occupies the same
-     visual box regardless of the source aspect ratio, and is
-     letterboxed via object-fit: contain. Left-aligned to keep
-     the mark anchored to the same edge across the grid. */
+  /* Optical cap-height lock — every logo is scaled to the same
+     fixed height so they read at the same size across the grid.
+     Source files are tight-cropped to the wordmark (no padding,
+     no payoff), so a height cap alone gives consistent presence.
+     Very wide wordmarks (lastminute.com) are naturally allowed
+     to shrink below cap when they would otherwise overflow the
+     cell — that's the nature of an 8.5:1 wordmark. */
   .client-logo-wrap {
     width: 100%;
-    max-width: 11rem;
-    height: 3rem;
+    min-height: 2.75rem;
     display: flex;
     align-items: center;
     justify-content: flex-start;
   }
   .client-logo {
-    max-height: 100%;
-    max-width: 100%;
+    height: 2rem;
     width: auto;
-    height: auto;
+    max-width: 100%;
     object-fit: contain;
     object-position: left center;
     display: block;
   }
   @media (min-width: 900px) {
-    .client-logo-wrap { height: 3.25rem; }
+    .client-logo { height: 2.25rem; }
+    .client-logo-wrap { min-height: 3rem; }
   }
 </style>
