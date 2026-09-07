@@ -24,13 +24,15 @@ const experience = [
 // Per usare i loghi reali: salvare gli SVG in `public/logos/{slug}.svg`
 // e sostituire il <span> wordmark con:
 //   <img src={`${base}/logos/${c.slug}.svg`} alt={c.name} class="client-logo" />
+// hasLogo: true → render <img src="/logos/{slug}.svg">; false → wordmark
+// Flip to true when the SVG file lands in public/logos/{slug}.svg.
 const clients = [
-  { slug: 'lastminute', name: 'lastminute.com', sector: 'Travel',    color: '#EC008C', casing: 'lowercase' as const },
-  { slug: 'eni',        name: 'eni',            sector: 'Energy',    color: '#F5C518', casing: 'lowercase' as const },
-  { slug: 'tim',        name: 'TIM',            sector: 'Telco',     color: '#0056A3', casing: 'uppercase' as const },
-  { slug: 'gruppo-cap', name: 'Gruppo CAP',     sector: 'Utilities', color: '#2892C7', casing: 'normal'    as const },
-  { slug: 'unipol',     name: 'Unipol',         sector: 'Insurance', color: '#007F3F', casing: 'normal'    as const },
-  { slug: 'eolo',       name: 'eolo',           sector: 'Telco',     color: '#00A6E4', casing: 'lowercase' as const },
+  { slug: 'lastminute', name: 'lastminute.com', sector: 'Travel',    color: '#EC008C', casing: 'lowercase' as const, hasLogo: false },
+  { slug: 'eni',        name: 'eni',            sector: 'Energy',    color: '#F5C518', casing: 'lowercase' as const, hasLogo: false },
+  { slug: 'tim',        name: 'TIM',            sector: 'Telco',     color: '#0056A3', casing: 'uppercase' as const, hasLogo: false },
+  { slug: 'gruppo-cap', name: 'Gruppo CAP',     sector: 'Utilities', color: '#2892C7', casing: 'normal'    as const, hasLogo: false },
+  { slug: 'unipol',     name: 'Unipol',         sector: 'Insurance', color: '#007F3F', casing: 'normal'    as const, hasLogo: true  },
+  { slug: 'eolo',       name: 'eolo',           sector: 'Telco',     color: '#00A6E4', casing: 'lowercase' as const, hasLogo: false },
 ];
 const sectors = [
   'Energy & Utilities',
@@ -124,36 +126,31 @@ const principi = [
         </p>
       </div>
 
-      <!-- RIGHT — client cells. When public/logos/{slug}.svg exists it
-           renders the real logo; otherwise it falls back to a brand-
-           colored wordmark placeholder. Toggle per client via `useSvg`. -->
+      <!-- RIGHT — client cells. Per-client flag `hasLogo` decides whether
+           the SVG file at public/logos/{slug}.svg is rendered, or a
+           brand-colored wordmark placeholder. -->
       <ul class="list-none p-0 m-0 grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-6">
-        {clients.map((c) => {
-          // Set to true once the file exists in public/logos/. Placeholder
-          // wordmark is used otherwise — no fake pictorial reproductions.
-          const useSvg = false;
-          return (
-            <li class="client-cell relative flex flex-col items-start justify-between p-6 min-h-[10rem] border border-border transition-colors duration-300 hover:border-fg">
-              {useSvg ? (
-                <img
-                  src={`${base}/logos/${c.slug}.svg`}
-                  alt={c.name}
-                  class="client-logo max-h-[3.5rem] w-auto"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <span
-                  class="client-wordmark font-body font-black"
-                  style={`color: ${c.color}; font-size: clamp(1.3rem, 2vw, 1.8rem); letter-spacing: -0.03em; line-height: 1; text-transform: ${c.casing === 'lowercase' ? 'lowercase' : c.casing === 'uppercase' ? 'uppercase' : 'none'};`}
-                >{c.name}</span>
-              )}
-              <span class="font-mono text-[0.62rem] tracking-[0.16em] uppercase text-muted mt-4">
-                {c.sector}
-              </span>
-            </li>
-          );
-        })}
+        {clients.map((c) => (
+          <li class="client-cell relative flex flex-col items-start justify-between p-6 min-h-[10rem] border border-border transition-colors duration-300 hover:border-fg">
+            {c.hasLogo ? (
+              <img
+                src={`${base}/logos/${c.slug}.svg`}
+                alt={c.name}
+                class="client-logo max-h-[3.5rem] w-auto"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <span
+                class="client-wordmark font-body font-black"
+                style={`color: ${c.color}; font-size: clamp(1.3rem, 2vw, 1.8rem); letter-spacing: -0.03em; line-height: 1; text-transform: ${c.casing === 'lowercase' ? 'lowercase' : c.casing === 'uppercase' ? 'uppercase' : 'none'};`}
+              >{c.name}</span>
+            )}
+            <span class="font-mono text-[0.62rem] tracking-[0.16em] uppercase text-muted mt-4">
+              {c.sector}
+            </span>
+          </li>
+        ))}
       </ul>
 
     </div>

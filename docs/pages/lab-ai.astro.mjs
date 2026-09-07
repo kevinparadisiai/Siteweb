@@ -1,0 +1,62 @@
+import { c as createComponent, r as renderComponent, a as renderTemplate, m as maybeRenderHead, b as addAttribute } from '../chunks/astro/server_thzPqhcw.mjs';
+import 'kleur/colors';
+import 'html-escaper';
+import { $ as $$Base, a as $$SiteSidebar, b as $$SiteFooter } from '../chunks/SiteFooter_yqd3yLzb.mjs';
+import { $ as $$FeatureHero } from '../chunks/FeatureHero_Dk2xPcW-.mjs';
+export { renderers } from '../renderers.mjs';
+
+const $$LabAi = createComponent(($$result, $$props, $$slots) => {
+  const base = "/Siteweb".replace(/\/$/, "");
+  return renderTemplate`${renderComponent($$result, "Base", $$Base, { "title": "Lab — AI come specchio critico" }, { "default": ($$result2) => renderTemplate`  ${renderComponent($$result2, "FeatureHero", $$FeatureHero, { "crumb": "Portfolio / Lab / AI come specchio critico", "glyph": "?", "title": "Cosa succede se chiedo a un LLM di argomentare  le mie decisioni di design?", "titleEmWord": "contro", "lede": "Un LLM è comodo quando mi dà idee. È scomodo quando gli chiedo di demolirle. Ho passato un mese a testare un prompt 'avvocato del diavolo strutturato' su tre progetti reali." })} ${maybeRenderHead()}<section class="container-editorial"> <div class="my-14 p-6 bg-accent-weak border-l-[3px] border-accent"> <p class="eyebrow mb-4">Cosa contiene questa nota</p> <dl class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-4"> ${[
+    ["Interrogativo", "Un LLM può funzionare come critico, non come generatore?"],
+    ["Cosa ho fatto", "Testato un prompt su 3 progetti reali, 1 mese di iterazioni"],
+    ["Artefatto", "Prompt template copiabile in fondo"],
+    ["Onestà", "Racconto anche il caso in cui non ha funzionato"],
+    ["Data", "Giugno 2024"],
+    ["Lettura", "~5 min"]
+  ].map(([k, v]) => renderTemplate`<div> <dt class="text-[0.7rem] uppercase tracking-[0.12em] font-medium text-muted mb-2">${k}</dt> <dd class="m-0 text-step-0 text-fg">${v}</dd> </div>`)} </dl> </div> <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-12 pb-16 items-start"> <article class="max-w-measure text-fg"> <h2 id="perche" class="font-display font-normal text-step-3 mt-0 mb-4">Perché mi sono posto la domanda</h2> <p class="mb-4">Uso LLM da tempo come acceleratori di ideazione: brainstorm, prime bozze di copy, sintesi di note di ricerca. In tutti questi usi il modello mi <em>aiuta</em>. Mi conferma, aggiunge, amplifica. E questo, dopo qualche mese, ha smesso di darmi comfort e ha iniziato a insospettirmi.</p> <p class="mb-4">I designer senior che stimo hanno una qualità in comune: fanno domande scomode presto. Non aspettano la review per essere criticati. Mi sono chiesto se un LLM potesse funzionare come un critico strutturato — non come pari, ma come <em>specchio deformante</em> che rendesse visibile quello che stavo evitando di guardare.</p> <h2 id="setup" class="font-display font-normal text-step-3 mt-14 mb-4">Il setup</h2> <p class="mb-4">Ho scelto tre decisioni di design che avevo già preso su progetti reali. Per ciascuna ho preparato un brief sintetico: contesto, opzione scelta, tre motivi principali.</p> <p class="mb-4">Poi ho scritto un prompt con un vincolo esplicito: <em>non deve essere bilanciato</em>. Voglio solo il contro, dal più concreto al più teorico.</p> <h2 id="cosa" class="font-display font-normal text-step-3 mt-14 mb-4">Cosa è successo</h2> <p class="mb-4">Su <strong>due progetti su tre</strong>, le prime due obiezioni erano lacune reali che, se avessi lavorato con più tempo, avrei visto io. Averle sulla pagina mi ha costretto a rispondere: o correggere, o articolare perché avevo scelto di ignorarle consapevolmente.</p> <p class="mb-4">Sul <strong>terzo progetto</strong>, quello con più dati raccolti a monte, l'esperimento è fallito. Il modello sembrava consapevole di essere "difeso" e ha prodotto obiezioni di forma, non di sostanza.</p> <blockquote class="font-display italic font-normal text-step-3 leading-[1.3] text-fg py-5 my-14 border-y border-border max-w-[55ch]" style="font-variation-settings: 'opsz' 72, 'SOFT' 100;">
+Il valore non era nelle obiezioni che ricevevo. Era nel fatto che scrivere il prompt mi obbligava a formulare la mia decisione in modo abbastanza chiaro da poter essere attaccata.
+</blockquote> <h2 id="template" class="font-display font-normal text-step-3 mt-14 mb-4">Il prompt</h2> <pre class="my-5 mb-6 bg-fg text-bg py-5 px-6 font-mono text-[calc(theme(fontSize.step--1)+0.05rem)] leading-relaxed whitespace-pre-wrap overflow-x-auto border-l-[3px] border-accent" id="prompt"><strong class="text-accent-weak font-medium">Contesto:</strong>
+[Descrivi la situazione in 3-4 righe. Chi sono gli utenti, qual è il problema di business,
+quali vincoli operativi.]
+
+<strong class="text-accent-weak font-medium">Opzione che ho scelto:</strong>
+[Descrivi la tua decisione di design in modo concreto e specifico.]
+
+<strong class="text-accent-weak font-medium">Perché l'ho scelta (i miei tre motivi):</strong>
+1. [Motivo #1]
+2. [Motivo #2]
+3. [Motivo #3]
+
+<strong class="text-accent-weak font-medium">Compito:</strong>
+Comportati come un Design Lead che sta facendo una review critica del mio lavoro.
+NON commentare i pro, NON bilanciare. Elenca solo le 5 obiezioni più forti che
+faresti a questa decisione, ordinate dalla più concreta e operativa (#1) alla
+più strategica e teorica (#5). Per ogni obiezione:
+
+- Formula il pensiero in una frase secca (non "potrebbe essere che", ma "questa
+  decisione fallisce se...").
+- Aggiungi un esempio concreto in cui l'obiezione si materializza.
+- Chiudi con una domanda diretta che dovrei potermi rispondere.
+
+Se le obiezioni ti sembrano deboli, dimmelo esplicitamente. Non inventare debolezze inesistenti.</pre> <button type="button" class="inline-flex items-center gap-2 bg-transparent border border-border-strong py-2 px-4 font-mono text-step--1 text-muted mt-3 min-h-[40px] transition-colors duration-150 hover:bg-fg hover:text-bg hover:border-fg" id="copyPromptBtn" aria-label="Copia il prompt template"> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="8" width="12" height="12" rx="1"></rect><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"></path></svg> <span id="copyPromptLabel">Copia prompt</span> </button> <h2 id="limiti" class="font-display font-normal text-step-3 mt-14 mb-4">Quando non usarlo</h2> <ul class="pl-5 mb-4"> <li class="mb-2"><strong>Su decisioni ancora molto morbide.</strong> Se non riesci a scriverne il brief, non è il modello che ti serve, è più tempo di riflessione.</li> <li class="mb-2"><strong>Su decisioni già blindate dai dati.</strong> Ti darà obiezioni deboli.</li> <li class="mb-2"><strong>Come sostituto della review umana.</strong> È utile prima, non dopo.</li> </ul> <p class="flex items-center justify-center gap-4 my-14 mb-4 text-muted-2 font-display italic font-light text-step-2 before:content-[''] before:flex-1 before:h-px before:bg-border before:max-w-16 after:content-[''] after:flex-1 after:h-px after:bg-border after:max-w-16" aria-hidden="true">§</p> </article> <aside class="lg:sticky lg:top-24 font-mono text-step--1 leading-relaxed"> <h4 class="eyebrow mb-3">In questa nota</h4> <ul class="list-none p-0 m-0 mb-6"> ${[
+    ["#perche", "Perché la domanda"],
+    ["#setup", "Il setup"],
+    ["#cosa", "Cosa è successo"],
+    ["#template", "Prompt template"],
+    ["#limiti", "Quando non usarlo"]
+  ].map(([h, t], i, arr) => renderTemplate`<li${addAttribute(`py-2 ${i < arr.length - 1 ? "border-b border-border" : ""}`, "class")}> <a${addAttribute(h, "href")}>${t}</a> </li>`)} </ul> <h4 class="eyebrow mb-3">Tag</h4> <ul class="list-none p-0 m-0"> <li class="py-2 border-b border-border">AI</li> <li class="py-2 border-b border-border">Metodo</li> <li class="py-2 border-b border-border">Prompt engineering</li> <li class="py-2">Critical thinking</li> </ul> </aside> </div> <nav class="mt-20 pt-14 border-t border-border" aria-label="Torna al portfolio"> <a${addAttribute(`${base}/`, "href")} class="block py-6 no-underline group"> <p class="eyebrow mb-3">← Torna al portfolio</p> <p class="font-display font-normal text-step-4 leading-[1.05] tracking-tight m-0 transition-transform duration-300 ease-editorial group-hover:translate-x-2">Altre note nel Lab</p> </a> </nav> </section>   `, "footer": ($$result2) => renderTemplate`${renderComponent($$result2, "SiteFooter", $$SiteFooter, { "slot": "footer" })}`, "sidebar": ($$result2) => renderTemplate`${renderComponent($$result2, "SiteSidebar", $$SiteSidebar, { "slot": "sidebar", "current": "lab" })}` })}`;
+}, "/home/user/Siteweb/src/pages/lab-ai.astro", void 0);
+const $$file = "/home/user/Siteweb/src/pages/lab-ai.astro";
+const $$url = "/Siteweb/lab-ai";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$LabAi,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
