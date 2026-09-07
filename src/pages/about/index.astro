@@ -26,15 +26,14 @@ const experience = [
 // Per usare i loghi reali: salvare gli SVG in `public/logos/{slug}.svg`
 // e sostituire il <span> wordmark con:
 //   <img src={`${base}/logos/${c.slug}.svg`} alt={c.name} class="client-logo" />
-// hasLogo: true → render <img src="/logos/{slug}.svg">; false → wordmark
-// Flip to true when the SVG file lands in public/logos/{slug}.svg.
+// hasLogo: true → render <img src="/logos/{slug}.{ext}">; false → wordmark
 const clients = [
-  { slug: 'lastminute', name: 'lastminute.com', sector: 'Travel',    color: '#EC008C', casing: 'lowercase' as const, hasLogo: false },
-  { slug: 'eni',        name: 'eni',            sector: 'Energy',    color: '#F5C518', casing: 'lowercase' as const, hasLogo: false },
-  { slug: 'tim',        name: 'TIM',            sector: 'Telco',     color: '#0056A3', casing: 'uppercase' as const, hasLogo: false },
-  { slug: 'gruppo-cap', name: 'Gruppo CAP',     sector: 'Utilities', color: '#2892C7', casing: 'normal'    as const, hasLogo: false },
-  { slug: 'unipol',     name: 'Unipol',         sector: 'Insurance', color: '#007F3F', casing: 'normal'    as const, hasLogo: true  },
-  { slug: 'eolo',       name: 'eolo',           sector: 'Telco',     color: '#00A6E4', casing: 'lowercase' as const, hasLogo: false },
+  { slug: 'lastminute', name: 'lastminute.com', sector: 'Travel',    color: '#EC008C', casing: 'lowercase' as const, hasLogo: true, ext: 'png' },
+  { slug: 'eni',        name: 'eni',            sector: 'Energy',    color: '#F5C518', casing: 'lowercase' as const, hasLogo: true, ext: 'webp' },
+  { slug: 'tim',        name: 'TIM',            sector: 'Telco',     color: '#0056A3', casing: 'uppercase' as const, hasLogo: true, ext: 'webp' },
+  { slug: 'gruppo-cap', name: 'Gruppo CAP',     sector: 'Utilities', color: '#2892C7', casing: 'normal'    as const, hasLogo: true, ext: 'png'  },
+  { slug: 'unipol',     name: 'Unipol',         sector: 'Insurance', color: '#007F3F', casing: 'normal'    as const, hasLogo: true, ext: 'svg'  },
+  { slug: 'eolo',       name: 'eolo',           sector: 'Telco',     color: '#00A6E4', casing: 'lowercase' as const, hasLogo: true, ext: 'png'  },
 ];
 const sectors = [
   'Energy & Utilities',
@@ -136,7 +135,7 @@ const principi = [
           <li class="client-cell relative flex flex-col items-start justify-between p-6 min-h-[10rem] border border-border transition-colors duration-300 hover:border-fg">
             {c.hasLogo ? (
               <img
-                src={`${base}/logos/${c.slug}.svg`}
+                src={`${base}/logos/${c.slug}.${c.ext}`}
                 alt={c.name}
                 class="client-logo max-h-[3.5rem] w-auto"
                 loading="lazy"
