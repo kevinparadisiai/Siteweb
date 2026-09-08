@@ -149,8 +149,8 @@ const principi = [
         <div class="flex flex-wrap items-baseline gap-y-1 font-body text-fg text-step-0 leading-[1.65] max-w-[44ch]">
           {sectors.map((s, i) => (
             <span class="whitespace-nowrap">
-              {i > 0 && <span class="text-muted mx-3" aria-hidden="true">·</span>}
               {s}
+              {i < sectors.length - 1 && <span class="text-muted mx-3" aria-hidden="true">·</span>}
             </span>
           ))}
         </div>
