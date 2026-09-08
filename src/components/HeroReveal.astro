@@ -1,18 +1,10 @@
 ---
-// HeroReveal — classic slideshow: one phrase visible at a time. The
-// previous one slides up + fades out at the same moment the new one
-// slides in from below + fades in. Auto-plays on landing (2.5s per
-// slide). First scroll skips to the finale so the projects below are
-// reachable. Pulsing asterisk mark above the phrase area signals
-// animation activity.
-// Strategy §S1 — name + current role + direction, no fluff. Concrete
-// company names in phase 2 act as HR proof-points.
-const phases: string[][] = [
-  ['Kevin', 'Paradisi,', 'UX', 'Designer.'],
-  ['Sette', 'anni', 'tra', 'TIM,', 'Gruppo', 'CAP', 'ed', 'Eni.'],
-  ['Sposto', 'il', 'focus', 'verso', 'design', 'strategy.'],
-];
-const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
+// HeroReveal — single greeting revealed word-by-word on landing.
+// No slideshow: the h1 identity line stays put and settles into the
+// screen. Pulsing mark above signals the reveal is running, then
+// stills once the sequence is done.
+const phases: string[][] = [];
+const finale: string[] = ['Ciao,', 'sono', 'Kevin', 'Digital', 'Designer.'];
 ---
 <section
   id="hero"
@@ -51,7 +43,7 @@ const finale: string[] = ['Progetto', 'sistemi,', 'non', 'schermate.'];
         aria-hidden="true"
       >
         {finale.map((w, j) => {
-          const italic = /^sistemi/i.test(w);
+          const italic = /^digital/i.test(w);
           return (
             <span
               class:list={['hero-word', italic && 'font-display italic font-light text-accent']}

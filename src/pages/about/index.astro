@@ -60,10 +60,36 @@ const principi = [
   <FeatureHero
     crumb="Portfolio / About"
     glyph="K"
-    title="Chi sono, e cosa penso del mestiere."
-    titleEmWord="cosa penso"
-    lede="Sette anni di UX tra prodotto e servizi digitali. Sposto il focus verso design strategy — dove il valore sta nel decidere cosa costruire, non nel disegnarlo tutto. Questa pagina è un placeholder in continua evoluzione."
+    title="Dal dettaglio all'impatto: il mio percorso nel design."
+    titleEmWord="all'impatto"
+    lede="Credo che il design non sia solo una disciplina, ma un modo di pensare e agire per generare valore reale per le persone e le organizzazioni. La mia missione è creare esperienze digitali che migliorano la vita quotidiana degli utenti, risolvono problemi concreti e contribuiscono all'evoluzione dei modelli di servizio nei contesti in cui opero."
   />
+
+  <!-- Bio prose — voce lunga, non timeline. Le informazioni concrete
+       (aziende, ruolo, competenze) sono nella timeline sotto; qui c'è
+       il "perché". -->
+  <section class="container-editorial py-16 md:py-24" aria-labelledby="bio-anchor">
+    <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 md:gap-16">
+      <p class="text-[0.72rem] uppercase tracking-[0.18em] font-medium text-muted m-0 flex items-center gap-3">
+        <span class="inline-block w-10 h-px bg-accent" aria-hidden="true"></span>
+        <span id="bio-anchor">Bio</span>
+      </p>
+      <div class="prose-bio flex flex-col gap-6 max-w-[62ch] text-fg">
+        <p class="m-0 text-step-1 leading-[1.55]">
+          Dal 2018 lavoro in <strong class="font-semibold">Assist Digital</strong>, dove accompagno team multidisciplinari e stakeholder aziendali nell'ideazione e sviluppo di soluzioni digitali customer-centric. Attraverso approcci <em class="not-italic font-medium">Design Thinking</em> e metodologie <em class="not-italic font-medium">Agile</em>, progetto e facilito processi che integrano ricerca qualitativa e quantitativa, interaction design, wireframing, prototipazione su Figma, documentazione funzionale e formazione su CMS come <span class="tabular-nums">AEM</span>.
+        </p>
+        <p class="m-0 text-step-0 leading-[1.65]">
+          Mi muovo in ecosistemi organizzativi complessi, contribuendo alla maturazione UX delle aziende e alla diffusione di una cultura del design consapevole. Ho collaborato con realtà strutturate come <strong class="font-semibold">TIM, Eni, Gruppo CAP, Edenred, UnipolSai</strong> sviluppando soluzioni scalabili che rispettano i vincoli tecnici ma mettono al centro l'esperienza umana.
+        </p>
+        <p class="m-0 text-step-0 leading-[1.65]">
+          Mi distinguo per la capacità di ascolto, pazienza e visione strategica. Credo in un design che sappia farsi linguaggio comune tra business, tecnologia e persone. Per questo motivo continuo a formarmi e a esplorare ambiti trasversali come la scrittura per l'IA, la facilitazione di <em class="not-italic font-medium">Design Sprint</em> e la progettazione di servizi data-driven <span class="text-muted">(CIID, Copenaghen)</span>.
+        </p>
+        <p class="m-0 text-step-0 leading-[1.65] font-body font-semibold text-fg border-l-2 border-accent pl-5">
+          La mia ambizione non è solo progettare interfacce intuitive, ma contribuire alla costruzione di modelli sostenibili e inclusivi in cui il design diventi leva di trasformazione culturale e innovazione sistemica.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- Esperienza — timeline -->
   <section class="container-editorial py-16 md:py-24" aria-labelledby="esp-anchor">
