@@ -60,8 +60,8 @@ const principi = [
   <FeatureHero
     crumb="Portfolio / About"
     glyph="K"
-    title="Dal dettaglio all'impatto: il mio percorso nel design."
-    titleEmWord="all'impatto"
+    title="Il mio percorso nel design."
+    titleEmWord="percorso"
     lede="Credo che il design non sia solo una disciplina, ma un modo di pensare e agire per generare valore reale per le persone e le organizzazioni. La mia missione è creare esperienze digitali che migliorano la vita quotidiana degli utenti, risolvono problemi concreti e contribuiscono all'evoluzione dei modelli di servizio nei contesti in cui opero."
   />
 
@@ -75,7 +75,7 @@ const principi = [
         <span id="bio-anchor">Bio</span>
       </p>
       <div class="prose-bio flex flex-col gap-6 max-w-[62ch] text-fg">
-        <p class="m-0 text-step-1 leading-[1.55]">
+        <p class="m-0 text-step-0 leading-[1.65]">
           Dal 2018 lavoro in <strong class="font-semibold">Assist Digital</strong>, dove accompagno team multidisciplinari e stakeholder aziendali nell'ideazione e sviluppo di soluzioni digitali customer-centric. Attraverso approcci <em class="not-italic font-medium">Design Thinking</em> e metodologie <em class="not-italic font-medium">Agile</em>, progetto e facilito processi che integrano ricerca qualitativa e quantitativa, interaction design, wireframing, prototipazione su Figma, documentazione funzionale e formazione su CMS come <span class="tabular-nums">AEM</span>.
         </p>
         <p class="m-0 text-step-0 leading-[1.65]">
@@ -146,11 +146,14 @@ const principi = [
         <p class="text-[0.72rem] uppercase tracking-[0.16em] font-medium text-muted m-0 mt-12 mb-4">
           Settori
         </p>
-        <p class="font-body text-fg text-step-0 leading-[1.65] m-0 max-w-[40ch]">
+        <div class="flex flex-wrap items-baseline gap-y-1 font-body text-fg text-step-0 leading-[1.65] max-w-[44ch]">
           {sectors.map((s, i) => (
-            <><span>{s}</span>{i < sectors.length - 1 ? <span class="text-muted mx-2" aria-hidden="true">·</span> : null}</>
+            <span class="whitespace-nowrap">
+              {i > 0 && <span class="text-muted mx-3" aria-hidden="true">·</span>}
+              {s}
+            </span>
           ))}
-        </p>
+        </div>
       </div>
 
       <!-- RIGHT — client cells. Per-client flag `hasLogo` decides whether
