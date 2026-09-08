@@ -1,10 +1,11 @@
 ---
-// HeroReveal — single greeting revealed word-by-word on landing.
-// No slideshow: the h1 identity line stays put and settles into the
-// screen. Pulsing mark above signals the reveal is running, then
-// stills once the sequence is done.
-const phases: string[][] = [];
-const finale: string[] = ['Ciao,', 'sono', 'Kevin', 'Digital', 'Designer.'];
+// HeroReveal — 2-slide sequence on landing. Greeting first, identity
+// second. Word-by-word reveal per phase; finale is the h1 and holds
+// on screen after the sequence completes.
+const phases: string[][] = [
+  ['Ciao,', 'sono', 'Kevin'],
+];
+const finale: string[] = ['Digital', 'Designer.'];
 ---
 <section
   id="hero"
