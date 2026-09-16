@@ -2,113 +2,315 @@
 import V2Base from '@/layouts/V2Base.astro';
 import V2Header from '@/components/V2Header.astro';
 import V2Footer from '@/components/V2Footer.astro';
+import V2Eyebrow from '@/components/V2Eyebrow.astro';
+import ContactBlock from '@/components/ContactBlock.astro';
 ---
 <V2Base title="Kevin Paradisi — About">
   <V2Header current="about" />
 
-  <main id="main" class="about v2-shell">
-    <h1 class="about__title">Chi, come, ora.</h1>
+  <main id="main">
+    <!-- HERO: stessa lingua della home. Ghost word "about.",
+         KP mark a destra, copy a sinistra sotto. -->
+    <section class="about-hero" aria-labelledby="about-hero-title">
+      <div class="about-hero__ghost" aria-hidden="true">about.</div>
 
-    <section class="about__block" aria-labelledby="about-chi">
-      <h2 id="about-chi" class="about__label mono">Chi</h2>
-      <div class="about__body">
-        <p>
-          Kevin Paradisi, 33 anni, Milano. Progetto interfacce e servizi
-          digitali per aziende enterprise italiane dal 2018 come consulente
-          <strong>Assist Digital</strong>. Di formazione: interaction design,
-          poi Design Sprint e servizi data-driven <span class="ink-2">(CIID Copenaghen)</span>.
+      <figure class="about-hero__portrait" aria-hidden="true">
+        <div class="about-hero__portrait-frame">
+          <span class="about-hero__portrait-mark">KP</span>
+        </div>
+        <figcaption class="about-hero__portrait-caption mono">
+          Kevin Paradisi <span aria-hidden="true">·</span> placeholder foto
+        </figcaption>
+      </figure>
+
+      <div class="about-hero__content v2-shell">
+        <V2Eyebrow>About</V2Eyebrow>
+        <h1 id="about-hero-title" class="about-hero__title">
+          UX designer <em>in transito</em> verso design strategy.
+        </h1>
+        <p class="about-hero__lede">
+          Kevin Paradisi, 33 anni, Milano. Da 8 anni consulente
+          <strong>Assist Digital</strong> presso clienti enterprise italiani.
         </p>
+      </div>
+
+      <a href="#chi" class="about-hero__scroll mono" aria-label="Scorri al contenuto">
+        <span aria-hidden="true">↓</span>
+      </a>
+    </section>
+
+    <!-- CHI + FACTS: 2 colonne editorial -->
+    <section id="chi" class="about-section v2-shell" aria-labelledby="about-chi">
+      <V2Eyebrow id="about-chi">Chi</V2Eyebrow>
+      <div class="about-section__grid">
+        <div class="about-section__body">
+          <p>
+            Progetto interfacce e servizi digitali per grandi organizzazioni
+            italiane dal 2018. Le mie specialità: interaction design,
+            ricerca UX quali-quantitativa, wireframing e prototipazione
+            in Figma, documentazione funzionale, formazione su CMS
+            enterprise (<span class="mono">AEM</span>).
+          </p>
+          <p>
+            Formato al politecnico di Milano, poi CIID Copenaghen su
+            servizi data-driven. Facilito Design Sprint quando il team
+            è bloccato su una decisione troppo costosa da prendere in
+            solitaria.
+          </p>
+        </div>
+        <aside class="about-section__facts">
+          <dl>
+            <div><dt class="mono">Location</dt><dd>Milano, IT</dd></div>
+            <div><dt class="mono">Attivo da</dt><dd>2018</dd></div>
+            <div><dt class="mono">Attuale</dt><dd>Assist Digital</dd></div>
+            <div><dt class="mono">Cerca</dt><dd>Senior UX / Strategist</dd></div>
+            <div><dt class="mono">Disponibile</dt><dd>settembre 2026</dd></div>
+            <div><dt class="mono">Setup</dt><dd>Remoto o Milano</dd></div>
+          </dl>
+        </aside>
       </div>
     </section>
 
-    <section class="about__block" aria-labelledby="about-come">
-      <h2 id="about-come" class="about__label mono">Come</h2>
-      <div class="about__body">
-        <p>
-          Lavoro in <strong>Design Thinking + Agile</strong>: parto dagli
-          insight del customer care e dai dati di prodotto, non dai mockup.
-          Traduco requisiti in epic, feature e user story per non far arrivare
-          agli sviluppatori un file Figma senza contesto. Uso ricerca
-          qualitativa e quantitativa, A/B test, e prototipi Figma quando
-          servono a decidere — non a illustrare.
-        </p>
-        <p>
-          Faccio anche formazione su CMS enterprise (AEM in primis) e
-          facilito Design Sprint quando il team è bloccato su una decisione
-          troppo costosa da prendere in solitaria.
-        </p>
+    <!-- COME: prosa unica -->
+    <section class="about-section v2-shell" aria-labelledby="about-come">
+      <V2Eyebrow id="about-come">Come</V2Eyebrow>
+      <div class="about-section__grid about-section__grid--wide">
+        <div class="about-section__body">
+          <p class="about-section__lead">
+            <em>Design Thinking + Agile</em>. Parto dagli insight del
+            customer care e dai dati di prodotto, non dai mockup. Traduco
+            requisiti in epic, feature e user story per non far arrivare
+            agli sviluppatori un file Figma senza contesto.
+          </p>
+          <p>
+            Uso ricerca qualitativa e quantitativa, A/B test, e prototipi
+            Figma quando servono a decidere — non a illustrare. Faccio
+            anche formazione su CMS enterprise e coordinamento di
+            piccoli gruppi di designer sui progetti più strutturati.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="about__block" aria-labelledby="about-ora">
-      <h2 id="about-ora" class="about__label mono">Ora</h2>
-      <div class="about__body">
-        <p>
-          Sto spostando la mia quota da <em>esecuzione</em> a <em>direzione</em>:
-          design strategy, definizione dei problemi giusti, coordinamento di
-          designer più junior. Cerco un ruolo che riconosca questo passaggio —
-          <strong>Senior UX</strong> con responsabilità di indirizzo, o
-          <strong>Design Strategist</strong> in un team di prodotto.
-        </p>
-        <p class="mono ink-2 about__sig">
-          disponibile da settembre 2026 · remoto o milano
-        </p>
+    <!-- ORA: verso strategy -->
+    <section class="about-section v2-shell about-section--last" aria-labelledby="about-ora">
+      <V2Eyebrow id="about-ora">Ora</V2Eyebrow>
+      <div class="about-section__grid about-section__grid--wide">
+        <div class="about-section__body">
+          <p class="about-section__lead">
+            Sto spostando la mia quota da <em>esecuzione</em> a
+            <em>direzione</em>: design strategy, definizione dei
+            problemi giusti, coordinamento di designer più junior.
+          </p>
+          <p>
+            Cerco un ruolo che riconosca questo passaggio —
+            <strong>Senior UX</strong> con responsabilità di indirizzo,
+            o <strong>Design Strategist</strong> in un team di prodotto
+            enterprise.
+          </p>
+        </div>
       </div>
     </section>
   </main>
 
+  <ContactBlock />
   <V2Footer />
 </V2Base>
 
 <style>
-  .about {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    max-width: 900px;
+  /* ---------- HERO ABOUT ---------- */
+  .about-hero {
+    position: relative;
+    min-height: min(80vh, 720px);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 5rem;
+    overflow: hidden;
+    isolation: isolate;
   }
-  .about__title {
+  .about-hero__ghost {
+    position: absolute;
+    top: clamp(2rem, 5vh, 4rem);
+    left: clamp(-1rem, -2vw, -1.5rem);
+    right: 0;
     font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
     font-weight: 800;
     font-variation-settings: 'opsz' 96;
-    font-size: clamp(3rem, 8vw, 6rem);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    margin-bottom: 3.5rem;
+    font-size: clamp(7rem, 24vw, 22rem);
+    line-height: 0.82;
+    letter-spacing: -0.055em;
+    color: color-mix(in srgb, var(--ink) 7%, transparent);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
   }
-  .about__block {
+  .about-hero__portrait {
+    position: absolute;
+    right: clamp(1.25rem, 4vw, 2rem);
+    top: clamp(3rem, 6vh, 5rem);
+    width: min(32%, 18rem);
+    margin: 0;
+    z-index: 2;
+  }
+  .about-hero__portrait-frame {
+    aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(ellipse at 30% 20%, #2a2a2a 0%, var(--ink) 55%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px);
+    background-blend-mode: multiply;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .about-hero__portrait-mark {
+    font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 800;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--paper) 88%, transparent);
+  }
+  .about-hero__portrait-caption {
+    display: block;
+    margin-top: 0.55rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .about-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 34rem;
+    margin-top: clamp(16rem, 30vh, 22rem);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .about-hero__title {
+    font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 800;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(2.25rem, 6vw, 4.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 1.25rem 0 1.25rem;
+    max-width: 14ch;
+  }
+  .about-hero__title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .about-hero__lede {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.4;
+    color: var(--ink-2);
+    max-width: 42ch;
+    margin: 0;
+  }
+  .about-hero__lede strong { color: var(--ink); font-weight: 600; }
+
+  .about-hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--ink-2);
+    font-size: 1rem;
+    animation: about-scroll-bounce 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  @keyframes about-scroll-bounce {
+    0%, 100% { transform: translate(-50%, 0); opacity: 0.55; }
+    50%      { transform: translate(-50%, 6px); opacity: 1; }
+  }
+
+  @media (max-width: 780px) {
+    .about-hero { min-height: auto; padding-bottom: 4rem; }
+    .about-hero__ghost { font-size: clamp(4rem, 18vw, 8rem); top: 1rem; }
+    .about-hero__portrait {
+      position: static;
+      width: min(60%, 14rem);
+      margin: 3.5rem auto 2.5rem;
+    }
+    .about-hero__content { margin-top: 0; }
+  }
+
+  /* ---------- SEZIONI CHI/COME/ORA ---------- */
+  .about-section {
+    padding-top: 4rem;
+    padding-bottom: 1rem;
+    scroll-margin-top: 2rem;
+  }
+  .about-section--last { padding-bottom: 2rem; }
+  .about-section__grid {
     display: grid;
-    grid-template-columns: 8rem 1fr;
-    gap: 1.5rem 2.5rem;
-    padding: 2rem 0;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 3rem 4rem;
+    margin-top: 1.75rem;
+    padding-top: 1.75rem;
     border-top: 1px solid var(--rule);
   }
-  .about__block:last-of-type { border-bottom: 1px solid var(--rule); }
-  .about__label {
-    font-size: 0.78rem;
-    color: var(--ink-2);
-    letter-spacing: 0.06em;
-    text-transform: lowercase;
-    padding-top: 0.35rem;
+  .about-section__grid--wide {
+    grid-template-columns: 1fr;
+    max-width: 62ch;
   }
-  .about__body {
+  .about-section__body {
     font-size: 1.05rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--ink);
     max-width: 62ch;
   }
-  .about__body p + p { margin-top: 1rem; }
-  .about__body em { font-style: italic; font-weight: 500; }
-  .about__sig {
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-    letter-spacing: 0.02em;
+  .about-section__body p + p { margin-top: 1rem; }
+  .about-section__body em {
+    font-style: italic;
+    font-weight: 500;
+  }
+  .about-section__body strong { font-weight: 600; }
+  .about-section__lead {
+    font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+    line-height: 1.4;
+    color: var(--ink);
+    font-weight: 500;
   }
 
-  @media (max-width: 640px) {
-    .about__block {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
-    .about__label { padding-top: 0; }
+  .about-section__facts dl {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+  }
+  .about-section__facts dl div {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.85rem;
+  }
+  .about-section__facts dl div:last-child { border-bottom: 0; padding-bottom: 0; }
+  .about-section__facts dt {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .about-section__facts dd {
+    margin: 0;
+    font-size: 0.98rem;
+    color: var(--ink);
+  }
+
+  @media (max-width: 780px) {
+    .about-section__grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-section__facts { margin-top: 1rem; }
   }
 </style>

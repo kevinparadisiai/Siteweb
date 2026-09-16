@@ -1,0 +1,41 @@
+---
+// V2Eyebrow — piccolo eyebrow uppercase in mono con dash a sinistra.
+// Firma editoriale ripetuta in tutte le sezioni v2 (coerenza).
+interface Props {
+  id?: string;
+  variant?: 'ink' | 'paper';
+  as?: 'p' | 'span';
+}
+const { id, variant = 'ink', as: Tag = 'p' } = Astro.props;
+---
+<Tag
+  id={id}
+  class:list={['v2-eyebrow mono', `v2-eyebrow--${variant}`]}
+>
+  <span class="v2-eyebrow__dash" aria-hidden="true"></span>
+  <span class="v2-eyebrow__label"><slot /></span>
+</Tag>
+
+<style>
+  .v2-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+  }
+  .v2-eyebrow--ink { color: var(--ink-2); }
+  .v2-eyebrow--paper { color: color-mix(in srgb, var(--paper) 65%, transparent); }
+  .v2-eyebrow__dash {
+    display: inline-block;
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.9;
+    flex-shrink: 0;
+  }
+  .v2-eyebrow__label { display: inline-block; }
+</style>

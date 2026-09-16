@@ -1,40 +1,40 @@
 ---
+// V2Footer — minimalissimo. Il grosso del contatto vive in
+// ContactBlock (dark). Qui solo una barra copyright.
 const year = new Date().getFullYear();
 ---
-<footer class="v2-footer v2-shell">
-  <div class="v2-footer__row">
-    <span class="mono ink-2">© {year} Kevin Paradisi</span>
-    <a href="mailto:kevinparadisiai@gmail.com" class="v2-footer__link">kevinparadisiai@gmail.com</a>
-    <a
-      href="https://www.linkedin.com/in/kevinparadisi"
-      target="_blank"
-      rel="noopener"
-      class="v2-footer__link"
-    >LinkedIn <span class="ink-2" aria-hidden="true">↗</span></a>
+<footer class="v2-footer">
+  <div class="v2-footer__shell">
+    <span class="v2-footer__copy mono">© {year} Kevin Paradisi <span aria-hidden="true">·</span> Milano, EU</span>
+    <span class="v2-footer__made mono">Costruito con cura, senza template.</span>
   </div>
 </footer>
 
 <style>
   .v2-footer {
-    padding: 4rem 1.25rem 3rem;
-    margin-top: 4rem;
-    border-top: 1px solid var(--rule);
+    background: var(--ink);
+    color: color-mix(in srgb, var(--paper) 45%, transparent);
+    padding: 1.25rem 0;
+    border-top: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
   }
-  .v2-footer__row {
+  .v2-footer__shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 4vw, 2rem);
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
     flex-wrap: wrap;
-    gap: 0.35rem 2rem;
-    align-items: baseline;
-    font-size: 0.9rem;
   }
-  .v2-footer__link {
-    color: var(--ink);
-    border-bottom: 1px solid transparent;
-    transition: border-color 180ms ease;
+  .v2-footer__copy,
+  .v2-footer__made {
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
   }
-  .v2-footer__link:hover { border-color: var(--ink); }
+  .v2-footer__copy span[aria-hidden="true"] { margin: 0 0.4rem; opacity: 0.55; }
 
-  @media (min-width: 720px) {
-    .v2-footer { padding: 5rem 2rem 3rem; }
+  @media (max-width: 560px) {
+    .v2-footer__made { display: none; }
   }
 </style>

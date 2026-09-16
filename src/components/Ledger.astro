@@ -1,15 +1,20 @@
 ---
 import { engagements } from '@/data/engagements';
+import V2Eyebrow from '@/components/V2Eyebrow.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <section class="ledger v2-shell" aria-labelledby="ledger-title">
   <div class="ledger__head">
-    <h2 id="ledger-title" class="ledger__title">
-      Prove <span class="ledger__title-sub">— 2018 <span class="ledger__arrow" aria-hidden="true">→</span> oggi</span>
-    </h2>
-    <p class="ledger__meta mono ink-2">
-      {engagements.length} ingaggi enterprise
-    </p>
+    <V2Eyebrow>Prove</V2Eyebrow>
+    <div class="ledger__title-row">
+      <h2 id="ledger-title" class="ledger__title">
+        Ingaggi enterprise.<br>
+        <span class="ledger__title-sub">2018 <span class="ledger__arrow" aria-hidden="true">→</span> oggi.</span>
+      </h2>
+      <p class="ledger__meta mono">
+        {engagements.length} clienti · Italia
+      </p>
+    </div>
   </div>
 
   <ol class="ledger__list" role="list">
@@ -44,31 +49,34 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 </section>
 
 <style>
-  .ledger { padding-top: 4rem; padding-bottom: 2rem; scroll-margin-top: 2rem; }
+  .ledger { padding-top: 5rem; padding-bottom: 2rem; scroll-margin-top: 2rem; }
   .ledger__head {
     display: flex;
-    align-items: baseline;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .ledger__title-row {
+    display: flex;
+    align-items: flex-end;
     justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
   }
   .ledger__title {
     font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
-    font-weight: 700;
-    font-variation-settings: 'opsz' 48;
-    font-size: clamp(1.5rem, 2.6vw, 2rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
     color: var(--ink);
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    margin: 0;
   }
   .ledger__title-sub {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-    font-weight: 400;
+    color: color-mix(in srgb, var(--ink) 40%, transparent);
+  }
+  .ledger__meta {
     font-size: 0.82rem;
     color: var(--ink-2);
     letter-spacing: 0.02em;
