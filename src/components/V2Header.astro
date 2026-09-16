@@ -1,0 +1,119 @@
+---
+// V2Header — nome + ruolo (identità unica) + due CTA.
+// Non è sticky: la tabella-ledger deve stare sopra la piega.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+interface Props {
+  current?: 'home' | 'about' | 'work';
+}
+const { current = 'home' } = Astro.props;
+---
+<header class="v2-header v2-shell" data-in>
+  <a class="v2-header__id" href={`${base}/v2/`} aria-label="Home">
+    <span class="v2-header__name">Kevin Paradisi</span>
+    <span class="v2-header__role">
+      UX designer <span class="v2-header__arrow" aria-hidden="true">→</span> Design strategy
+    </span>
+  </a>
+
+  <nav class="v2-header__actions" aria-label="Azioni principali">
+    <a href={`${base}/v2/about/`} class:list={['v2-header__link', current === 'about' && 'is-current']}>About</a>
+    <a href="mailto:kevinparadisiai@gmail.com" class="v2-header__link">Scrivimi</a>
+    <a
+      href={`${base}/cv.pdf`}
+      download="Kevin-Paradisi-CV.pdf"
+      class="v2-header__cv"
+    >Scarica CV</a>
+  </nav>
+</header>
+
+<style>
+  .v2-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .v2-header__id { display: flex; flex-direction: column; gap: 0.15rem; }
+  .v2-header__name {
+    font-family: 'IBM Plex Sans Condensed', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3.6vw, 2.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .v2-header__role {
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    letter-spacing: 0.005em;
+  }
+  .v2-header__arrow {
+    display: inline-block;
+    margin: 0 0.15em;
+    transition: transform 260ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .v2-header__id:hover .v2-header__arrow {
+    transform: translateX(3px);
+  }
+
+  .v2-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .v2-header__link {
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    line-height: 1;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+  .v2-header__link:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .v2-header__link.is-current {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .v2-header__cv {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 0.6rem 0.9rem;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    transition: background 180ms ease, transform 180ms ease;
+  }
+  .v2-header__cv:hover { background: var(--flag); }
+
+  /* Entry micro-anim: la sola cosa che si muove all'atterraggio,
+     insieme alle righe del ledger. */
+  .v2-header {
+    opacity: 0;
+    transform: translateY(6px);
+    animation: v2-fade-in 420ms cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+  }
+  @keyframes v2-fade-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .v2-header { animation: none; opacity: 1; transform: none; }
+    .v2-header__arrow { transition: none; }
+  }
+
+  @media (max-width: 640px) {
+    .v2-header {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+    .v2-header__actions { justify-content: flex-start; gap: 0.9rem; flex-wrap: wrap; }
+  }
+</style>

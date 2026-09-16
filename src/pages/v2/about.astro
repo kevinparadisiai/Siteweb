@@ -1,0 +1,113 @@
+---
+import V2Base from '@/layouts/V2Base.astro';
+import V2Header from '@/components/V2Header.astro';
+import V2Footer from '@/components/V2Footer.astro';
+---
+<V2Base title="Kevin Paradisi — About">
+  <V2Header current="about" />
+
+  <main id="main" class="about v2-shell">
+    <h1 class="about__title">Chi, come, ora.</h1>
+
+    <section class="about__block" aria-labelledby="about-chi">
+      <h2 id="about-chi" class="about__label mono">Chi</h2>
+      <div class="about__body">
+        <p>
+          Kevin Paradisi, 33 anni, Milano. Progetto interfacce e servizi
+          digitali per aziende enterprise italiane dal 2018 come consulente
+          <strong>Assist Digital</strong>. Di formazione: interaction design,
+          poi Design Sprint e servizi data-driven <span class="ink-2">(CIID Copenaghen)</span>.
+        </p>
+      </div>
+    </section>
+
+    <section class="about__block" aria-labelledby="about-come">
+      <h2 id="about-come" class="about__label mono">Come</h2>
+      <div class="about__body">
+        <p>
+          Lavoro in <strong>Design Thinking + Agile</strong>: parto dagli
+          insight del customer care e dai dati di prodotto, non dai mockup.
+          Traduco requisiti in epic, feature e user story per non far arrivare
+          agli sviluppatori un file Figma senza contesto. Uso ricerca
+          qualitativa e quantitativa, A/B test, e prototipi Figma quando
+          servono a decidere — non a illustrare.
+        </p>
+        <p>
+          Faccio anche formazione su CMS enterprise (AEM in primis) e
+          facilito Design Sprint quando il team è bloccato su una decisione
+          troppo costosa da prendere in solitaria.
+        </p>
+      </div>
+    </section>
+
+    <section class="about__block" aria-labelledby="about-ora">
+      <h2 id="about-ora" class="about__label mono">Ora</h2>
+      <div class="about__body">
+        <p>
+          Sto spostando la mia quota da <em>esecuzione</em> a <em>direzione</em>:
+          design strategy, definizione dei problemi giusti, coordinamento di
+          designer più junior. Cerco un ruolo che riconosca questo passaggio —
+          <strong>Senior UX</strong> con responsabilità di indirizzo, o
+          <strong>Design Strategist</strong> in un team di prodotto.
+        </p>
+        <p class="mono ink-2 about__sig">
+          disponibile da settembre 2026 · remoto o milano
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <V2Footer />
+</V2Base>
+
+<style>
+  .about {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    max-width: 900px;
+  }
+  .about__title {
+    font-family: 'IBM Plex Sans Condensed', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+  .about__block {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1.5rem 2.5rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .about__block:last-of-type { border-bottom: 1px solid var(--rule); }
+  .about__label {
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    padding-top: 0.35rem;
+  }
+  .about__body {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink);
+    max-width: 62ch;
+  }
+  .about__body p + p { margin-top: 1rem; }
+  .about__body em { font-style: italic; font-weight: 500; }
+  .about__sig {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 640px) {
+    .about__block {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .about__label { padding-top: 0; }
+  }
+</style>

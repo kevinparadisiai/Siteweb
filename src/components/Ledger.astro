@@ -1,0 +1,217 @@
+---
+import { engagements } from '@/data/engagements';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section class="ledger v2-shell" aria-labelledby="ledger-title">
+  <div class="ledger__head">
+    <h1 id="ledger-title" class="ledger__title">
+      Ingaggi 2018 <span class="ledger__arrow" aria-hidden="true">→</span> oggi
+    </h1>
+    <p class="ledger__meta mono ink-2">
+      {engagements.length} clienti enterprise · Italia
+    </p>
+  </div>
+
+  <ol class="ledger__list" role="list">
+    {engagements.map((e, i) => {
+      const linkable = !!e.slug;
+      const Tag = linkable ? 'a' : 'div';
+      const href = linkable ? `${base}/v2/work/${e.slug}/` : undefined;
+      return (
+        <li
+          class:list={['ledger__row', linkable && 'is-linkable']}
+          style={`--client:${e.color}; --i:${i};`}
+        >
+          <Tag
+            {...(linkable ? { href } : {})}
+            class="ledger__cell-wrap"
+            aria-label={linkable ? `${e.client} — apri case study` : undefined}
+          >
+            <span class="ledger__year mono">{e.year}</span>
+            <span class="ledger__client">
+              <span class="ledger__swatch" aria-hidden="true"></span>
+              <span class="ledger__client-name">{e.client}</span>
+            </span>
+            <span class="ledger__role">{e.role}</span>
+            <span class="ledger__deliverable">{e.deliverable}</span>
+            <span class="ledger__kpi mono">{e.kpi}</span>
+            <span class="ledger__arrow-cell" aria-hidden="true">{linkable ? '→' : ''}</span>
+          </Tag>
+        </li>
+      );
+    })}
+  </ol>
+</section>
+
+<style>
+  .ledger { padding-top: 1.5rem; }
+  .ledger__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .ledger__title {
+    font-family: 'IBM Plex Sans Condensed', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .ledger__arrow {
+    display: inline-block;
+    transform: translateY(-0.05em);
+  }
+  .ledger__meta {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  .ledger__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .ledger__row {
+    border-bottom: 1px solid var(--rule);
+
+    /* stagger entry — solo alla prima load */
+    opacity: 0;
+    transform: translateY(6px);
+    animation: ledger-row-in 460ms cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+    animation-delay: calc(120ms + var(--i) * 60ms);
+  }
+  @keyframes ledger-row-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ledger__cell-wrap {
+    display: grid;
+    grid-template-columns:
+      minmax(6.5rem, auto)   /* year */
+      minmax(9rem, 1.15fr)   /* client */
+      minmax(7rem, 0.9fr)    /* role */
+      minmax(0, 2.4fr)       /* deliverable */
+      minmax(9rem, 1.2fr)    /* kpi */
+      1.75rem;               /* arrow */
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 1.15rem 0.5rem;
+    color: var(--ink);
+    transition: background-color 240ms ease, padding-left 240ms ease;
+  }
+  .ledger__year {
+    font-size: 0.82rem;
+    color: var(--ink-2);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .ledger__client {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+  .ledger__swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--client);
+    transform: translateY(-1px);
+    transition: transform 240ms cubic-bezier(0.2, 0.6, 0.2, 1),
+                width 240ms cubic-bezier(0.2, 0.6, 0.2, 1);
+    flex-shrink: 0;
+  }
+  .ledger__client-name { white-space: nowrap; }
+  .ledger__role {
+    font-size: 0.95rem;
+    color: var(--ink-2);
+  }
+  .ledger__deliverable {
+    font-size: 0.98rem;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .ledger__kpi {
+    font-size: 0.82rem;
+    color: var(--ink-2);
+    text-align: right;
+    white-space: nowrap;
+    transition: color 240ms ease;
+  }
+  .ledger__arrow-cell {
+    font-size: 1rem;
+    color: var(--ink-2);
+    text-align: right;
+    transition: transform 240ms cubic-bezier(0.2, 0.6, 0.2, 1),
+                color 240ms ease;
+  }
+
+  /* --- Hover (solo righe cliccabili) --- */
+  .ledger__row.is-linkable .ledger__cell-wrap:hover,
+  .ledger__row.is-linkable .ledger__cell-wrap:focus-visible {
+    background-color: color-mix(in srgb, var(--client) 7%, transparent);
+    padding-left: 1rem;
+    outline: none;
+  }
+  .ledger__row.is-linkable .ledger__cell-wrap:hover .ledger__swatch,
+  .ledger__row.is-linkable .ledger__cell-wrap:focus-visible .ledger__swatch {
+    width: 18px;
+    transform: translateY(-1px);
+  }
+  .ledger__row.is-linkable .ledger__cell-wrap:hover .ledger__arrow-cell,
+  .ledger__row.is-linkable .ledger__cell-wrap:focus-visible .ledger__arrow-cell {
+    transform: translateX(4px);
+    color: var(--ink);
+  }
+  .ledger__row.is-linkable .ledger__cell-wrap:hover .ledger__kpi,
+  .ledger__row.is-linkable .ledger__cell-wrap:focus-visible .ledger__kpi {
+    color: var(--ink);
+  }
+
+  /* Non-cliccabili: swatch presente, freccia assente, no hover */
+  .ledger__row:not(.is-linkable) .ledger__arrow-cell { visibility: hidden; }
+  .ledger__row:not(.is-linkable) .ledger__cell-wrap { cursor: default; }
+
+  /* --- Responsive: da tabella a card verticale --- */
+  @media (max-width: 900px) {
+    .ledger__cell-wrap {
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "year    kpi"
+        "client  client"
+        "role    role"
+        "deliv   deliv"
+        "arrow   arrow";
+      gap: 0.35rem 1rem;
+      padding: 1.4rem 0.5rem;
+    }
+    .ledger__year        { grid-area: year; }
+    .ledger__client      { grid-area: client; font-size: 1.35rem; }
+    .ledger__role        { grid-area: role; }
+    .ledger__deliverable { grid-area: deliv; font-size: 1rem; margin-top: 0.15rem; }
+    .ledger__kpi         { grid-area: kpi; text-align: right; }
+    .ledger__arrow-cell  { grid-area: arrow; text-align: left; padding-top: 0.35rem; }
+
+    .ledger__row.is-linkable .ledger__cell-wrap:hover,
+    .ledger__row.is-linkable .ledger__cell-wrap:focus-visible {
+      padding-left: 0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ledger__row {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .ledger__cell-wrap,
+    .ledger__swatch,
+    .ledger__arrow-cell,
+    .ledger__kpi { transition: none; }
+  }
+</style>

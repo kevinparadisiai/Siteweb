@@ -78,12 +78,46 @@
 }
 
 /* ==========================================================================
+   Preview banner — link a versione alternativa in valutazione (v2).
+   Da rimuovere quando la direzione è scelta.
+   ========================================================================== */
+body { padding-top: 2.4rem; }
+.preview-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 0.65rem 1rem;
+  background: #111111;
+  color: #FBFBFA;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background-color 200ms ease;
+}
+.preview-banner:hover { background: #E43C00; }
+.preview-banner__label { opacity: 0.7; }
+.preview-banner__cta { font-weight: 500; }
+.preview-banner__cta span { display: inline-block; margin-left: 0.25rem; transition: transform 240ms cubic-bezier(0.2, 0.6, 0.2, 1); }
+.preview-banner:hover .preview-banner__cta span { transform: translateX(4px); }
+@media (max-width: 600px) {
+  .preview-banner { gap: 0.75rem; padding: 0.55rem 0.75rem; font-size: 0.7rem; }
+  .preview-banner__label { display: none; }
+}
+
+/* ==========================================================================
    Language switcher — top-right persistent (Sketchin pattern)
    ========================================================================== */
 /* Persistent CV download pill — top-right, before the lang switch. */
 .site-cv {
   position: fixed;
-  top: 1.15rem;
+  top: 3.55rem; /* banner height 2.4rem + 1.15rem original offset */
   right: calc(clamp(1rem, 4vw, 2.5rem) + 6rem);
   z-index: 70;
   display: inline-flex;
@@ -113,7 +147,7 @@
 
 .lang-switch {
   position: fixed;
-  top: 1.5rem;
+  top: 3.9rem; /* banner 2.4rem + 1.5rem original offset */
   right: clamp(1rem, 4vw, 2.5rem);
   z-index: 70;
   display: inline-flex;
@@ -146,7 +180,7 @@
    ========================================================================== */
 .site-brandbar {
   position: fixed;
-  top: 1.35rem;
+  top: 3.75rem; /* banner 2.4rem + 1.35rem original offset */
   left: clamp(1rem, 4vw, 2.5rem);
   z-index: 60;
   display: inline-flex;
@@ -736,7 +770,7 @@
    ========================================================================== */
 .chapter-marker {
   position: sticky;
-  top: 5rem;
+  top: 7.4rem; /* banner 2.4rem + 5rem original */
   z-index: 20;
   pointer-events: none;
   padding-left: clamp(1rem, 4vw, 2.5rem);

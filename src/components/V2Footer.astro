@@ -1,0 +1,40 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="v2-footer v2-shell">
+  <div class="v2-footer__row">
+    <span class="mono ink-2">© {year} Kevin Paradisi</span>
+    <a href="mailto:kevinparadisiai@gmail.com" class="v2-footer__link">kevinparadisiai@gmail.com</a>
+    <a
+      href="https://www.linkedin.com/in/kevinparadisi"
+      target="_blank"
+      rel="noopener"
+      class="v2-footer__link"
+    >LinkedIn <span class="ink-2" aria-hidden="true">↗</span></a>
+  </div>
+</footer>
+
+<style>
+  .v2-footer {
+    padding: 4rem 1.25rem 3rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--rule);
+  }
+  .v2-footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 2rem;
+    align-items: baseline;
+    font-size: 0.9rem;
+  }
+  .v2-footer__link {
+    color: var(--ink);
+    border-bottom: 1px solid transparent;
+    transition: border-color 180ms ease;
+  }
+  .v2-footer__link:hover { border-color: var(--ink); }
+
+  @media (min-width: 720px) {
+    .v2-footer { padding: 5rem 2rem 3rem; }
+  }
+</style>

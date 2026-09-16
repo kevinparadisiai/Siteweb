@@ -1,0 +1,106 @@
+---
+import V2Base from '@/layouts/V2Base.astro';
+import V2Header from '@/components/V2Header.astro';
+import V2Footer from '@/components/V2Footer.astro';
+import Ledger from '@/components/Ledger.astro';
+---
+<V2Base title="Kevin Paradisi — UX designer → Design strategy">
+  <V2Header current="home" />
+
+  <main id="main">
+    <Ledger />
+
+    <!-- Note: 3 frasi, niente principi. -->
+    <section class="v2-section v2-shell" aria-labelledby="note-title">
+      <h2 id="note-title" class="v2-section__title">Note</h2>
+      <div class="v2-section__body">
+        <p>
+          Dal 2018 lavoro dentro <strong>Assist Digital</strong>, in postazione
+          consulente presso i clienti dell'elenco qui sopra. Il ruolo cambia
+          nome — UX Designer, UX Consultant, Senior UX — ma il lavoro è sempre
+          lo stesso: leggere il problema di business, capire chi ne paga il
+          costo, e portare a terra la soluzione in cicli brevi con
+          stakeholder che parlano lingue diverse.
+        </p>
+        <p>
+          Il passaggio verso design strategy nasce da qui: la maggior parte
+          delle decisioni che contano viene presa <em>prima</em> del wireframe,
+          non dopo. La mia prossima quota è disegnare quel prima.
+        </p>
+      </div>
+    </section>
+
+    <!-- Ora: stato attuale, senza fluff. -->
+    <section class="v2-section v2-shell" aria-labelledby="ora-title">
+      <h2 id="ora-title" class="v2-section__title">Ora</h2>
+      <div class="v2-section__body v2-section__body--ora">
+        <p>
+          <span class="ora-flag" aria-hidden="true"></span>
+          Disponibile da <strong>settembre 2026</strong> · Remoto o Milano ·
+          Ruolo target: <strong>Senior UX</strong> o <strong>Design Strategist</strong>
+          in team di prodotto.
+        </p>
+        <p class="ora-cta">
+          <a href="mailto:kevinparadisiai@gmail.com" class="ora-link">Scrivimi due righe</a>
+          <span class="ink-2" aria-hidden="true"> · rispondo in 24h.</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <V2Footer />
+</V2Base>
+
+<style>
+  .v2-section {
+    padding-top: 4rem;
+    padding-bottom: 0.5rem;
+  }
+  .v2-section__title {
+    font-family: 'IBM Plex Sans Condensed', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+    margin-bottom: 1.5rem;
+  }
+  .v2-section__body {
+    max-width: 66ch;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .v2-section__body p + p { margin-top: 1rem; }
+  .v2-section__body em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* Ora — flag rosso come indicatore di stato "on-air", non come accento. */
+  .v2-section__body--ora .ora-flag {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: var(--flag);
+    border-radius: 50%;
+    transform: translateY(-1px);
+    margin-right: 0.5rem;
+    animation: ora-pulse 2s ease-in-out infinite;
+  }
+  @keyframes ora-pulse {
+    0%, 100% { opacity: 0.55; transform: translateY(-1px) scale(1); }
+    50%      { opacity: 1;    transform: translateY(-1px) scale(1.15); }
+  }
+  .ora-cta { margin-top: 0.75rem; }
+  .ora-link {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+  .ora-link:hover { color: var(--flag); border-color: var(--flag); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ora-flag { animation: none; }
+  }
+</style>

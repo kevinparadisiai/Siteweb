@@ -25,6 +25,15 @@ const base = import.meta.env.BASE_URL;
   </head>
   <body class={bodyClass}>
     <a class="skip-link" href="#main">Vai al contenuto</a>
+
+    <!-- Preview banner — link visibile a una versione alternativa
+         del sito in fase di validazione. Si toglie una volta scelta
+         la direzione. -->
+    <a class="preview-banner" href={`${base}v2/`} aria-label="Apri la preview del nuovo design">
+      <span class="preview-banner__label">Preview · nuovo design in valutazione</span>
+      <span class="preview-banner__cta">Vedi la nuova versione <span aria-hidden="true">→</span></span>
+    </a>
+
     <slot name="sidebar" />
     <slot name="header" />
 
