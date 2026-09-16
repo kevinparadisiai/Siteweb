@@ -16,7 +16,11 @@ const { current = 'home' } = Astro.props;
   </a>
 
   <nav class="v2-header__actions" aria-label="Azioni principali">
-    <a href={`${base}/v2/about/`} class:list={['v2-header__link', current === 'about' && 'is-current']}>About</a>
+    <a
+      href={`${base}/v2/about/`}
+      class:list={['v2-header__link', current === 'about' && 'is-current']}
+      aria-current={current === 'about' ? 'page' : undefined}
+    >About</a>
     <a href="mailto:kevinparadisiai@gmail.com" class="v2-header__link">Scrivimi</a>
     <a
       href={`${base}/cv.pdf`}
@@ -67,7 +71,11 @@ const { current = 'home' } = Astro.props;
     font-size: 0.95rem;
     color: var(--ink-2);
     line-height: 1;
-    padding: 0.35rem 0;
+    /* touch-target-size ≥44px */
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.35rem;
     border-bottom: 1px solid transparent;
     transition: color 180ms ease, border-color 180ms ease;
   }
@@ -84,7 +92,11 @@ const { current = 'home' } = Astro.props;
     font-size: 0.78rem;
     color: var(--paper);
     background: var(--ink);
-    padding: 0.6rem 0.9rem;
+    /* touch-target-size ≥44px: 0.85 × 2 + font 12.5px ≈ 40px + line-height buffer */
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 1rem;
     line-height: 1;
     letter-spacing: 0.02em;
     text-transform: none;
