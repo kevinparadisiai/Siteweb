@@ -1,0 +1,184 @@
+---
+// Manifesto — l'hero della v2. Composizione tipografica asimmetrica
+// in Bricolage Grotesque, opsize massimo (96pt). Due movimenti:
+// - "Prima del wireframe." (contesto, peso medio, grigio scuro)
+// - "La decisione." (statement, peso 800, indent asimmetrico,
+//   preceduta da barra colorata TIM-blue come firma).
+// Piccola label mono in alto (identità + ruolo), meta in basso
+// (scala del lavoro + scroll cue verso il ledger).
+import { engagements } from '@/data/engagements';
+const count = engagements.length;
+---
+<section
+  class="manifesto v2-shell"
+  aria-labelledby="manifesto-heading"
+  data-reveal-manifesto
+>
+  <p class="manifesto__meta mono">
+    <span>Kevin Paradisi</span>
+    <span aria-hidden="true" class="manifesto__meta-sep">·</span>
+    <span>UX designer <span aria-hidden="true">→</span><span class="sr-only"> verso </span> Design strategy</span>
+  </p>
+
+  <h1 id="manifesto-heading" class="manifesto__title">
+    <span class="manifesto__line manifesto__line--1" data-i="0">
+      Prima del wireframe.
+    </span>
+    <span class="manifesto__line manifesto__line--2" data-i="1">
+      <span class="manifesto__bar" aria-hidden="true"></span>La decisione.
+    </span>
+  </h1>
+
+  <div class="manifesto__foot">
+    <p class="manifesto__scale mono">
+      8 anni <span aria-hidden="true">·</span> {count} aziende enterprise <span aria-hidden="true">·</span> Italia
+    </p>
+    <a href="#prove" class="manifesto__cue" aria-label="Vai alle prove del lavoro">
+      <span class="mono">Prove</span>
+      <span aria-hidden="true" class="manifesto__cue-arrow">↓</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    min-height: min(88vh, 780px);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+    gap: 3rem;
+  }
+
+  /* Meta line — identità + ruolo in mono, sopra il manifesto */
+  .manifesto__meta {
+    font-size: 0.82rem;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .manifesto__meta-sep { opacity: 0.5; }
+
+  /* Titolo — 2 movimenti tipografici in Bricolage Grotesque */
+  .manifesto__title {
+    align-self: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+  }
+  .manifesto__line {
+    display: block;
+    font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: manifesto-in 720ms cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+    animation-delay: calc(120ms + var(--i, 0) * 220ms);
+  }
+  .manifesto__line[data-i="0"] { --i: 0; }
+  .manifesto__line[data-i="1"] { --i: 1; }
+
+  /* Riga 1 — contesto, peso medio, colore grigio scuro (--ink-2
+     ha 6.8:1 di contrasto, AAA large text). Opsize massimo 96 per
+     dare aria alla lettera. */
+  .manifesto__line--1 {
+    font-weight: 500;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(2.8rem, 9.5vw, 8rem);
+    color: var(--ink-2);
+  }
+
+  /* Riga 2 — statement, peso 800, indent asimmetrico, barra
+     colorata come firma della "decisione". */
+  .manifesto__line--2 {
+    font-weight: 800;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(3.5rem, 12vw, 10rem);
+    color: var(--ink);
+    padding-left: clamp(0px, 6vw, 6rem);
+    position: relative;
+  }
+  .manifesto__bar {
+    display: inline-block;
+    width: clamp(2rem, 5vw, 4rem);
+    height: clamp(6px, 0.9vw, 12px);
+    background: var(--accent-manifesto);
+    margin-right: clamp(0.5rem, 1.2vw, 1.25rem);
+    vertical-align: 0.32em;
+  }
+
+  @keyframes manifesto-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Foot — scala + scroll cue */
+  .manifesto__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .manifesto__scale {
+    font-size: 0.82rem;
+    color: var(--ink-2);
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+  .manifesto__scale span[aria-hidden="true"] { opacity: 0.5; }
+  .manifesto__cue {
+    /* touch-target ≥44px */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0 0.4rem;
+    margin-right: -0.4rem;
+    font-size: 0.82rem;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--ink);
+  }
+  .manifesto__cue-arrow {
+    display: inline-block;
+    transform: translateY(0);
+    transition: transform 240ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .manifesto__cue:hover .manifesto__cue-arrow {
+    transform: translateY(3px);
+  }
+
+  /* Screen-reader only (ux-ux-pro-max §1 aria-labels) */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
+
+  @media (max-width: 720px) {
+    .manifesto {
+      min-height: min(78vh, 640px);
+      gap: 2rem;
+      padding-top: 1rem;
+    }
+    .manifesto__line--2 { padding-left: 4vw; }
+    .manifesto__foot { padding-top: 1.2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .manifesto__line { animation: none; opacity: 1; transform: none; }
+    .manifesto__cue-arrow { transition: none; }
+  }
+</style>

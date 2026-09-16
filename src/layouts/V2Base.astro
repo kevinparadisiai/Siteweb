@@ -23,7 +23,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <style is:global>
@@ -34,6 +34,10 @@ const {
         --ink-2: #5A5A58;
         --rule: #DCDBD5;
         --flag: #E43C00;
+        /* accento manifesto — ancorato al TIM blue (cliente attuale
+           di Kevin, non decorativo). Usato solo sulla barra della
+           "decisione" nell'hero. */
+        --accent-manifesto: #1E39A0;
 
         color-scheme: light;
         background: var(--paper);
@@ -55,8 +59,9 @@ const {
         -moz-osx-font-smoothing: grayscale;
       }
       html.v2 h1, html.v2 h2, html.v2 h3, html.v2 h4 {
-        font-family: 'IBM Plex Sans Condensed', 'Inter Tight', system-ui, sans-serif;
+        font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
         font-weight: 700;
+        font-variation-settings: 'opsz' 48;
         letter-spacing: -0.015em;
         margin: 0;
         color: var(--ink);

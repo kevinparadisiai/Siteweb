@@ -2,13 +2,15 @@
 import V2Base from '@/layouts/V2Base.astro';
 import V2Header from '@/components/V2Header.astro';
 import V2Footer from '@/components/V2Footer.astro';
+import Manifesto from '@/components/Manifesto.astro';
 import Ledger from '@/components/Ledger.astro';
 ---
 <V2Base title="Kevin Paradisi — UX designer → Design strategy">
   <V2Header current="home" />
 
   <main id="main">
-    <Ledger />
+    <Manifesto />
+    <div id="prove"><Ledger /></div>
 
     <!-- Note: 3 frasi, niente principi. -->
     <section class="v2-section v2-shell" aria-labelledby="note-title">
@@ -57,7 +59,7 @@ import Ledger from '@/components/Ledger.astro';
     padding-bottom: 0.5rem;
   }
   .v2-section__title {
-    font-family: 'IBM Plex Sans Condensed', 'Inter Tight', system-ui, sans-serif;
+    font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
     font-weight: 700;
     font-size: 1.25rem;
     line-height: 1;
