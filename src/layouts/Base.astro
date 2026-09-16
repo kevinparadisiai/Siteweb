@@ -8,6 +8,7 @@ interface Props {
 }
 const { title, description = 'Portfolio di Kevin Paradisi — UX Designer moving to design strategy.', bodyClass = '' } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const v2Href = (base.endsWith('/') ? base : base + '/') + 'v2/';
 ---
 <!DOCTYPE html>
 <html lang="it">
@@ -29,7 +30,7 @@ const base = import.meta.env.BASE_URL;
     <!-- Preview banner — link visibile a una versione alternativa
          del sito in fase di validazione. Si toglie una volta scelta
          la direzione. -->
-    <a class="preview-banner" href={`${base}v2/`} aria-label="Apri la preview del nuovo design">
+    <a class="preview-banner" href={v2Href} aria-label="Apri la preview del nuovo design">
       <span class="preview-banner__label">Preview · nuovo design in valutazione</span>
       <span class="preview-banner__cta">Vedi la nuova versione <span aria-hidden="true">→</span></span>
     </a>
