@@ -1,0 +1,278 @@
+---
+// HeroPortrait — hero editorial ispirata a Damian Watracz:
+// parola ghosted enorme come layer di sfondo, ritratto (o
+// placeholder) a destra, copy essenziale a sinistra sotto.
+//
+// Il ghost dice "strategy." — la direzione dove Kevin va.
+// La sua identità attuale (UX designer) è dichiarata nell'eyebrow
+// e nel copy: la composizione mette in tensione dove sta e dove va.
+---
+<section class="hero" aria-labelledby="hero-title">
+
+  <!-- Ghost word: layer di sfondo, gigante, ghosted -->
+  <div class="hero__ghost" aria-hidden="true">strategy.</div>
+
+  <!-- Ritratto — placeholder progettato. Da sostituire con una
+       foto B&W ritratto quando disponibile. -->
+  <figure class="hero__portrait" aria-hidden="true">
+    <div class="hero__portrait-frame">
+      <span class="hero__portrait-mark">KP</span>
+    </div>
+    <figcaption class="hero__portrait-caption mono">
+      Kevin Paradisi <span class="hero__portrait-sep">·</span> placeholder foto
+    </figcaption>
+  </figure>
+
+  <!-- Copy a sinistra -->
+  <div class="hero__content v2-shell">
+    <p class="hero__eyebrow mono">
+      <span class="hero__eyebrow-dash" aria-hidden="true">—</span>
+      Portfolio · Kevin Paradisi
+    </p>
+
+    <h1 id="hero-title" class="hero__intro">
+      Kevin Paradisi — UX Designer basato a Milano, in movimento
+      verso <em>design strategy</em> per aziende enterprise.
+    </h1>
+
+    <p class="hero__body">
+      Da 8 anni progetto sistemi digitali per grandi organizzazioni
+      italiane. Le mie specialità: interaction design, ricerca UX
+      quali-quantitativa, coordinamento di team multidisciplinari e
+      traduzione di requisiti complessi in decisioni di prodotto
+      che il team può portare a terra.
+    </p>
+
+    <div class="hero__ctas">
+      <a href="#prove" class="hero__cta hero__cta--primary">
+        Guarda le prove
+        <span aria-hidden="true" class="hero__cta-arrow">↓</span>
+      </a>
+      <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/v2/about/`} class="hero__cta">
+        Chi sono
+        <span aria-hidden="true" class="hero__cta-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll cue centrato in basso -->
+  <a href="#prove" class="hero__scroll mono" aria-label="Scorri verso il basso">
+    <span aria-hidden="true">↓</span>
+  </a>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(92vh, 860px);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem clamp(1.25rem, 4vw, 2rem) 5rem;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* ---------- GHOST WORD ---------- */
+  .hero__ghost {
+    position: absolute;
+    top: clamp(3rem, 6vh, 5rem);
+    left: clamp(-1rem, -2vw, -1.5rem);
+    right: 0;
+    font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 800;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(7rem, 24vw, 22rem);
+    line-height: 0.82;
+    letter-spacing: -0.055em;
+    color: color-mix(in srgb, var(--ink) 7%, transparent);
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* ---------- PORTRAIT ---------- */
+  .hero__portrait {
+    position: absolute;
+    right: clamp(1.25rem, 4vw, 2rem);
+    top: clamp(3rem, 6vh, 5rem);
+    width: min(36%, 22rem);
+    margin: 0;
+    z-index: 2;
+    animation: portrait-in 720ms cubic-bezier(0.2, 0.6, 0.2, 1) 120ms forwards;
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .hero__portrait-frame {
+    aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(ellipse at 30% 20%, #2a2a2a 0%, var(--ink) 55%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--paper);
+    /* Sottile grana */
+    background-image:
+      radial-gradient(ellipse at 30% 20%, #2a2a2a 0%, var(--ink) 55%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0 1px, transparent 1px 3px);
+    background-blend-mode: multiply;
+  }
+  .hero__portrait-mark {
+    font-family: 'Bricolage Grotesque', 'Inter Tight', system-ui, sans-serif;
+    font-weight: 800;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(5rem, 12vw, 11rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--paper) 88%, transparent);
+  }
+  .hero__portrait-caption {
+    display: block;
+    margin-top: 0.6rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+  .hero__portrait-sep { opacity: 0.5; margin: 0 0.25rem; }
+
+  @keyframes portrait-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- CONTENT ---------- */
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 34rem;
+    margin-top: clamp(18rem, 34vh, 26rem);
+    padding-left: 0;
+    padding-right: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: content-in 640ms cubic-bezier(0.2, 0.6, 0.2, 1) 260ms forwards;
+  }
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin: 0 0 1.35rem;
+  }
+  .hero__eyebrow-dash {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--ink-2);
+  }
+  /* Elimino il "—" come carattere, uso solo la barra CSS come
+     divisore visivo. Aggiorno il markup per non renderizzarlo. */
+  .hero__eyebrow-dash + * { margin-left: 0; }
+
+  .hero__intro {
+    font-family: 'Inter Tight', system-ui, sans-serif;
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin: 0 0 1.5rem;
+    max-width: 30rem;
+  }
+  .hero__intro em {
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .hero__body {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0 0 2rem;
+    max-width: 46ch;
+  }
+
+  .hero__ctas {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    /* touch-target ≥44px */
+    min-height: 2.75rem;
+    padding: 0 0.15rem;
+    font-size: 0.9rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    transition: color 180ms ease, border-color 180ms ease;
+  }
+  .hero__cta--primary { font-weight: 500; }
+  .hero__cta-arrow {
+    display: inline-block;
+    transition: transform 260ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .hero__cta:hover {
+    color: var(--accent-manifesto);
+    border-color: var(--accent-manifesto);
+  }
+  .hero__cta:hover .hero__cta-arrow { transform: translateX(3px); }
+  .hero__cta--primary:hover .hero__cta-arrow { transform: translateY(3px); }
+
+  /* ---------- SCROLL CUE ---------- */
+  .hero__scroll {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--ink-2);
+    font-size: 1rem;
+    animation: scroll-bounce 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  @keyframes scroll-bounce {
+    0%, 100% { transform: translate(-50%, 0); opacity: 0.55; }
+    50%      { transform: translate(-50%, 6px); opacity: 1; }
+  }
+
+  @keyframes content-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 780px) {
+    .hero {
+      min-height: auto;
+      padding-bottom: 4rem;
+    }
+    .hero__ghost {
+      font-size: clamp(4.5rem, 18vw, 8rem);
+      top: 1rem;
+    }
+    .hero__portrait {
+      position: static;
+      width: min(70%, 16rem);
+      margin: 4rem auto 2.5rem;
+    }
+    .hero__content {
+      margin-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__portrait,
+    .hero__content { animation: none; opacity: 1; transform: none; }
+    .hero__scroll { animation: none; }
+    .hero__cta-arrow { transition: none; }
+  }
+</style>
